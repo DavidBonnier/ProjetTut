@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>891</width>
     <height>610</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
        </spacer>
       </item>
       <item row="5" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="BoutonCompas">
         <property name="icon">
          <iconset resource="../../Code Plein Ecran/Test/test.qrc">
           <normaloff>:/Test/Resources/compas.gif</normaloff>:/Test/Resources/compas.gif</iconset>
@@ -48,7 +48,7 @@
        </widget>
       </item>
       <item row="4" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton_7">
+       <widget class="QPushButton" name="BoutonRegle">
         <property name="text">
          <string/>
         </property>
@@ -68,7 +68,7 @@
        </widget>
       </item>
       <item row="3" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="BoutonEquerre">
         <property name="text">
          <string/>
         </property>
@@ -88,7 +88,7 @@
        </widget>
       </item>
       <item row="2" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="BoutonCrayon">
         <property name="mouseTracking">
          <bool>false</bool>
         </property>
@@ -126,7 +126,7 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="3">
-       <widget class="QPushButton" name="PleinEcran">
+       <widget class="QPushButton" name="BoutonPleinEcran">
         <property name="icon">
          <iconset resource="../../Code Plein Ecran/Test/test.qrc">
           <normaloff>:/Test/Resources/SortieFullScreen.gif</normaloff>:/Test/Resources/SortieFullScreen.gif</iconset>
@@ -140,7 +140,7 @@
        </widget>
       </item>
       <item row="13" column="0" colspan="8">
-       <widget class="QCheckBox" name="checkBox_5">
+       <widget class="QCheckBox" name="checkBoxGrille">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -159,7 +159,7 @@
        </widget>
       </item>
       <item row="6" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="BoutonPoint">
         <property name="text">
          <string/>
         </property>
@@ -179,7 +179,7 @@
        <widget class="QWidget" name="widget_6" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QPushButton" name="pushButtonBleu">
+          <widget class="QPushButton" name="BoutonBleu">
            <property name="minimumSize">
             <size>
              <width>30</width>
@@ -195,7 +195,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonVert">
+          <widget class="QPushButton" name="BoutonVert">
            <property name="minimumSize">
             <size>
              <width>30</width>
@@ -211,7 +211,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonRouge">
+          <widget class="QPushButton" name="BoutonRouge">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -230,7 +230,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonJaune">
+          <widget class="QPushButton" name="BoutonJaune">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -252,7 +252,7 @@
        </widget>
       </item>
       <item row="8" column="0">
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="BoutonNoir">
         <property name="minimumSize">
          <size>
           <width>30</width>
@@ -274,7 +274,7 @@
        </widget>
       </item>
       <item row="7" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="BoutonTexte">
         <property name="text">
          <string/>
         </property>
@@ -291,7 +291,7 @@
        </widget>
       </item>
       <item row="10" column="0" rowspan="3">
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="BoutonEpaisseur">
         <property name="minimumSize">
          <size>
           <width>30</width>
@@ -336,7 +336,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="QScrollArea" name="ScrollAreaOptionsOutils">
      <property name="minimumSize">
       <size>
        <width>230</width>
@@ -363,7 +363,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QDockWidget" name="dockWidget_3">
+        <widget class="QDockWidget" name="DockWidgetCrayon">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -403,34 +403,34 @@
          <widget class="QWidget" name="dockWidgetContents_3">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QGroupBox" name="groupBox">
+            <widget class="QGroupBox" name="GroupBoxCrayonPosition">
              <property name="title">
               <string>Position</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QLabel" name="label">
+               <widget class="QLabel" name="LabelPositionX">
                 <property name="text">
                  <string>x</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox">
+               <widget class="QDoubleSpinBox" name="SpinBoxCrayonPositionX">
                 <property name="decimals">
                  <number>1</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_2">
+               <widget class="QLabel" name="LabelPositionY">
                 <property name="text">
                  <string>y</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+               <widget class="QDoubleSpinBox" name="SpinBoxCrayonPositionY">
                 <property name="decimals">
                  <number>1</number>
                 </property>
@@ -440,32 +440,32 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox">
+            <widget class="QCheckBox" name="CheckBoxCrayonTransparence">
              <property name="text">
               <string>transparence</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_2" native="true">
+            <widget class="QWidget" name="WidgetCrayonOrientation" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QLabel" name="label_3">
+               <widget class="QLabel" name="LabelCrayonOrientation">
                 <property name="text">
                  <string>Orientation</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox">
+               <widget class="QSpinBox" name="SpinBoxCrayonOrientation">
                 <property name="maximum">
                  <number>360</number>
                 </property>
                </widget>
               </item>
              </layout>
-             <zorder>spinBox</zorder>
-             <zorder>label_3</zorder>
+             <zorder>SpinBoxCrayonOrientation</zorder>
+             <zorder>LabelCrayonOrientation</zorder>
             </widget>
            </item>
           </layout>
@@ -480,7 +480,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDockWidget" name="dockWidget_4">
+        <widget class="QDockWidget" name="DockWidgetRegle">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -511,34 +511,34 @@
          <widget class="QWidget" name="dockWidgetContents_4">
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QGroupBox" name="groupBox_3">
+            <widget class="QGroupBox" name="GroupBoxReglePosition">
              <property name="title">
               <string>Position</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="LabelReglePositionX">
                 <property name="text">
                  <string>x</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+               <widget class="QDoubleSpinBox" name="SpinBoxReglePositionX">
                 <property name="decimals">
                  <number>1</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="LabelReglePotitionY">
                 <property name="text">
                  <string>y</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+               <widget class="QDoubleSpinBox" name="SpinBoxReglePositionY">
                 <property name="decimals">
                  <number>1</number>
                 </property>
@@ -548,7 +548,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_2">
+            <widget class="QCheckBox" name="CheckBoxRegleTransparence">
              <property name="text">
               <string>transparence</string>
              </property>
@@ -558,14 +558,14 @@
             <widget class="QWidget" name="widget_3" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="LabelRegleOrientation">
                 <property name="text">
                  <string>Orientation</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_4">
+               <widget class="QSpinBox" name="SpinBoxRegleOrientation">
                 <property name="maximum">
                  <number>360</number>
                 </property>
@@ -581,13 +581,13 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
-               <widget class="QSpinBox" name="spinBox_5"/>
+               <widget class="QSpinBox" name="SpinBoxRegleTracerPoint1"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_6"/>
+               <widget class="QSpinBox" name="SpinBoxRegleTracerPoint2"/>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_9">
+               <widget class="QPushButton" name="BoutonRegleTracerOK">
                 <property name="maximumSize">
                  <size>
                   <width>30</width>
@@ -614,7 +614,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDockWidget" name="dockWidget_5">
+        <widget class="QDockWidget" name="DockWidgetEquerre">
          <property name="minimumSize">
           <size>
            <width>174</width>
@@ -639,34 +639,34 @@
          <widget class="QWidget" name="dockWidgetContents_5">
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QGroupBox" name="groupBox_5">
+            <widget class="QGroupBox" name="GroupBoxEquerrePosition">
              <property name="title">
               <string>Position</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QLabel" name="label_7">
+               <widget class="QLabel" name="LabelEquerrePositionX">
                 <property name="text">
                  <string>x</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+               <widget class="QDoubleSpinBox" name="SpinBoxEquerrePositionX">
                 <property name="decimals">
                  <number>1</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_8">
+               <widget class="QLabel" name="LabelEquerrePositionY">
                 <property name="text">
                  <string>y</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+               <widget class="QDoubleSpinBox" name="SpinBoxEquerrePositionY">
                 <property name="decimals">
                  <number>1</number>
                 </property>
@@ -676,24 +676,24 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_3">
+            <widget class="QCheckBox" name="CheckBoxEquerreTransparence">
              <property name="text">
               <string>transparence</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_4" native="true">
+            <widget class="QWidget" name="WidgetEquerreOrientation" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
-               <widget class="QLabel" name="label_9">
+               <widget class="QLabel" name="LabelEquerreOrientation">
                 <property name="text">
                  <string>Orientation</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_7">
+               <widget class="QSpinBox" name="SpinBoxEquerreOrientation">
                 <property name="maximum">
                  <number>360</number>
                 </property>
@@ -703,19 +703,19 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_6">
+            <widget class="QGroupBox" name="GroupBoxEquerreTracer">
              <property name="title">
               <string>Tracer</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
-               <widget class="QSpinBox" name="spinBox_8"/>
+               <widget class="QSpinBox" name="SpinBoxEquerreTracerPoint1"/>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_9"/>
+               <widget class="QSpinBox" name="SpinBoxEquerreTracerPoint2"/>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_10">
+               <widget class="QPushButton" name="PushButtonEquerreTracerOK">
                 <property name="maximumSize">
                  <size>
                   <width>30</width>
@@ -742,7 +742,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDockWidget" name="dockWidget_2">
+        <widget class="QDockWidget" name="DockWidgetCompas">
          <property name="minimumSize">
           <size>
            <width>174</width>
@@ -767,34 +767,34 @@
          <widget class="QWidget" name="dockWidgetContents_2">
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QGroupBox" name="groupBox_7">
+            <widget class="QGroupBox" name="GroupBoxPositionCompas">
              <property name="title">
               <string>Position</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_11">
               <item>
-               <widget class="QLabel" name="label_10">
+               <widget class="QLabel" name="LabelCompasPositionX">
                 <property name="text">
                  <string>x</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+               <widget class="QDoubleSpinBox" name="SpinBoxCompasPositionX">
                 <property name="decimals">
                  <number>1</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_11">
+               <widget class="QLabel" name="LabelCompasPositionY">
                 <property name="text">
                  <string>y</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+               <widget class="QDoubleSpinBox" name="SpinBoxCompasPositionY">
                 <property name="decimals">
                  <number>1</number>
                 </property>
@@ -804,37 +804,37 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_4">
+            <widget class="QCheckBox" name="CheckBoxCompasTransparence">
              <property name="text">
               <string>transparence</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_5" native="true">
+            <widget class="QWidget" name="WidgetCompasOption" native="true">
              <property name="enabled">
               <bool>true</bool>
              </property>
              <layout class="QFormLayout" name="formLayout">
               <item row="1" column="0">
-               <widget class="QLabel" name="label_13">
+               <widget class="QLabel" name="LabelEcartementCompas">
                 <property name="text">
                  <string>Ecartement</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QSpinBox" name="spinBox_11"/>
+               <widget class="QSpinBox" name="SpinBoxCompasEcartement"/>
               </item>
               <item row="3" column="1">
-               <widget class="QSpinBox" name="spinBox_10">
+               <widget class="QSpinBox" name="SpinBoxCompasOrientation">
                 <property name="maximum">
                  <number>360</number>
                 </property>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="label_12">
+               <widget class="QLabel" name="LabelCompasOrientation">
                 <property name="text">
                  <string>Orientation</string>
                 </property>
