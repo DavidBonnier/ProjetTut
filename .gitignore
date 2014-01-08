@@ -32,6 +32,7 @@
 *.suo
 *.user
 *.sln.docstates
+*.vcxproj
 
 # Build results
 [Dd]ebug/
