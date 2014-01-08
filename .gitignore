@@ -10,7 +10,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Compiled Static libraries
 *.lai
@@ -33,6 +32,7 @@
 *.user
 *.sln.docstates
 *.vcxproj
+*.dll
 
 # Build results
 [Dd]ebug/
@@ -217,7 +217,7 @@ $RECYCLE.BIN/
 *.la
 *.lai
 *.so
-*.dll
+
 *.dylib
 
 # Qt-es
