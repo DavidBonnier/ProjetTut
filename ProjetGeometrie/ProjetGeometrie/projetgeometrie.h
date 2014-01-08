@@ -10,7 +10,7 @@ class ProjetGeometrie : public QWidget
 
 public:
 	ProjetGeometrie(QWidget *parent = 0);
-	~ProjetGeometrie(); //bonjour
+	~ProjetGeometrie();
 
 private:
 	Ui::ProjetGeometrieClass ui;
