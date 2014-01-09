@@ -8,4 +8,5 @@ protected:
 
 public :
 	void selectionner();
+	void setColor(int newColor[3]); //Change la couleur
 };

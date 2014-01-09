@@ -3,6 +3,7 @@
 
 class Geometrie
 {
+public:
 	Instrument* instruments;
 	Figure* figures;
 };

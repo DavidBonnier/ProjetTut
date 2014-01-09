@@ -140,7 +140,7 @@
        </widget>
       </item>
       <item row="13" column="0" colspan="8">
-       <widget class="QCheckBox" name="checkBoxGrille">
+       <widget class="QCheckBox" name="CheckBoxGrille">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -356,7 +356,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-279</y>
         <width>211</width>
         <height>871</height>
        </rect>
@@ -715,7 +715,7 @@
                <widget class="QSpinBox" name="SpinBoxEquerreTracerPoint2"/>
               </item>
               <item>
-               <widget class="QPushButton" name="PushButtonEquerreTracerOK">
+               <widget class="QPushButton" name="BoutonEquerreTracerOK">
                 <property name="maximumSize">
                  <size>
                   <width>30</width>

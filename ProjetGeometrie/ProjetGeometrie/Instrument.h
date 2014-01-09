@@ -1,5 +1,6 @@
 class Instrument
 {
+public:
 	double x;
 	double y;
 	double angle;
