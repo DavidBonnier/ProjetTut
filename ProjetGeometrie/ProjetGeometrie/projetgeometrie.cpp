@@ -121,8 +121,8 @@ void ProjetGeometrie::Vert()
 
 void ProjetGeometrie::Jaune()
 {
-	int bleu[3] = {0,255,255};
-	geometrie->figures->setColor(bleu);
+	int jaune[3] = {0,255,255};
+	geometrie->figures->setColor(jaune);
 }
 
 void ProjetGeometrie::Rouge()
