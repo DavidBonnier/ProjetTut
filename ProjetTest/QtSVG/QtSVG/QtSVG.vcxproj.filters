@@ -24,12 +24,12 @@
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{c46a1aa6-6448-442f-9670-c7af35821f40}</UniqueIdentifier>
+      <UniqueIdentifier>{ab39a0aa-c6c3-489a-9946-2c88b92222d5}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{fcea5af5-0753-47cb-b3fb-228c5571a52c}</UniqueIdentifier>
+      <UniqueIdentifier>{936cc189-553b-476f-b907-94e10ff1e082}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
@@ -38,39 +38,33 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="qtsvg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_test.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtsvg.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_test.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_qtsvg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\qrc_test.cpp">
+    <ClCompile Include="GeneratedFiles\qrc_qtsvg.cpp">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DessinSvg.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="test.h">
+    <CustomBuild Include="qtsvg.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="test.ui">
+    <CustomBuild Include="qtsvg.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="test.qrc">
+    <CustomBuild Include="qtsvg.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_test.h">
+    <ClInclude Include="GeneratedFiles\ui_qtsvg.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DessinSvg.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

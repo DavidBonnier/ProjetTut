@@ -1,4 +1,0 @@
-class Equerre : public Regle
-{
-
-};
