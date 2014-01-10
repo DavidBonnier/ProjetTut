@@ -121,7 +121,7 @@ void ProjetGeometrie::Vert()
 
 void ProjetGeometrie::Jaune()
 {
-	int jaune[3] = {0,255,255};
+	int bleu[3] = {0,255,255};
 	geometrie->figures->setColor(bleu);
 }
 
@@ -223,7 +223,7 @@ void ProjetGeometrie::CompasEcartement(int ecartement)
 
 }
 
-void ProjetGeometrie::EquerreOrientation(int orientation)
+void ProjetGeometrie::CompasOrientation(int orientation)
 {
 
 }
