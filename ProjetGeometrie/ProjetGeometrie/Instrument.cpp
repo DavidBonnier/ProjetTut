@@ -8,3 +8,8 @@ void Instrument :: rotation(double newangle)
 {
 
 }
+
+void Instrument::tracer(int x, int y)
+{
+
+}

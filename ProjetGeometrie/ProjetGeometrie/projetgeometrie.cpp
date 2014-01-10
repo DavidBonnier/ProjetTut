@@ -135,95 +135,95 @@ void ProjetGeometrie::Rouge()
 //Crayon
 void ProjetGeometrie::CrayonPositionX(double x)
 {
-	geometrie->instruments->translation(x, 0);
+	geometrie->instruments[0].translation(x, ui.SpinBoxCrayonPositionY->value()); 
 }
 
 void ProjetGeometrie::CrayonPositionY(double y)
 {
-	geometrie->instruments->translation(0, y);
+	geometrie->instruments[0].translation(ui.SpinBoxCrayonPositionX->value(), y);
 }
 
 void ProjetGeometrie::CrayonTransparence()
 {
-	geometrie->instruments->transparence = true;
+	geometrie->instruments[0].transparence = true;
 }
 
 void ProjetGeometrie::CrayonOrientation(int orientation)
 {
-	geometrie->instruments->rotation(orientation);
+	geometrie->instruments[0].rotation(orientation);
 }
 //Règle
 void ProjetGeometrie::ReglePositionX(double x)
 {
-
+	geometrie->instruments[2].translation(x, ui.SpinBoxReglePositionY->value()); 
 }
 
 void ProjetGeometrie::ReglePositionY(double y)
 {
-
+	geometrie->instruments[2].translation(ui.SpinBoxReglePositionX->value(), y) 
 }
 
 void ProjetGeometrie::RegleTransparence()
 {
-
+	geometrie->instruments[2].transparence = true;
 }
 
 void ProjetGeometrie::RegleOrientation(int orientation)
 {
-
+	geometrie->instruments[2].rotation(orientation); 
 }
 
 void ProjetGeometrie::RegleTracer()
 {
-
+	geometrie->instruments[2].tracer(ui.SpinBoxRegleTracerPoint1->value(), ui.SpinBoxRegleTracerPoint2->value());
 }
 //Equerre
 void ProjetGeometrie::EquerrePositionX(double x)
 {
-
+	geometrie->instruments[1].translation(x, ui.SpinBoxEquerrePositionY->value()); 
 }
 
 void ProjetGeometrie::EquerrePositionY(double y)
 {
-
+	geometrie->instruments[1].translation(ui.SpinBoxEquerrePositionX->value(), y)
 }
 
 void ProjetGeometrie::EquerreTransparence()
 {
-
+	geometrie->instruments[1].transparence = true;
 }
 
 void ProjetGeometrie::EquerreOrientation(int orientation)
 {
-
+	geometrie->instruments[1].rotation(orientation);
 }
 
 void ProjetGeometrie::EquerreTracer()
 {
-
+	geometrie->instruments[1].tracer(ui.SpinBoxEquerreTracerPoint1->value(), ui.SpinBoxEquerreTracerPoint2->value());
 }
 //Compas
 void ProjetGeometrie::CompasPositionX(double x)
 {
-
+	geometrie->instruments[3].translation(x, ui.SpinBoxCompasPositionY->value());
 }
 
 void ProjetGeometrie::CompasPositionY(double y)
 {
-
+	geometrie->instruments[3].translation(ui.SpinBoxCompasPositionX->value(), y)
 }
 
 void ProjetGeometrie::CompasTransparence()
 {
-
+	geometrie->instruments[3].transparence = true;
 }
 
 void ProjetGeometrie::CompasEcartement(int ecartement)
 {
-
+	//geometrie->instruments[3].
 }
 
 void ProjetGeometrie::CompasOrientation(int orientation)
 {
-
+	geometrie->instruments[3].tracer(ui.SpinBoxCompasTracerPoint1->value(), ui.SpinBoxCompasTracerPoint2->value());
 }

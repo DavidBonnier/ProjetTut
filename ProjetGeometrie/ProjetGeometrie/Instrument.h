@@ -8,4 +8,5 @@ public:
 
 	virtual void translation (double newx , double newy);
 	void rotation (double newangle);
+	void tracer(int x, int y);
 };
