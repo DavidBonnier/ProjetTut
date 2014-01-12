@@ -6,15 +6,15 @@ ProjetGeometrie::ProjetGeometrie(QWidget *parent)
 	ui.setupUi(this);
 //Connection des boutons
 	//Boutons outils
-	connect(ui.BoutonPleinEcran, SIGNAL(triggered(bool)), this, SLOT(PleinEcran()));
-	connect(ui.BoutonCrayon, SIGNAL(triggered(bool)), this, SLOT(Crayon()));
-	connect(ui.BoutonEquerre, SIGNAL(triggered(bool)), this, SLOT(Equerre()));
-	connect(ui.BoutonRegle, SIGNAL(triggered(bool)), this, SLOT(Regle()));
-	connect(ui.BoutonCompas, SIGNAL(triggered(bool)), this, SLOT(Compas()));
-	connect(ui.BoutonPoint, SIGNAL(triggered(bool)), this, SLOT(Point()));
-	connect(ui.BoutonTexte, SIGNAL(triggered(bool)), this, SLOT(Texte()));
-	connect(ui.BoutonEpaisseur, SIGNAL(triggered(bool)), this, SLOT(Epaisseur()));
-	connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille()));
+	connect(ui.BoutonPleinEcran, SIGNAL(clicked(bool)), this, SLOT(PleinEcran(bool)));
+	connect(ui.BoutonCrayon, SIGNAL(clicked(bool)), this, SLOT(Crayon(bool)));
+	connect(ui.BoutonEquerre, SIGNAL(clicked(bool)), this, SLOT(Equerre(bool)));
+	connect(ui.BoutonRegle, SIGNAL(clicked(bool)), this, SLOT(Regle(bool)));
+	connect(ui.BoutonCompas, SIGNAL(clicked(bool)), this, SLOT(Compas(bool)));
+	connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(Point(bool)));
+	connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(Texte(bool)));
+	connect(ui.BoutonEpaisseur, SIGNAL(clicked(bool)), this, SLOT(Epaisseur(bool)));
+	connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille(bool)));
 	//Boutons couleurs
 	connect(ui.BoutonNoir, SIGNAL(triggered(bool)), this, SLOT(Noir()));
 	connect(ui.BoutonBleu, SIGNAL(triggered(bool)), this, SLOT(Bleu()));
@@ -25,24 +25,24 @@ ProjetGeometrie::ProjetGeometrie(QWidget *parent)
 	//Crayon
 	connect(ui.SpinBoxCrayonPositionX, SIGNAL(valueChanged(double)), this, SLOT(CrayonPositionX(double)));
 	connect(ui.SpinBoxCrayonPositionY, SIGNAL(valueChanged(double)), this, SLOT(CrayonPositionY(double)));
-	connect(ui.CheckBoxCrayonTransparence, SIGNAL(clicked(bool)), this, SLOT(CrayonTransparence()));
+	connect(ui.CheckBoxCrayonTransparence, SIGNAL(clicked(bool)), this, SLOT(CrayonTransparence(bool)));
 	connect(ui.SpinBoxCrayonOrientation, SIGNAL(valueChanged(int)), this, SLOT(CrayonOrientation(int)));
 	//Regle
 	connect(ui.SpinBoxReglePositionX, SIGNAL(valueChanged(double)), this, SLOT(ReglePositionX(double)));
 	connect(ui.SpinBoxReglePositionY, SIGNAL(valueChanged(double)), this, SLOT(ReglePositionY(double)));
-	connect(ui.CheckBoxRegleTransparence, SIGNAL(clicked(bool)), this, SLOT(RegleTransparence()));
+	connect(ui.CheckBoxRegleTransparence, SIGNAL(clicked(bool)), this, SLOT(RegleTransparence(bool)));
 	connect(ui.SpinBoxRegleOrientation, SIGNAL(valueChanged(int)), this, SLOT(RegleOrientation(int)));
 	connect(ui.BoutonRegleTracerOK, SIGNAL(clicked(bool)), this, SLOT(RegleTracer()));
 	//Equerre
 	connect(ui.SpinBoxEquerrePositionX, SIGNAL(valueChanged(double)), this, SLOT(EquerrePositionX(double)));
 	connect(ui.SpinBoxEquerrePositionY, SIGNAL(valueChanged(double)), this, SLOT(EquerrePositionY(double)));
-	connect(ui.CheckBoxEquerreTransparence, SIGNAL(clicked(bool)), this, SLOT(EquerreTransparence()));
+	connect(ui.CheckBoxEquerreTransparence, SIGNAL(clicked(bool)), this, SLOT(EquerreTransparence(bool)));
 	connect(ui.SpinBoxEquerreOrientation, SIGNAL(valueChanged(int)), this, SLOT(EquerreOrientation(int)));
 	connect(ui.BoutonEquerreTracerOK, SIGNAL(clicked(bool)), this, SLOT(EquerreTracer()));
 	//Compas
 	connect(ui.SpinBoxCompasPositionX, SIGNAL(valueChanged(double)), this, SLOT(CompasPositionX(double)));
 	connect(ui.SpinBoxCompasPositionY, SIGNAL(valueChanged(double)), this, SLOT(CompasPositionY(double)));
-	connect(ui.CheckBoxCompasTransparence, SIGNAL(clicked(bool)), this, SLOT(CompasTransparence()));
+	connect(ui.CheckBoxCompasTransparence, SIGNAL(clicked(bool)), this, SLOT(CompasTransparence(bool)));
 	connect(ui.SpinBoxCompasEcartement, SIGNAL(valueChanged(int)), this, SLOT(CompasEcartement(int)));
 	connect(ui.SpinBoxCompasOrientation, SIGNAL(valueChanged(int)), this, SLOT(CompasOrientation(int)));
 }
@@ -55,47 +55,47 @@ ProjetGeometrie::~ProjetGeometrie()
 
 //****************************************SLOTS*******************************
 //Outils
-void ProjetGeometrie::PleinEcran()
+void ProjetGeometrie::PleinEcran(bool b)
 {
 
 }
 
-void ProjetGeometrie::Crayon()
+void ProjetGeometrie::Crayon(bool b)
 {
 
 }
 
-void ProjetGeometrie::Equerre()
+void ProjetGeometrie::Equerre(bool b)
 {
 
 }
 
-void ProjetGeometrie::Regle()
+void ProjetGeometrie::Regle(bool b)
 {
 
 }
 
-void ProjetGeometrie::Compas()
+void ProjetGeometrie::Compas(bool b)
 {
 
 }
 
-void ProjetGeometrie::Point()
+void ProjetGeometrie::Point(bool b)
 {
 
 }
 
-void ProjetGeometrie::Texte()
+void ProjetGeometrie::Texte(bool b)
 {
 
 }
 
-void ProjetGeometrie::Epaisseur()
+void ProjetGeometrie::Epaisseur(bool b)
 {
 
 }
 
-void ProjetGeometrie::Grille()
+void ProjetGeometrie::Grille(bool b)
 {
 
 }
@@ -143,9 +143,9 @@ void ProjetGeometrie::CrayonPositionY(double y)
 	geometrie->instruments[0].translation(ui.SpinBoxCrayonPositionX->value(), y);
 }
 
-void ProjetGeometrie::CrayonTransparence()
+void ProjetGeometrie::CrayonTransparence(bool b)
 {
-	geometrie->instruments[0].transparence = true;
+	geometrie->instruments[0].transparence = b;
 }
 
 void ProjetGeometrie::CrayonOrientation(int orientation)
@@ -160,12 +160,12 @@ void ProjetGeometrie::ReglePositionX(double x)
 
 void ProjetGeometrie::ReglePositionY(double y)
 {
-	geometrie->instruments[2].translation(ui.SpinBoxReglePositionX->value(), y) 
+	geometrie->instruments[2].translation(ui.SpinBoxReglePositionX->value(), y);
 }
 
-void ProjetGeometrie::RegleTransparence()
+void ProjetGeometrie::RegleTransparence(bool b)
 {
-	geometrie->instruments[2].transparence = true;
+	geometrie->instruments[2].transparence = b;
 }
 
 void ProjetGeometrie::RegleOrientation(int orientation)
@@ -185,12 +185,12 @@ void ProjetGeometrie::EquerrePositionX(double x)
 
 void ProjetGeometrie::EquerrePositionY(double y)
 {
-	geometrie->instruments[1].translation(ui.SpinBoxEquerrePositionX->value(), y)
+	geometrie->instruments[1].translation(ui.SpinBoxEquerrePositionX->value(), y);
 }
 
-void ProjetGeometrie::EquerreTransparence()
+void ProjetGeometrie::EquerreTransparence(bool b)
 {
-	geometrie->instruments[1].transparence = true;
+	geometrie->instruments[1].transparence = b;
 }
 
 void ProjetGeometrie::EquerreOrientation(int orientation)
@@ -210,12 +210,12 @@ void ProjetGeometrie::CompasPositionX(double x)
 
 void ProjetGeometrie::CompasPositionY(double y)
 {
-	geometrie->instruments[3].translation(ui.SpinBoxCompasPositionX->value(), y)
+	geometrie->instruments[3].translation(ui.SpinBoxCompasPositionX->value(), y);
 }
 
-void ProjetGeometrie::CompasTransparence()
+void ProjetGeometrie::CompasTransparence(bool b)
 {
-	geometrie->instruments[3].transparence = true;
+	geometrie->instruments[3].transparence = b;
 }
 
 void ProjetGeometrie::CompasEcartement(int ecartement)
@@ -225,5 +225,5 @@ void ProjetGeometrie::CompasEcartement(int ecartement)
 
 void ProjetGeometrie::CompasOrientation(int orientation)
 {
-	geometrie->instruments[3].tracer(ui.SpinBoxCompasTracerPoint1->value(), ui.SpinBoxCompasTracerPoint2->value());
+	geometrie->instruments[3].rotation(orientation);
 }
