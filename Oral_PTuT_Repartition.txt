@@ -1,0 +1,5 @@
+->Présentation   ---> Pierre
+->BOMEHC + TGT   ---> David 
+->Interaction avec SSESD / Contraintes des handicapés   ---> Ravel        
+->Avancement Interface   ---> Hugo
+->Avancement Géométrie   ---> Dylan
