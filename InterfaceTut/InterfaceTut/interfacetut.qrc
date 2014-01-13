@@ -1,4 +1,4 @@
 <RCC>
-    <qresource prefix="InterfaceTut">
+    <qresource prefix="/">
     </qresource>
 </RCC>

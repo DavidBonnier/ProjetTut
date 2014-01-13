@@ -29,7 +29,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="Cours">
          <attribute name="title">
@@ -128,13 +128,13 @@
            </spacer>
           </item>
           <item row="0" column="9">
-           <widget class="QPushButton" name="PleinecranCours">
+           <widget class="QPushButton" name="PleinEcranCours">
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</iconset>
+              <normaloff>Resources/Fullscreen.gif</normaloff>Resources/Fullscreen.gif</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -197,7 +197,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</iconset>
+              <normaloff>Resources/Fullscreen.gif</normaloff>Resources/Fullscreen.gif</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -260,7 +260,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</iconset>
+              <normaloff>Resources/Fullscreen.gif</normaloff>Resources/Fullscreen.gif</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -307,7 +307,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</normaloff>../../../../GitHub/ProjetTut/Interface/Interface/Resources/Fullscreen.gif</iconset>
+             <normaloff>Resources/Fullscreen.gif</normaloff>Resources/Fullscreen.gif</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -646,7 +646,7 @@
   <action name="actionRaccourcis_Clavier">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/racourcisClavier.png</normaloff>Resources/racourcisClavier.png</iconset>
+     <normaloff>Resources/raccourcisClavier.png</normaloff>Resources/raccourcisClavier.png</iconset>
    </property>
    <property name="text">
     <string>Raccourcis Clavier</string>

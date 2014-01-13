@@ -9,14 +9,17 @@ int main(int argc, char *argv[])
 	Interface w;
 	User t;
 	bool ok = false;
-	QMessageBox* choix = new QMessageBox(QMessageBox::Question, "Gestion des utilisateurs ", "Souhaitez vous vous enregistrer?");
+	QMessageBox* choix = new QMessageBox(QMessageBox::Question, "Gestion des utilisateurs ", "Souhaitez-vous vous enregistrer?");
 	choix->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+	choix->setButtonText(QMessageBox::Yes, "Oui");
+	choix->setButtonText(QMessageBox::No, "Non");
 	choix->show();
 	int ret = choix->exec();
 	switch (ret)
 	{
 		case QMessageBox::Yes:
 			t.Enregistrement();
+			t.StockageVector();
 			break;
 
 		case QMessageBox::No:
