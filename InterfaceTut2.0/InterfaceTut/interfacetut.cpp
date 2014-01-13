@@ -8,7 +8,7 @@ Interface::Interface(QWidget *parent, Qt::WFlags flags)
 	printer = new QPrinter;
 
 	txtZoneIsClicked = false;
-
+	
 	actionZoneTexte = new QAction(0);
 
 	// Toolbar
@@ -99,25 +99,20 @@ void Interface::closeEvent(QCloseEvent *event)
 void Interface::ZoneDeTexte()
 {
 	txt = new QTextEdit(ui.Onglets->currentWidget());
+	txt->installEventFilter(this);
 	txt->show();
 }
 
 // Le cliquer - déposer
 bool Interface::eventFilter(QObject* obj, QEvent *event)
 {
-	if(obj == txt )
+	if( txt != NULL &&obj == txt && event->type() == QEvent::MouseButtonPress)
 	{
-		if(event->type() == QEvent::MouseButtonPress)
-		{
-			QMessageBox* suppression_ok = new QMessageBox(QMessageBox::NoIcon, tr("Gestion des utilisateurs "), "La suppression s'est déroulée avec succès. ");
-			suppression_ok->setIconPixmap(QPixmap("Resources/supprUti.png"));
-			suppression_ok->show();
-			if(!txtZoneIsClicked)
-				txtZoneIsClicked = true;
-			else
-				txtZoneIsClicked = false;
-			return true;
-		}
+		if(!txtZoneIsClicked)
+			txtZoneIsClicked = true;
+		else
+			txtZoneIsClicked = false;
+		return true;
 	}
 	else
 		return QWidget::eventFilter( obj, event );
@@ -128,18 +123,14 @@ void Interface::mousePressEvent(QMouseEvent* mouse)
 {
 	if(txtZoneIsClicked)
 	{
-		QMessageBox* suppression_ok = new QMessageBox(QMessageBox::NoIcon, tr("Gestion des utilisateurs "), "La suppression s'est déroulée avec succès. ");
-		suppression_ok->setIconPixmap(QPixmap("Resources/supprUti.png"));
-		suppression_ok->show();
-		txt->pos().setX(mouse->pos().x());
-		txt->pos().setY(mouse->pos().y());
+		txt->move(mouse->pos().x(), mouse->pos().y() );
 	}
 }
 
 // Boite de dialogue raccourcis
 void Interface::AffichageRaccourcis()
 {
-	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", "<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p> <p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p><p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p><p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p><p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p><p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p><p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p><p> <strong> - F12 </strong>: Sauvegarder Sous. </p><p> <strong> - Ctrl + P </strong>: Imprimer. </p><p> <strong> - Alt + P </strong>: Aperçu avant impression. </p><p> <strong> - F1 </strong>: Affichage de l'aide. </p><p> <strong> - Ctrl + H </strong>: Affichage de cette boîte de dialogue. </p><p> <strong> - Alt + F4 </strong>: Quitter le programme.");
+	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", "<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p> <p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p><p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p><p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p><p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p><p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p><p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p><p> <strong> - F12 </strong>: Sauvegarder Sous. </p><p> <strong> - Ctrl + P </strong>: Imprimer. </p><p> <strong> - Alt + P </strong>: Aperçu avant impression. </p><p><strong> - Zones de texte </strong>: clic droit sur les bords de la zone de texte puis clic gauche à l'endroit  souhaité. Un second clic droit sur la zone de texte interdit le déplacement.</p><p> <strong> - F1 </strong>: Affichage de l'aide. </p><p> <strong> - Ctrl + H </strong>: Affichage de cette boîte de dialogue. </p><p> <strong> - Alt + F4 </strong>: Quitter le programme.");
 	shortcuts->setIconPixmap(QPixmap("Resources/raccourcisClavier.png"));
 	shortcuts->show();
 }
