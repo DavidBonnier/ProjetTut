@@ -4,7 +4,7 @@
 # Compiled Object files
 *.slo
 *.lo
-*.o
+*.oc
 *.obj
 
 # Compiled Dynamic libraries
@@ -31,7 +31,6 @@
 *.suo
 *.user
 *.sln.docstates
-*.vcxproj
 *.dll
 
 # Build results
