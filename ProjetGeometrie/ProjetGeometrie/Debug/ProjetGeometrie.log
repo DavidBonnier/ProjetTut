@@ -1,0 +1,31 @@
+﻿Build started 12/01/2014 17:52:24.
+     1>Project "C:\Users\proprietaire\Documents\GitHub\ProjetTut\ProjetGeometrie\ProjetGeometrie\ProjetGeometrie.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\ProjetGeometrie.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ComputeCustomBuildOutput:
+         Creating directory "C:\Users\proprietaire\Documents\GitHub\ProjetTut\ProjetGeometrie\ProjetGeometrie\GeneratedFiles\Debug\".
+       CustomBuild:
+         Moc'ing projetgeometrie.h...
+         Uic'ing projetgeometrie.ui...
+         Rcc'ing projetgeometrie.qrc...
+     1>RCC : warning : No resources in 'C:\Users\proprietaire\Documents\GitHub\ProjetTut\ProjetGeometrie\ProjetGeometrie\projetgeometrie.qrc'.
+         
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\4.8.4\include /I.\GeneratedFiles\Debug /IC:\Qt\4.8.4\include\QtCore /IC:\Qt\4.8.4\include\QtGui /IC:\Qt\4.8.4\include\QtSvg /IC:\Qt\4.8.4\include\QtWidgets /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_SVG_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Compas.cpp Crayon.cpp Figure.cpp GeneratedFiles\Debug\moc_projetgeometrie.cpp Instrument.cpp main.cpp projetgeometrie.cpp Regle.cpp
+         Compas.cpp
+         Crayon.cpp
+         Figure.cpp
+         moc_projetgeometrie.cpp
+     1>c:\users\proprietaire\documents\github\projettut\projetgeometrie\projetgeometrie\generatedfiles\debug\../../projetgeometrie.h(4): fatal error C1083: Impossible d'ouvrir le fichier include : 'QtWidgets/QWidget' : No such file or directory
+         Instrument.cpp
+         main.cpp
+     1>c:\users\proprietaire\documents\github\projettut\projetgeometrie\projetgeometrie\projetgeometrie.h(4): fatal error C1083: Impossible d'ouvrir le fichier include : 'QtWidgets/QWidget' : No such file or directory
+         projetgeometrie.cpp
+     1>c:\users\proprietaire\documents\github\projettut\projetgeometrie\projetgeometrie\projetgeometrie.h(4): fatal error C1083: Impossible d'ouvrir le fichier include : 'QtWidgets/QWidget' : No such file or directory
+         Regle.cpp
+         Génération de code en cours...
+     1>Done Building Project "C:\Users\proprietaire\Documents\GitHub\ProjetTut\ProjetGeometrie\ProjetGeometrie\ProjetGeometrie.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.04
