@@ -1,2 +1,0 @@
-Identifiant : qsd : Mdp : art : Admin : n : Emplacement : C:/Users/proprietaire/Documents/GitHub/ProjetTut/InterfaceTut/InterfaceTut/qsd.txt
-Identifiant : o : Mdp : p : Admin : n : Emplacement : C:/Users/proprietaire/Documents/GitHub/ProjetTut/InterfaceTut/InterfaceTut/o.txt
