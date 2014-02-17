@@ -1,0 +1,79 @@
+<html>
+
+<head>
+	<title>Logiciel de Maths</title>
+	<link rel="stylesheet" href="style.css" media="screen">
+	<script type="text/javascript" src="menu.js"></script>	
+</head>
+
+<body>
+<ul id="menu">
+
+        <li>
+                <a href="index.html">Accueil</a>
+        </li>       
+        <li>
+               <a href="#">Interface du Logiciel</a>
+               <ul>
+                       <li>
+                              <a href="#">La gestion d'utilisateur ></a>
+                               <ul>
+                                        <li><a href="enregistrement.html">Création d'un utilisateur</a></li>
+                                        <li><a href="connexion.html">Connexion</a></li>
+										<li><a href="suppr.html">Suppression d'un utilisateur</a></li>
+                               </ul>
+
+                       </li>
+                        <li>
+                                <a href="#">Les autres fonctionnalités ></a>
+								<ul>
+                                        <li><a href="texte.html">Les zones de texte</a></li>
+                                        <li><a href="fichiers.html">Les fichiers (ouvrir, sauvegarder...)</a></li>
+										<li><a href="figures.html">Les figures géométriques</a></li>
+                               </ul>
+                       </li>
+                </ul>
+        </li>
+        
+       <li>
+                <a href="#">Géométrie</a>
+                <ul>
+                       <li><a href="#">Les instruments ></a>
+							   <ul>
+                                        <li><a href="compas.html">Compas</a></li>
+                                        <li><a href="crayon.html">Crayon</a></li>
+										<li><a href="equerre.html">Équerre</a></li>
+										<li><a href="regle.html">Règle</a></li>
+                               </ul>
+					   </li>
+                       <li><a href="#">Les autres fonctionnalités ></a>
+								<ul>
+                                        <li><a href="magnestisme.html">Le magnétisme</a></li>
+                                        <li><a href="grille.html">La grille</a></li>
+                               </ul>
+					   </li>
+              </ul>
+       </li>
+       
+       <li>
+                <a href="contact.html">Contact</a>
+       </li>
+       
+</ul>
+
+<div id ="corps">
+	<p>Au premier démarrage du logiciel, il vous sera demandé de vous enregistrer (ce n'est pas obligatoire, sachez toutefois que l'accès à certaines fonctionnalités du logiciel requiert un compte administrateur).</p><p id="paragraphe">Si vous choisissez de vous enregistrer, vous devrez saisir un identifiant (le logiciel vérifiera si celui-ci est déjà utilisé), un mot de passe et spécifier si l'utilisateur créé est <em>Administrateur</em>.</p>
+	<p id="paragraphe">Une fois ces données saisies et vérifiées, l'utilisateur sera automatiquement sauvegardé dans un fichier nommé <em>Utilisateurs.xml</em>. Ce fichier regroupe les identifiants, mots de passe et options réglées pour chaque utilisateur créé.</p>
+	<p id ="paragraphe">Une fois ceci fait, vous accédez à la page principale du logiciel (en mode "<em>écran scindé</em>") où vous pourrez commencer vos figures géométriques. </p>
+	</br></br>
+	<div id="important">
+		<h3>Attention! Le logiciel <img id="imp" src="Images/panneau_attention.png">stocke les utilisateurs créés dans un fichier nommé <em>Utilisateurs.xml</em>. Fichier à ne surtout pas supprimer!</h3>
+	</div>
+	<div id="footer-enre-html">
+<p id="footer-p">Site crée par ROCHE Hugo, 2014</p>	</div>
+</div>
+
+
+</body>
+
+</html>

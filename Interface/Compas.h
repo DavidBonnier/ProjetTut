@@ -1,0 +1,49 @@
+///////////////////////////////////////////////////////////////////////////
+//! \file Compas.h
+//!
+//! \brief Déclaration des fonctions pour la gestion des transformations géométriques du compas.
+//!
+//! \date 12/01/2014
+///////////////////////////////////////////////////////////////////////////
+
+#ifndef COMPAS_H_
+#define COMPAS_H_
+
+#include <QDomDocument>
+#include <QFile>
+#include <QMessageBox>
+#include <QPainter>
+#include <QTextStream>
+#include <QMouseEvent>
+#include "instrument.h"
+#include "math.h"
+
+class Geometrie;
+
+///////////////////////////////////////////////////////////////////////////
+//! \class Compas
+//!
+//! \brief Classe servant à effectuer les transformations sur le compas en modifiant son fichier XML.
+///////////////////////////////////////////////////////////////////////////
+class Compas : public Instrument
+{
+public:
+    Compas(Geometrie * geometrie);
+    ~Compas();
+
+    double angleEcartement(double ecart, double longueurBranche);
+    int hauteurCompas(double ecart, int longueurBranche);
+
+    void tracer();
+    void setEcartement(double ecartement);
+
+    void dessinerCompas(QPainter& dessin);
+
+private:
+    int m_hauteurPointe;
+    int m_hauteurBase;
+    int m_ecartement;
+
+};
+
+#endif

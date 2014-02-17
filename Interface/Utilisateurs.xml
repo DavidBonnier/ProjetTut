@@ -1,0 +1,13 @@
+<utilisateurs>
+<firstUse>false</firstUse>
+ <utilisateur>
+  <identifiant>qsd</identifiant>
+  <password>art</password>
+  <admin>true</admin>
+ </utilisateur>
+ <utilisateur>
+  <identifiant>zetzet</identifiant>
+  <password>dfgdg</password>
+  <admin> false</admin>
+ </utilisateur>
+</utilisateurs>

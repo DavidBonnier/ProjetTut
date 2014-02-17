@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InterfaceClass</class>
+ <widget class="QMainWindow" name="InterfaceClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1633</width>
+    <height>979</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Interface</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="LayoutCahiers">
+      <item>
+       <widget class="QTabWidget" name="Onglets">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>545</width>
+          <height>689</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>1</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="tabShape">
+         <enum>QTabWidget::Rounded</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="Cours">
+         <attribute name="title">
+          <string>Cahier de Cours</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="PleinEcranCours">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="interface.qrc">
+              <normaloff>:/Interface/Resources/Fullscreen.gif</normaloff>:/Interface/Resources/Fullscreen.gif</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QScrollArea" name="scrollAreaCours">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>777</width>
+               <height>814</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Eval">
+         <attribute name="title">
+          <string>Cahier d'Évaluation</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="PleinEcranEval">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="interface.qrc">
+              <normaloff>:/Interface/Resources/Fullscreen.gif</normaloff>:/Interface/Resources/Fullscreen.gif</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer_31">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QScrollArea" name="scrollAreaEval">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>98</width>
+               <height>28</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Exo">
+         <attribute name="title">
+          <string>Cahier d'Exercices</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="PleinEcranExo">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="interface.qrc">
+              <normaloff>:/Interface/Resources/Fullscreen.gif</normaloff>:/Interface/Resources/Fullscreen.gif</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer_30">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QScrollArea" name="scrollAreaExo">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>98</width>
+               <height>28</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="LayoutGeom">
+      <item row="0" column="0">
+       <widget class="QWidget" name="Geom" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>544</width>
+          <height>689</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_10">
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_33">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_34">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="10">
+          <widget class="QPushButton" name="GeomPleinEcran">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="interface.qrc">
+             <normaloff>:/Interface/Resources/Fullscreen.gif</normaloff>:/Interface/Resources/Fullscreen.gif</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer_32">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_35">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4">
+          <spacer name="horizontalSpacer_36">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="5">
+          <spacer name="horizontalSpacer_37">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="6">
+          <spacer name="horizontalSpacer_38">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="7">
+          <spacer name="horizontalSpacer_39">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="9">
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="interface.qrc">
+             <normaloff>:/Interface/Resources/insertGeom.png</normaloff>:/Interface/Resources/insertGeom.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="8">
+          <spacer name="horizontalSpacer_40">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="0" colspan="11">
+          <widget class="QWidget" name="geomEcranScind_2" native="true">
+           <layout class="QHBoxLayout" name="geomEcranScind"/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1633</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="actionNouveau"/>
+    <addaction name="actionOuvrir"/>
+    <addaction name="actionFermer"/>
+    <addaction name="separator"/>
+    <addaction name="actionConnexion"/>
+    <addaction name="actionChanger_d_Utilisateur"/>
+    <addaction name="actionNouvel_Utilisateur"/>
+    <addaction name="actionSupprimer_un_Utilisateur"/>
+    <addaction name="separator"/>
+    <addaction name="actionSauvegarder"/>
+    <addaction name="actionSauvegarder_Sous"/>
+    <addaction name="separator"/>
+    <addaction name="actionApercu_avant_impression"/>
+    <addaction name="actionImprimer"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menu_dition">
+    <property name="title">
+     <string>Édition</string>
+    </property>
+    <addaction name="actionCopier"/>
+    <addaction name="actionColler"/>
+    <addaction name="actionCouper"/>
+    <addaction name="separator"/>
+    <addaction name="actionAnnuler"/>
+    <addaction name="actionRefaire"/>
+   </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionGrille"/>
+   </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionRaccourcis_Clavier"/>
+    <addaction name="actionDocumentation_Utilisateur"/>
+   </widget>
+   <addaction name="menuFichier"/>
+   <addaction name="menu_dition"/>
+   <addaction name="menuOptions"/>
+   <addaction name="menuAide"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNouveau">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/new_file.png</normaloff>:/Interface/Resources/new_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Nouveau</string>
+   </property>
+  </action>
+  <action name="actionOuvrir">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/ouvrir.png</normaloff>:/Interface/Resources/ouvrir.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ouvrir</string>
+   </property>
+  </action>
+  <action name="actionFermer">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/close_file.png</normaloff>:/Interface/Resources/close_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fermer</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/sauver.png</normaloff>:/Interface/Resources/sauver.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sauvegarder</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_Sous">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/sauver_sous.png</normaloff>:/Interface/Resources/sauver_sous.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sauvegarder Sous</string>
+   </property>
+  </action>
+  <action name="actionNouvel_Utilisateur">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/ajouterUti.png</normaloff>:/Interface/Resources/ajouterUti.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ajouter un Utilisateur</string>
+   </property>
+  </action>
+  <action name="actionSupprimer_un_Utilisateur">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/supprUti.png</normaloff>:/Interface/Resources/supprUti.png</iconset>
+   </property>
+   <property name="text">
+    <string>Supprimer un Utilisateur</string>
+   </property>
+  </action>
+  <action name="actionChanger_d_Utilisateur">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/modif_uti.png</normaloff>:/Interface/Resources/modif_uti.png</iconset>
+   </property>
+   <property name="text">
+    <string>Changer d'Utilisateur</string>
+   </property>
+  </action>
+  <action name="actionApercu_avant_impression">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/apercuImpression.png</normaloff>:/Interface/Resources/apercuImpression.png</iconset>
+   </property>
+   <property name="text">
+    <string>Aperçu avant impression</string>
+   </property>
+  </action>
+  <action name="actionImprimer">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/apercuImpression.png</normaloff>:/Interface/Resources/apercuImpression.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimer</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/erreurConnexion.png</normaloff>:/Interface/Resources/erreurConnexion.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionCopier">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/copier.png</normaloff>:/Interface/Resources/copier.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copier</string>
+   </property>
+  </action>
+  <action name="actionColler">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/coller.png</normaloff>:/Interface/Resources/coller.png</iconset>
+   </property>
+   <property name="text">
+    <string>Coller</string>
+   </property>
+  </action>
+  <action name="actionCouper">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/couper.png</normaloff>:/Interface/Resources/couper.png</iconset>
+   </property>
+   <property name="text">
+    <string>Couper</string>
+   </property>
+  </action>
+  <action name="actionAnnuler">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/annuler.png</normaloff>:/Interface/Resources/annuler.png</iconset>
+   </property>
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+  </action>
+  <action name="actionRefaire">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/refaire.png</normaloff>:/Interface/Resources/refaire.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refaire</string>
+   </property>
+  </action>
+  <action name="actionRaccourcis_Clavier">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/raccourcisClavier.png</normaloff>:/Interface/Resources/raccourcisClavier.png</iconset>
+   </property>
+   <property name="text">
+    <string>Raccourcis clavier</string>
+   </property>
+  </action>
+  <action name="actionPrise_en_main_du_logiciel">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/aide.png</normaloff>:/Interface/Resources/aide.png</iconset>
+   </property>
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+  </action>
+  <action name="actionConnexion">
+   <property name="icon">
+    <iconset resource="interface.qrc">
+     <normaloff>:/Interface/Resources/login.png</normaloff>:/Interface/Resources/login.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connexion</string>
+   </property>
+  </action>
+  <action name="actionDocumentation_Utilisateur">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/aide.png</normaloff>Resources/aide.png</iconset>
+   </property>
+   <property name="text">
+    <string>Documentation Utilisateur</string>
+   </property>
+  </action>
+  <action name="actionGrille">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Grille</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="interface.qrc"/>
+ </resources>
+ <connections/>
+</ui>

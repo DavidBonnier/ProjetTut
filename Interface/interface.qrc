@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/Interface">
+        <file>Resources/aide.png</file>
+        <file>Resources/ajouterUti.png</file>
+        <file>Resources/annuler.png</file>
+        <file>Resources/apercuImpression.png</file>
+        <file>Resources/close_file.png</file>
+        <file>Resources/coller.png</file>
+        <file>Resources/copier.png</file>
+        <file>Resources/couper.png</file>
+        <file>Resources/erreurConnexion.png</file>
+        <file>Resources/fontColor.png</file>
+        <file>Resources/fontSize.png</file>
+        <file>Resources/Fullscreen.gif</file>
+        <file>Resources/imprimer.png</file>
+        <file>Resources/insertGeom.png</file>
+        <file>Resources/login.png</file>
+        <file>Resources/miseEnPage.png</file>
+        <file>Resources/modif_uti.png</file>
+        <file>Resources/new_file.png</file>
+        <file>Resources/ouvrir.png</file>
+        <file>Resources/quitter.png</file>
+        <file>Resources/raccourcisClavier.png</file>
+        <file>Resources/refaire.png</file>
+        <file>Resources/sauver.png</file>
+        <file>Resources/sauver_sous.png</file>
+        <file>Resources/SortieFullscreen.gif</file>
+        <file>Resources/supprUti.png</file>
+        <file>Resources/validationConnexion.png</file>
+    </qresource>
+</RCC>

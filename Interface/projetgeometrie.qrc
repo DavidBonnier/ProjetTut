@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/ProjetGeometrie">
+        <file>Resources/compas.gif</file>
+        <file>Resources/crayon.gif</file>
+        <file>Resources/equerre.gif</file>
+        <file>Resources/Point.gif</file>
+        <file>Resources/regle.gif</file>
+        <file>Resources/SortieFullscreen.gif</file>
+        <file>Resources/Texte.gif</file>
+        <file>Resources/Trait.gif</file>
+    </qresource>
+</RCC>
