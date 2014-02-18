@@ -9,6 +9,7 @@
 #include "Equerre.h"
 #include "Geometrie.h"
 #include "projetgeometrie.h"
+#include "qmath.h"
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -131,3 +132,4 @@ void Equerre::dessinerEquerre(QPainter& dessin)
     }
     dessin.restore();
 }
+

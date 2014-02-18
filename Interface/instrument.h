@@ -30,6 +30,12 @@ public:
     virtual void translation(double positionX , double positionY);
     virtual void setAngle(double angle);
 
+    inline int getPositionX(){return m_positionX;}
+    inline int getPositionY(){return m_positionY;}
+    inline double getAngle(){return m_angle;}
+    inline int getLongueur(){return m_longueur;}
+    inline int getLargeur(){return m_largeur;}
+
     bool m_moveSelected;
     bool m_rotateSelectedRight;
     bool m_rotateSelectedLeft;

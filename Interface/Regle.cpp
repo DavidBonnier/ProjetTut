@@ -93,11 +93,12 @@ void Regle :: tracer (double graduation1 , double graduation2 )
     QPointF * finTrait = NULL;
 
     const int angleDroit = 90;
+    const int decalageRegle = 1;
 
     if(m_angle == 0 || m_angle == 360)
     {
-        debTrait = new QPointF(m_positionX + graduation1, m_positionY);
-        finTrait = new QPointF(m_positionX + graduation2, m_positionY);
+        debTrait = new QPointF(m_positionX + graduation1, m_positionY - decalageRegle);
+        finTrait = new QPointF(m_positionX + graduation2, m_positionY - decalageRegle);
     }
     else if(m_angle < 90)
     {
@@ -105,13 +106,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = sin(toGradian(m_angle)) * graduation1;
         const double x2 = cos(toGradian(m_angle)) * graduation2;
         const double y2 = sin(toGradian(m_angle)) * graduation2;
-        debTrait = new QPointF(m_positionX + x1, m_positionY + y1);
-        finTrait = new QPointF(m_positionX + x2, m_positionY + y2);
+        debTrait = new QPointF(m_positionX + x1 + decalageRegle, m_positionY + y1);
+        finTrait = new QPointF(m_positionX + x2 + decalageRegle, m_positionY + y2);
     }
     else if(m_angle == 90)
     {
-        debTrait = new QPointF(m_positionX, m_positionY + graduation1);
-        finTrait = new QPointF(m_positionX, m_positionY + graduation2);
+        debTrait = new QPointF(m_positionX + decalageRegle, m_positionY + graduation1);
+        finTrait = new QPointF(m_positionX + decalageRegle, m_positionY + graduation2);
     }
     else if(m_angle < 180)
     {
@@ -120,13 +121,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = cos(toGradian(angleEcartement)) * graduation1;
         const double x2 = sin(toGradian(angleEcartement)) * graduation2;
         const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX - x1, m_positionY + y1);
-        finTrait = new QPointF(m_positionX - x2, m_positionY + y2);
+        debTrait = new QPointF(m_positionX - x1, m_positionY + y1 + decalageRegle);
+        finTrait = new QPointF(m_positionX - x2, m_positionY + y2 + decalageRegle);
     }
     else if(m_angle == 180)
     {
-        debTrait = new QPointF(m_positionX - graduation1, m_positionY);
-        finTrait = new QPointF(m_positionX - graduation2, m_positionY);
+        debTrait = new QPointF(m_positionX - graduation1, m_positionY + decalageRegle);
+        finTrait = new QPointF(m_positionX - graduation2, m_positionY + decalageRegle);
     }
     else if(m_angle < 270)
     {
@@ -135,13 +136,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = sin(toGradian(angleEcartement)) * graduation1;
         const double x2 = cos(toGradian(angleEcartement)) * graduation2;
         const double y2 = sin(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX - x1, m_positionY - y1);
-        finTrait = new QPointF(m_positionX - x2, m_positionY - y2);
+        debTrait = new QPointF(m_positionX - x1 - decalageRegle, m_positionY - y1);
+        finTrait = new QPointF(m_positionX - x2 - decalageRegle, m_positionY - y2);
     }
     else if(m_angle == 270)
     {
-        debTrait = new QPointF(m_positionX, m_positionY - graduation1);
-        finTrait = new QPointF(m_positionX, m_positionY - graduation2);
+        debTrait = new QPointF(m_positionX - decalageRegle, m_positionY - graduation1);
+        finTrait = new QPointF(m_positionX - decalageRegle, m_positionY - graduation2);
     }
     else if(m_angle < 360)
     {
@@ -150,8 +151,8 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = cos(toGradian(angleEcartement)) * graduation1;
         const double x2 = sin(toGradian(angleEcartement)) * graduation2;
         const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX + x1, m_positionY - y1);
-        finTrait = new QPointF(m_positionX + x2, m_positionY - y2);
+        debTrait = new QPointF(m_positionX + x1, m_positionY - y1 - decalageRegle);
+        finTrait = new QPointF(m_positionX + x2, m_positionY - y2 - decalageRegle);
     }
 
     if (debTrait && finTrait)
