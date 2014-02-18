@@ -414,11 +414,16 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
     {
         txt = new QTextEdit(this);
         txt->installEventFilter(this);
+		txt->setFixedHeight(35);
+		txt->setFixedWidth(100);
+		txt->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
         txt->move(clic->pos().x(), clic->pos().y());
         txt->setContextMenuPolicy(Qt::NoContextMenu);
         txt->show();
         stockTxt.push_back(txt);
         clickTxt = false;
+		emit curseur();
     }
 }
 

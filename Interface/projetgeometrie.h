@@ -29,6 +29,7 @@ signals:
 
 public slots :
     //Outils
+	void restoreCursor();
     void sortieFullScreen();
     void Crayon();
     void Equerre();

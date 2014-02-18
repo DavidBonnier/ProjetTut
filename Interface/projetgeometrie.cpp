@@ -11,6 +11,8 @@ ProjetGeometrie::ProjetGeometrie()
 
     //Boutons outils
     connect(ui.BoutonPleinEcran, SIGNAL(clicked(bool)), this, SLOT(sortieFullScreen()));
+	
+	connect(m_geometrie, SIGNAL(curseur()), this, SLOT(restoreCursor()));
 
     connect(ui.BoutonCrayon, SIGNAL(clicked(bool)), this, SLOT(Crayon()));
     connect(ui.BoutonEquerre, SIGNAL(clicked(bool)), this, SLOT(Equerre()));
@@ -107,6 +109,11 @@ void ProjetGeometrie::Grille(bool b)
 {
     m_geometrie->grille = b;
     m_geometrie->update();
+}
+
+void ProjetGeometrie::restoreCursor()
+{
+	QApplication::restoreOverrideCursor();
 }
 
 void ProjetGeometrie::zoneTexte()

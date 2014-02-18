@@ -38,6 +38,7 @@ class ProjetGeometrie;
 ///////////////////////////////////////////////////////////////////////////
 class Geometrie : public QWidget
 {
+	Q_OBJECT
 public:
     Geometrie(ProjetGeometrie * projetGeometrie);
     ~Geometrie();
@@ -81,6 +82,9 @@ private:
     void dessinerFigure(QPainter* dessinTrait);
     QString * nomFichier;
     QString * nomFichierTemp;
+
+signals:
+	void curseur();
 };
 
 #endif
