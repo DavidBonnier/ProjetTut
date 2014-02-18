@@ -120,7 +120,7 @@ void Compas :: tracer (double angleArriver)
     m_transparence = true;
     if(m_geometrie->tableauFigure.isEmpty())
     {
-        m_geometrie->tableauFigure.push_back(new Arc(m_positionX-m_ecartement,m_positionY-m_ecartement,
+        m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
                                                      m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
     }
     else
@@ -133,7 +133,7 @@ void Compas :: tracer (double angleArriver)
         }
         else
         {
-            m_geometrie->tableauFigure.push_back(new Arc(m_positionX-m_ecartement,m_positionY-m_ecartement,
+            m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
                                                          m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
         }
     }
@@ -203,59 +203,59 @@ void Compas::dessinerCompas(QPainter& dessin)
     dessin.save();
 
     //Rotation
-    dessin.translate(m_positionX,m_positionY);
+    dessin.translate(m_position.x(),m_position.y());
     dessin.rotate(-m_angle);
-    dessin.translate(-m_positionX,-m_positionY);
+    dessin.translate(-m_position.x(),-m_position.y());
 //Dessin de la branche avec pointe
     double teta = angleEcartement(m_ecartement, m_longueur+m_hauteurPointe);
     dessin.save();
     //Rotation de la tige
-    dessin.translate(m_positionX,m_positionY);
+    dessin.translate(m_position.x(),m_position.y());
     dessin.rotate(-teta);
-    dessin.translate(-m_positionX,-m_positionY);
+    dessin.translate(-m_position.x(),-m_position.y());
     //Dessin
     dessin.setPen(Qt::black);
-    QPointF pointe[3] = {QPointF(m_positionX,m_positionY), QPointF(m_positionX, m_positionY+m_hauteurPointe), QPointF(m_positionX-m_largeur/2, m_positionY+m_hauteurPointe)}; //Points de la pointe
+    QPointF pointe[3] = {QPointF(m_position.x(),m_position.y()), QPointF(m_position.x(), m_position.y()+m_hauteurPointe), QPointF(m_position.x()-m_largeur/2, m_position.y()+m_hauteurPointe)}; //Points de la pointe
     dessin.drawConvexPolygon(pointe, 3); //Dessin de la pointe
     dessin.setBrush(Qt::gray);
-    dessin.drawRect(m_positionX-m_largeur, m_positionY+m_hauteurPointe, m_largeur, m_longueur); //Branche avec pointe
+    dessin.drawRect(m_position.x()-m_largeur, m_position.y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec pointe
     dessin.restore();
 
 //Dessin de la branche avec mine
     dessin.save();
     //Rotation de la tige
-    dessin.translate(m_positionX+m_ecartement,m_positionY);
+    dessin.translate(m_position.x()+m_ecartement,m_position.y());
     dessin.rotate(teta);
-    dessin.translate(-m_positionX -m_ecartement,-m_positionY);
+    dessin.translate(-m_position.x() -m_ecartement,-m_position.y());
     //Dessin
     dessin.setBrush(Qt::black);
-    QPointF mine[4] = {QPointF(m_positionX+m_ecartement,m_positionY), QPointF(m_positionX+m_ecartement, m_positionY+m_hauteurPointe),
-                      QPointF(m_positionX+m_largeur/2+m_ecartement, m_positionY+m_hauteurPointe), QPointF(m_positionX+m_largeur/3+m_ecartement, m_positionY+m_hauteurPointe/3)}; //Points de la mine
+    QPointF mine[4] = {QPointF(m_position.x()+m_ecartement,m_position.y()), QPointF(m_position.x()+m_ecartement, m_position.y()+m_hauteurPointe),
+                      QPointF(m_position.x()+m_largeur/2+m_ecartement, m_position.y()+m_hauteurPointe), QPointF(m_position.x()+m_largeur/3+m_ecartement, m_position.y()+m_hauteurPointe/3)}; //Points de la mine
     dessin.drawConvexPolygon(mine, 4); //Dessin de la mine
     dessin.setBrush(Qt::gray);
-    dessin.drawRect(m_positionX+m_ecartement, m_positionY+m_hauteurPointe, m_largeur, m_longueur); //Branche avec mine
+    dessin.drawRect(m_position.x()+m_ecartement, m_position.y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec mine
     dessin.restore();
 
 //Dessin du centre
     dessin.setBrush(Qt::blue);
     int hauteurcentre = hauteurCompas(m_ecartement, m_longueur);
-    dessin.drawRect(m_positionX+(m_ecartement/2)-m_largeur, m_positionY+hauteurcentre, 2*m_largeur, m_hauteurBase); //Base du compas
-    dessin.drawRect(m_positionX+(m_ecartement/2)-m_largeur/2, m_positionY+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2); //Bout du compas
+    dessin.drawRect(m_position.x()+(m_ecartement/2)-m_largeur, m_position.y()+hauteurcentre, 2*m_largeur, m_hauteurBase); //Base du compas
+    dessin.drawRect(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2); //Bout du compas
     //Dessin du bouton de rotation;
     dessin.setBrush(QColor(124,255,255));
-    dessin.drawRect(m_positionX+(m_ecartement/2)-m_largeur/2, m_positionY+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2);
+    dessin.drawRect(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2);
 
 //Dessin de la vis
     //Rotation
     dessin.save();
-    dessin.translate(m_positionX+(m_ecartement/2), m_positionY+hauteurcentre+5*m_hauteurBase/8);
+    dessin.translate(m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+5*m_hauteurBase/8);
     dessin.rotate(teta/2);
-    dessin.translate(-m_positionX-(m_ecartement/2), -m_positionY-hauteurcentre-5*m_hauteurBase/8);
+    dessin.translate(-m_position.x()-(m_ecartement/2), -m_position.y()-hauteurcentre-5*m_hauteurBase/8);
     //Dessin
     dessin.setBrush(Qt::gray);
-    dessin.drawEllipse(m_positionX+(m_ecartement/2)-m_largeur/2, m_positionY+hauteurcentre+m_hauteurBase/2, m_largeur, m_largeur); //Cercle
-    dessin.drawLine(m_positionX+(m_ecartement/2), m_positionY+hauteurcentre+m_hauteurBase/2, m_positionX+(m_ecartement/2), m_positionY+hauteurcentre+3*m_hauteurBase/4); //Trait vertical
-    dessin.drawLine(m_positionX+(m_ecartement/2)-m_largeur/2, m_positionY+hauteurcentre+5*m_hauteurBase/8, m_positionX+(m_ecartement/2)+m_largeur/2, m_positionY+hauteurcentre+5*m_hauteurBase/8); //Trait horizontal
+    dessin.drawEllipse(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase/2, m_largeur, m_largeur); //Cercle
+    dessin.drawLine(m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+m_hauteurBase/2, m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+3*m_hauteurBase/4); //Trait vertical
+    dessin.drawLine(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+5*m_hauteurBase/8, m_position.x()+(m_ecartement/2)+m_largeur/2, m_position.y()+hauteurcentre+5*m_hauteurBase/8); //Trait horizontal
     dessin.restore();
     dessin.restore();
 }

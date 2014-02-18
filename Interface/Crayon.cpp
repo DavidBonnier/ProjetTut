@@ -101,25 +101,25 @@ void Crayon::dessinerCrayon(QPainter& dessin)
     int epaisseurMine = m_epaisseur/2;
     int hauteurMine = m_hauteurPointe/3;
     //Rotation
-    dessin.translate(m_positionX,m_positionY);
+    dessin.translate(m_position.x(),m_position.y());
     dessin.rotate(m_angle);
-    dessin.translate(-m_positionX,-m_positionY);
+    dessin.translate(-m_position.x(),-m_position.y());
     //Dessin de la mine
-    QPointF pointsMine[3] = {QPointF(m_positionX, m_positionY), QPointF(m_positionX-(epaisseurMine/2), m_positionY+hauteurMine), QPointF(m_positionX+epaisseurMine/2, m_positionY+hauteurMine)}; //Points de la zone transparente
+    QPointF pointsMine[3] = {QPointF(m_position.x(), m_position.y()), QPointF(m_position.x()-(epaisseurMine/2), m_position.y()+hauteurMine), QPointF(m_position.x()+epaisseurMine/2, m_position.y()+hauteurMine)}; //Points de la zone transparente
     dessin.drawConvexPolygon(pointsMine, 3); //Dessin de la mine
     //Dessin du reste de la pointe
     dessin.setBrush(QColor(255,203,96)); //Mise en couleur de la pointe
-    QPointF pointe[4] = {QPointF(m_positionX-(epaisseurMine/2), m_positionY+hauteurMine), QPointF(m_positionX+epaisseurMine/2, m_positionY+hauteurMine),
-                         QPointF(m_positionX+m_epaisseur/2, m_positionY+m_hauteurPointe), QPointF(m_positionX-(m_epaisseur/2), m_positionY+m_hauteurPointe)}; //Points du triangle principal
+    QPointF pointe[4] = {QPointF(m_position.x()-(epaisseurMine/2), m_position.y()+hauteurMine), QPointF(m_position.x()+epaisseurMine/2, m_position.y()+hauteurMine),
+                         QPointF(m_position.x()+m_epaisseur/2, m_position.y()+m_hauteurPointe), QPointF(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe)}; //Points du triangle principal
     dessin.drawConvexPolygon(pointe, 4); //Pointe du crayon
     //Dessin du corps du crayon
     dessin.setBrush(QColor(255,255,49));
-    dessin.drawRect(m_positionX-(m_epaisseur/2), m_positionY+m_hauteurPointe, m_epaisseur, m_longueur);
+    dessin.drawRect(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe, m_epaisseur, m_longueur);
     //Dessin du bouton rotation
     dessin.setBrush(QColor(125,255,255));
-    dessin.drawRect(m_positionX-epaisseurMine, m_positionY+250, 2*epaisseurMine, 8*epaisseurMine);
+    dessin.drawRect(m_position.x()-epaisseurMine, m_position.y()+250, 2*epaisseurMine, 8*epaisseurMine);
     //Dessin de 2 traits sur le corps
-    dessin.drawLine(m_positionX-(m_epaisseur/5),m_positionY+m_hauteurPointe, m_positionX-(m_epaisseur/5),m_positionY+m_hauteurPointe+m_longueur-30);
-    dessin.drawLine(m_positionX+m_epaisseur/5,m_positionY+m_hauteurPointe, m_positionX+m_epaisseur/5,m_positionY+m_hauteurPointe+m_longueur-30);
+    dessin.drawLine(m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe, m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe+m_longueur-30);
+    dessin.drawLine(m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe, m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe+m_longueur-30);
     dessin.restore();
 }

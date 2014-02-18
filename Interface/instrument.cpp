@@ -48,19 +48,19 @@ void Instrument::Initialisation()
 
             //Variable
             if (element.tagName() == "positionX")
-                m_positionX = element.text().toInt();
+                m_position.setX(element.text().toInt());
             if (element.tagName() == "positionY")
-                m_positionY = element.text().toInt();
+                m_position.setY(element.text().toInt());
             if (element.tagName() == "angle")
                 m_angle = element.text().toDouble();
             if (element.tagName() == "offsetX")
-                m_offsetX = element.text().toInt();
+                m_offset.setX(element.text().toInt());
             if (element.tagName() == "offsetY")
-                m_offsetY = element.text().toInt();
+                m_offset.setY(element.text().toInt());
             if (element.tagName() == "posClicX")
-                m_posClicX = element.text().toInt();
+                m_posClic.setX(element.text().toInt());
             if (element.tagName() == "posClicY")
-                m_posClicY = element.text().toInt();
+                m_posClic.setY(element.text().toInt());
 
             //Constantes
             if (element.tagName() == "longueur")
@@ -87,9 +87,8 @@ void Instrument::Initialisation()
 ///////////////////////////////////////////////////////////////////////
 void Instrument::translation(double positionX , double positionY)
 {
-    m_positionX = positionX;
-    m_positionY = positionY;
-
+    m_position.setX(positionX);
+    m_position.setY(positionY);
     update();
 }
 
@@ -134,8 +133,8 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation)
     if(!boutonRotation)
     {
         m_moveSelected = true;
-        m_offsetX = clic->x() - m_positionX;
-        m_offsetY = clic->y() - m_positionY;
+        m_offset.setX(clic->x() - m_position.x());
+        m_offset.setY(clic->y() - m_position.y());
     }
 
     else
@@ -145,8 +144,8 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation)
         else
             m_rotateSelectedRight = true;
         m_oldRotationValue = m_angle;
-        m_posClicX = clic->x();
-        m_posClicY = clic->y();
+        m_posClic.setX(clic->x());
+        m_posClic.setY(clic->y());
     }
     update();
 }
@@ -155,33 +154,33 @@ void Instrument::move(QMouseEvent *move)
 {
     if(m_moveSelected)
     {
-        translation(move->x() - m_offsetX, move->y() - m_offsetY);
-        //Pour éviter les positions négatives
-        if (m_positionX < 0)
+        translation(move->x() - m_offset.x(), move->y() - m_offset.y());
+        //Pom_position.x()es positions négatives
+        if (m_position.x() < 0)
         {
-            m_offsetX = move->x();
-            translation(0,m_positionY);
+            m_offset.setX(move->x());
+            translation(0,m_position.y());
         }
 
-        if (m_positionY < 0)
+        if (m_position.y() < 0)
         {
-            m_offsetY = move->y();
-            translation(m_positionX,0);
+            m_offset.setX(m_position.x());
+            translation(m_position.x(),0);
         }
     }
 
     if (m_rotateSelectedRight || m_rotateSelectedLeft)
     {
-        double xA = m_posClicX - m_positionX;
-        double yA = m_posClicY - m_positionY;
-        double xB = move->x() - m_positionX;
-        double yB = move->y() - m_positionY;
+        double xA = m_posClic.x() -m_position.x();
+        double yA = m_posClic.y() -m_position.y();
+        double xB = move->x() - m_position.x();
+        double yB = move->y() - m_position.y();
         double cosTheta = (xA*xB + yA*yB)/(sqrt(pow(xA,2)+pow(yA,2)) * sqrt(pow(xB,2)+pow(yB,2)));
         double thetaRadians = acos(cosTheta);
         double theta = (180*thetaRadians)/3.14159265359;
         //On regarde si la souris est au dessus de la droite (posClic, pos)
-        double cd = yA/xA;
-        double h = m_positionX-cd*m_positionY;
+        double cd =m_position.x();
+        double h = m_position.x()-cd*m_position.y();
         if (move->y() < cd * move->x() + h)
             theta = -theta;
         double newAngle;

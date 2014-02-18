@@ -97,8 +97,8 @@ void Regle :: tracer (double graduation1 , double graduation2 )
 
     if(m_angle == 0 || m_angle == 360)
     {
-        debTrait = new QPointF(m_positionX + graduation1, m_positionY - decalageRegle);
-        finTrait = new QPointF(m_positionX + graduation2, m_positionY - decalageRegle);
+        debTrait = new QPointF(m_position.x() + graduation1, m_position.y() - decalageRegle);
+        finTrait = new QPointF(m_position.x() + graduation2, m_position.y() - decalageRegle);
     }
     else if(m_angle < 90)
     {
@@ -106,13 +106,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = sin(toGradian(m_angle)) * graduation1;
         const double x2 = cos(toGradian(m_angle)) * graduation2;
         const double y2 = sin(toGradian(m_angle)) * graduation2;
-        debTrait = new QPointF(m_positionX + x1 + decalageRegle, m_positionY + y1);
-        finTrait = new QPointF(m_positionX + x2 + decalageRegle, m_positionY + y2);
+        debTrait = new QPointF(m_position.x() + x1 + decalageRegle, m_position.y() + y1);
+        finTrait = new QPointF(m_position.x() + x2 + decalageRegle, m_position.y() + y2);
     }
     else if(m_angle == 90)
     {
-        debTrait = new QPointF(m_positionX + decalageRegle, m_positionY + graduation1);
-        finTrait = new QPointF(m_positionX + decalageRegle, m_positionY + graduation2);
+        debTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation1);
+        finTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation2);
     }
     else if(m_angle < 180)
     {
@@ -121,13 +121,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = cos(toGradian(angleEcartement)) * graduation1;
         const double x2 = sin(toGradian(angleEcartement)) * graduation2;
         const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX - x1, m_positionY + y1 + decalageRegle);
-        finTrait = new QPointF(m_positionX - x2, m_positionY + y2 + decalageRegle);
+        debTrait = new QPointF(m_position.x() - x1, m_position.y() + y1 + decalageRegle);
+        finTrait = new QPointF(m_position.x() - x2, m_position.y() + y2 + decalageRegle);
     }
     else if(m_angle == 180)
     {
-        debTrait = new QPointF(m_positionX - graduation1, m_positionY + decalageRegle);
-        finTrait = new QPointF(m_positionX - graduation2, m_positionY + decalageRegle);
+        debTrait = new QPointF(m_position.x() - graduation1, m_position.y() + decalageRegle);
+        finTrait = new QPointF(m_position.x() - graduation2, m_position.y() + decalageRegle);
     }
     else if(m_angle < 270)
     {
@@ -136,13 +136,13 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = sin(toGradian(angleEcartement)) * graduation1;
         const double x2 = cos(toGradian(angleEcartement)) * graduation2;
         const double y2 = sin(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX - x1 - decalageRegle, m_positionY - y1);
-        finTrait = new QPointF(m_positionX - x2 - decalageRegle, m_positionY - y2);
+        debTrait = new QPointF(m_position.x() - x1 - decalageRegle, m_position.y() - y1);
+        finTrait = new QPointF(m_position.x() - x2 - decalageRegle, m_position.y() - y2);
     }
     else if(m_angle == 270)
     {
-        debTrait = new QPointF(m_positionX - decalageRegle, m_positionY - graduation1);
-        finTrait = new QPointF(m_positionX - decalageRegle, m_positionY - graduation2);
+        debTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation1);
+        finTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation2);
     }
     else if(m_angle < 360)
     {
@@ -151,8 +151,8 @@ void Regle :: tracer (double graduation1 , double graduation2 )
         const double y1 = cos(toGradian(angleEcartement)) * graduation1;
         const double x2 = sin(toGradian(angleEcartement)) * graduation2;
         const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_positionX + x1, m_positionY - y1 - decalageRegle);
-        finTrait = new QPointF(m_positionX + x2, m_positionY - y2 - decalageRegle);
+        debTrait = new QPointF(m_position.x() + x1, m_position.y() - y1 - decalageRegle);
+        finTrait = new QPointF(m_position.x() + x2, m_position.y() - y2 - decalageRegle);
     }
 
     if (debTrait && finTrait)
@@ -237,16 +237,16 @@ void Regle::dessinerRegle(QPainter& dessin)
         dessin.setBrush(QColor(255,255,153)); //Couleur du petit rectangle
 
     //Rotation
-    dessin.translate(m_positionX,m_positionY);
+    dessin.translate(m_position.x(),m_position.y());
     dessin.rotate(m_angle);
-    dessin.translate(-m_positionX,-m_positionY);
+    dessin.translate(-m_position.x(),-m_position.y());
     //Dessin des rectangles
-    dessin.drawRect(m_positionX, m_positionY, m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)
+    dessin.drawRect(m_position.x(), m_position.y(), m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)
     dessin.setBrush(QColor(255,255,51)); //Mise en couleur de la partie principale de la regle
-    dessin.drawRect(m_positionX, m_positionY+m_largeur/4, m_longueur, m_largeur);
+    dessin.drawRect(m_position.x(), m_position.y()+m_largeur/4, m_longueur, m_largeur);
     //Dessin du bouton de rotation
     dessin.setBrush(QColor(127,255,255));
-    dessin.drawEllipse(QPointF(m_positionX+500,m_positionY+50),15,15);
+    dessin.drawEllipse(QPointF(m_position.x()+500,m_position.y()+50),15,15);
 
 //Dessin des graduations
     int hauteurMaxGrad = m_largeur/6;
@@ -257,14 +257,14 @@ void Regle::dessinerRegle(QPainter& dessin)
     {
         if (i%50 == 0) //Graduation cm
         {
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+hauteurMaxGrad);
-            dessin.drawText(m_positionX+2+i, m_positionY-3+m_largeur/2, grad[chiffre]); //Affichage des chiffres
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad);
+            dessin.drawText(m_position.x()+2+i, m_position.y()-3+m_largeur/2, grad[chiffre]); //Affichage des chiffres
             chiffre++;
         }
         else if (i%25 == 0) //Graduation 1/2 cm
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+2*hauteurMaxGrad/3);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+2*hauteurMaxGrad/3);
         else //Graduation mm
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+hauteurMaxGrad/3);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/3);
     }
     dessin.restore();
 }

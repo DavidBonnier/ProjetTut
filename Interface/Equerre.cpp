@@ -98,20 +98,20 @@ void Equerre::dessinerEquerre(QPainter& dessin)
         dessin.setBrush(QColor(255,255,152)); //Couleur du petit rectangle
 
     //Rotation
-    dessin.translate(m_positionX,m_positionY);
+    dessin.translate(m_position.x(),m_position.y());
     dessin.rotate(m_angle);
-    dessin.translate(-m_positionX,-m_positionY);
+    dessin.translate(-m_position.x(),-m_position.y());
     //Dessin de la zone transparente
-    QPointF pointHyp = Thales(m_longueur, m_largeur, hauteurZoneTransp, m_positionX, m_positionY);
-    QPointF pointsZoneTranparent[4] = {QPointF(m_positionX, m_positionY), QPointF(m_positionX+m_longueur, m_positionY), pointHyp, QPointF(m_positionX, m_positionY+hauteurZoneTransp)}; //Points de la zone transparente
+    QPointF pointHyp = Thales(m_longueur, m_largeur, hauteurZoneTransp, m_position.x(), m_position.y());
+    QPointF pointsZoneTranparent[4] = {QPointF(m_position.x(), m_position.y()), QPointF(m_position.x()+m_longueur, m_position.y()), pointHyp, QPointF(m_position.x(), m_position.y()+hauteurZoneTransp)}; //Points de la zone transparente
     dessin.drawConvexPolygon(pointsZoneTranparent, 4); //Dessin de la zone transparente
     //Dessin de la zone principale
     dessin.setBrush(QColor(255,255,50)); //Mise en couleur de la partie principale de l'equerre
-    QPointF triangle[3] = {pointHyp, QPointF(m_positionX, m_positionY+hauteurZoneTransp), QPointF(m_positionX, m_positionY+m_largeur)}; //Points du triangle principal
+    QPointF triangle[3] = {pointHyp, QPointF(m_position.x(), m_position.y()+hauteurZoneTransp), QPointF(m_position.x(), m_position.y()+m_largeur)}; //Points du triangle principal
     dessin.drawConvexPolygon(triangle, 3); //Triangle principal
     //Dessin du bouton rotation
     dessin.setBrush(QColor(126,255,255));
-    dessin.drawEllipse(QPointF(m_positionX+250,m_positionY+50),15,15);
+    dessin.drawEllipse(QPointF(m_position.x()+250,m_position.y()+50),15,15);
     //Dessin des graduations
     dessin.setFont(QFont("Arial", 8)); //Police et taille des charactères
     int chiffre = 0; //Chiffre actuel sur l'équerre
@@ -121,14 +121,14 @@ void Equerre::dessinerEquerre(QPainter& dessin)
     {
         if (i%50 == 0) //Graduation cm
         {
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+hauteurMaxGrad);
-            dessin.drawText(m_positionX+2+i, m_positionY-3+m_largeur/8, grad[chiffre]); //Affichage des chiffres
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad);
+            dessin.drawText(m_position.x()+2+i, m_position.y()-3+m_largeur/8, grad[chiffre]); //Affichage des chiffres
             chiffre++;
         }
         else if (i%25 == 0) //Graduation 1/2 cm
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+hauteurMaxGrad/2);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/2);
         else //Graduation mm
-            dessin.drawLine(m_positionX+i,m_positionY, m_positionX+i,m_positionY+hauteurMaxGrad/4);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/4);
     }
     dessin.restore();
 }

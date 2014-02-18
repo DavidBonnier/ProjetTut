@@ -38,7 +38,7 @@ public:
     void translation(double positionX , double positionY);
     void setAngle(double angle);
 
-    QPointF Thales(double longueur, double largeur, double transp, int x, int m_positionY);
+    QPointF Thales(double longueur, double largeur, double transp, int x, int y);
 
     void dessinerEquerre(QPainter& dessin);
 };
