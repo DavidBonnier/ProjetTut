@@ -15,9 +15,9 @@ class ProjetGeometrie : public QWidget
     Q_OBJECT
 
 public:
-    ProjetGeometrie(Geometrie *geometri);
+    ProjetGeometrie();
     ~ProjetGeometrie();
-    Geometrie* geometrie;
+    Geometrie* m_geometrie;
     Ui::ProjetGeometrieClass ui;
 
 signals:
@@ -68,6 +68,8 @@ public slots :
     void CompasPositionY(int y);
     void CompasEcartement(int ecartement);
     void CompasOrientation(double orientation);
+    void CompasFinTracer();
+    void CompasAngleArriver(double angleArriver);
 };
 
 #endif // PROJETGEOMETRIE_H

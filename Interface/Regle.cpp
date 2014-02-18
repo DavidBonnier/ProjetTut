@@ -26,7 +26,7 @@ Regle::Regle(Geometrie * geometrie)
     m_nomDocument = new QString("Regle");
     m_nomElement = new QString("regle");
 
-    m_pointGeometrie = geometrie;
+    m_geometrie = geometrie;
 
     InitialisationRegle();
 
@@ -74,20 +74,87 @@ Regle::~Regle()
 }
 
 ///////////////////////////////////////////////////////////////////////
-//! \author JACQUIN Dylan
+//! \author  BONNIER David
 //!
 //! \param grad1 Graduation de départ du trait
 //! \param grad2 Graduation de fin du trait
 //!
 //! \brief Cette fonction permet de tracer un trait entre grad1 et grad2.
 //!
-//! \date 30/01/2014
+//! \date 17/02/2014
 ///////////////////////////////////////////////////////////////////////
 void Regle :: tracer (double graduation1 , double graduation2 )
 {
-    QPointF debTrait(m_positionX+graduation1*50,m_positionY);
-    QPointF finTrait(m_positionX+graduation2*50,m_positionY);
-    m_pointGeometrie->tableauFigure.push_back(new Ligne(QLineF(debTrait, finTrait)));
+    graduation1 *= 50;
+    graduation2 *= 50;
+
+    QPointF * debTrait = NULL;
+    QPointF * finTrait = NULL;
+
+    const int angleDroit = 90;
+
+    if(m_angle == 0 || m_angle == 360)
+    {
+        debTrait = new QPointF(m_positionX + graduation1, m_positionY);
+        finTrait = new QPointF(m_positionX + graduation2, m_positionY);
+    }
+    else if(m_angle < 90)
+    {
+        const double x1 = cos(toGradian(m_angle)) * graduation1;
+        const double y1 = sin(toGradian(m_angle)) * graduation1;
+        const double x2 = cos(toGradian(m_angle)) * graduation2;
+        const double y2 = sin(toGradian(m_angle)) * graduation2;
+        debTrait = new QPointF(m_positionX + x1, m_positionY + y1);
+        finTrait = new QPointF(m_positionX + x2, m_positionY + y2);
+    }
+    else if(m_angle == 90)
+    {
+        debTrait = new QPointF(m_positionX, m_positionY + graduation1);
+        finTrait = new QPointF(m_positionX, m_positionY + graduation2);
+    }
+    else if(m_angle < 180)
+    {
+        const double angleEcartement = m_angle - angleDroit;
+        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
+        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
+        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
+        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
+        debTrait = new QPointF(m_positionX - x1, m_positionY + y1);
+        finTrait = new QPointF(m_positionX - x2, m_positionY + y2);
+    }
+    else if(m_angle == 180)
+    {
+        debTrait = new QPointF(m_positionX - graduation1, m_positionY);
+        finTrait = new QPointF(m_positionX - graduation2, m_positionY);
+    }
+    else if(m_angle < 270)
+    {
+        const double angleEcartement = m_angle - 2*angleDroit;
+        const double x1 = cos(toGradian(angleEcartement)) * graduation1;
+        const double y1 = sin(toGradian(angleEcartement)) * graduation1;
+        const double x2 = cos(toGradian(angleEcartement)) * graduation2;
+        const double y2 = sin(toGradian(angleEcartement)) * graduation2;
+        debTrait = new QPointF(m_positionX - x1, m_positionY - y1);
+        finTrait = new QPointF(m_positionX - x2, m_positionY - y2);
+    }
+    else if(m_angle == 270)
+    {
+        debTrait = new QPointF(m_positionX, m_positionY - graduation1);
+        finTrait = new QPointF(m_positionX, m_positionY - graduation2);
+    }
+    else if(m_angle < 360)
+    {
+        const double angleEcartement = m_angle - 3*angleDroit;
+        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
+        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
+        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
+        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
+        debTrait = new QPointF(m_positionX + x1, m_positionY - y1);
+        finTrait = new QPointF(m_positionX + x2, m_positionY - y2);
+    }
+
+    if (debTrait && finTrait)
+        m_geometrie->tableauFigure.push_back(new Ligne(QLineF(*debTrait, *finTrait)));
 }
 
 //***************************************Fonctions de mise à jour des valeurs***************************************

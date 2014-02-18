@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "Geometrie.h"
+#include "projetgeometrie.h"
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -15,9 +16,10 @@
 //!
 //! \date 30/01/2014
 ///////////////////////////////////////////////////////////////////////
-Geometrie::Geometrie(QWidget* parent):
-    QWidget(parent)
+Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
 {
+    m_projetGeometrie = projetGeometrie;
+
     clickTxt = false;
     txtSelectionne = false;
     stockTxt.clear();
@@ -295,8 +297,6 @@ void Geometrie::dessinerFigure(QPainter* dessinTrait)
     QSvgGenerator * generator;
     generator = new QSvgGenerator;
     generator->setFileName(*nomFichierTemp);
-    generator->setSize(QSize(200, 200));
-    generator->setViewBox(QRect(0, 0, 200, 200));
     generator->setTitle(tr("Generation de SVG pour le tracage de geometrie"));
     generator->setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
 

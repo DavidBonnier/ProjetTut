@@ -204,3 +204,7 @@ void Instrument::deselectionner()
     m_rotateSelectedLeft = false;
 }
 
+double Instrument::toGradian(double angle)
+{
+    return PI*(angle/180);
+}

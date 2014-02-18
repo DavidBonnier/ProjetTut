@@ -1,11 +1,11 @@
 #include "projetgeometrie.h"
 
-ProjetGeometrie::ProjetGeometrie(Geometrie *geometri)
+ProjetGeometrie::ProjetGeometrie()
 {
     ui.setupUi(this);
-    geometrie = geometri;
+    m_geometrie = new Geometrie(this);
 
-    ui.DessinLayout->addWidget(geometrie);
+    ui.DessinLayout->addWidget(m_geometrie);
 
 //Connexions des boutons
 
@@ -45,11 +45,14 @@ ProjetGeometrie::ProjetGeometrie(Geometrie *geometri)
     connect(ui.SpinBoxCompasPositionY, SIGNAL(valueChanged(int)), this, SLOT(CompasPositionY(int)));
     connect(ui.SpinBoxCompasEcartement, SIGNAL(valueChanged(int)), this, SLOT(CompasEcartement(int)));
     connect(ui.SpinBoxCompasOrientation, SIGNAL(valueChanged(double)), this, SLOT(CompasOrientation(double)));
+
+    connect(ui.BoutonCompasTracerOK, SIGNAL(clicked(bool)), this, SLOT(CompasFinTracer()));
+    connect(ui.SpinBoxCompasTracerArc, SIGNAL(valueChanged(double)), this, SLOT(CompasAngleArriver(double)));
 }
 
 ProjetGeometrie::~ProjetGeometrie()
 {
-	delete geometrie;
+    delete m_geometrie;
 }
 
 //****************************************SLOTS*******************************
@@ -61,33 +64,33 @@ void ProjetGeometrie::sortieFullScreen()
 void ProjetGeometrie::Crayon()
 {
     emit clickCrayon();
-    geometrie->gererCrayon();
-    geometrie->modifCrayon = true;
-    geometrie->update();
+    m_geometrie->gererCrayon();
+    m_geometrie->modifCrayon = true;
+    m_geometrie->update();
 }
 
 void ProjetGeometrie::Equerre()
 {
     emit clickEquerre();
-    geometrie->gererEquerre();	
-    geometrie->modifEquerre = true;
-    geometrie->update();
+    m_geometrie->gererEquerre();
+    m_geometrie->modifEquerre = true;
+    m_geometrie->update();
 }
 
 void ProjetGeometrie::Regle()
 {
     emit clickRegle();
-    geometrie->gererRegle();
-    geometrie->modifRegle = true;
-    geometrie->update();
+    m_geometrie->gererRegle();
+    m_geometrie->modifRegle = true;
+    m_geometrie->update();
 }
 
 void ProjetGeometrie::Compas()
 {
     emit clickCompas();
-    geometrie->gererCompas();
-    geometrie->modifCompas = true;
-    geometrie->update();
+    m_geometrie->gererCompas();
+    m_geometrie->modifCompas = true;
+    m_geometrie->update();
 }
 
 void ProjetGeometrie::Point()
@@ -102,22 +105,22 @@ void ProjetGeometrie::Epaisseur(bool b)
 
 void ProjetGeometrie::Grille(bool b)
 {
-	geometrie->grille = b;
-	geometrie->update();
+    m_geometrie->grille = b;
+    m_geometrie->update();
 }
 
 void ProjetGeometrie::zoneTexte()
 {
-    if(geometrie->clickTxt)
+    if(m_geometrie->clickTxt)
     {
-        geometrie->clickTxt = false;
+        m_geometrie->clickTxt = false;
         QApplication::restoreOverrideCursor();
     }
     else
     {
         QCursor Souris(QPixmap("Resources/curseur-zoneTexte.png"),-1,-1);
         QApplication::setOverrideCursor(Souris);
-        geometrie->clickTxt = true;
+        m_geometrie->clickTxt = true;
     }
 }
 
@@ -151,31 +154,31 @@ void ProjetGeometrie::Rouge()
 //Crayon
 void ProjetGeometrie::CrayonPositionX(int x)
 {
-    if (geometrie->crayon)
+    if (m_geometrie->crayon)
     {
-        geometrie->crayon->translation(x, ui.SpinBoxCrayonPositionY->value());
-        geometrie->modifCrayon = true;
-        geometrie->update();
+        m_geometrie->crayon->translation(x, ui.SpinBoxCrayonPositionY->value());
+        m_geometrie->modifCrayon = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::CrayonPositionY(int y)
 {
-    if (geometrie->crayon)
+    if (m_geometrie->crayon)
     {
-        geometrie->crayon->translation(ui.SpinBoxCrayonPositionX->value(), y);
-        geometrie->modifCrayon = true;
-        geometrie->update();
+        m_geometrie->crayon->translation(ui.SpinBoxCrayonPositionX->value(), y);
+        m_geometrie->modifCrayon = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::CrayonTransparence(bool b)
 {
-    if (geometrie->crayon)
+    if (m_geometrie->crayon)
     {
-        geometrie->crayon->setTransparence(b);
-        geometrie->modifCrayon = true;
-        geometrie->update();
+        m_geometrie->crayon->setTransparence(b);
+        m_geometrie->modifCrayon = true;
+        m_geometrie->update();
     }
 }
 
@@ -187,41 +190,41 @@ void ProjetGeometrie::CrayonOrientation(double orientation)
     if (ui.SpinBoxCrayonOrientation->value() > 360)
         ui.SpinBoxCrayonOrientation->setValue(ui.SpinBoxCrayonOrientation->value() - 360);
 
-    if (geometrie->crayon)
+    if (m_geometrie->crayon)
     {
-        geometrie->crayon->setAngle(orientation);
-        geometrie->modifCrayon = true;
-        geometrie->update();
+        m_geometrie->crayon->setAngle(orientation);
+        m_geometrie->modifCrayon = true;
+        m_geometrie->update();
     }
 }
 //Règle
 void ProjetGeometrie::ReglePositionX(int x)
 {
-    if (geometrie->regle)
+    if (m_geometrie->regle)
     {
-        geometrie->regle->translation(x, ui.SpinBoxReglePositionY->value());
-        geometrie->modifRegle = true;
-        geometrie->update();
+        m_geometrie->regle->translation(x, ui.SpinBoxReglePositionY->value());
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::ReglePositionY(int y)
 {
-    if (geometrie->regle)
+    if (m_geometrie->regle)
     {
-        geometrie->regle->translation(ui.SpinBoxReglePositionX->value(), y);
-        geometrie->modifRegle = true;
-        geometrie->update();
+        m_geometrie->regle->translation(ui.SpinBoxReglePositionX->value(), y);
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::RegleTransparence(bool b)
 {
-    if (geometrie->regle)
+    if (m_geometrie->regle)
     {
-        geometrie->regle->setTransparence(b);
-        geometrie->modifRegle = true;
-        geometrie->update();
+        m_geometrie->regle->setTransparence(b);
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
     }
 }
 
@@ -233,51 +236,51 @@ void ProjetGeometrie::RegleOrientation(double orientation)
     if (ui.SpinBoxRegleOrientation->value() > 360)
         ui.SpinBoxRegleOrientation->setValue(ui.SpinBoxRegleOrientation->value() - 360);
 
-    if (geometrie->regle)
+    if (m_geometrie->regle)
     {
-        geometrie->regle->setAngle(orientation);
-        geometrie->modifRegle = true;
-        geometrie->update();
+        m_geometrie->regle->setAngle(orientation);
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::RegleTracer()
 {
-    if (geometrie->regle)
+    if (m_geometrie->regle)
     {
-        geometrie->regle->tracer(ui.SpinBoxRegleTracerPoint1->value(), ui.SpinBoxRegleTracerPoint2->value());
-        geometrie->modifRegle = true;
-        geometrie->update();
+        m_geometrie->regle->tracer(ui.SpinBoxRegleTracerPoint1->value(), ui.SpinBoxRegleTracerPoint2->value());
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
     }
 }
 //Equerre
 void ProjetGeometrie::EquerrePositionX(int x)
 {
-    if (geometrie->equerre)
+    if (m_geometrie->equerre)
     {
-        geometrie->equerre->translation(x, ui.SpinBoxEquerrePositionY->value());
-        geometrie->modifEquerre = true;
-        geometrie->update();
+        m_geometrie->equerre->translation(x, ui.SpinBoxEquerrePositionY->value());
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::EquerrePositionY(int y)
 {
-    if (geometrie->equerre)
+    if (m_geometrie->equerre)
     {
-        geometrie->equerre->translation(ui.SpinBoxEquerrePositionX->value(), y);
-        geometrie->modifEquerre = true;
-        geometrie->update();
+        m_geometrie->equerre->translation(ui.SpinBoxEquerrePositionX->value(), y);
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::EquerreTransparence(bool b)
 {
-    if (geometrie->equerre)
+    if (m_geometrie->equerre)
     {
-        geometrie->equerre->setTransparence(b);
-        geometrie->modifEquerre = true;
-        geometrie->update();
+        m_geometrie->equerre->setTransparence(b);
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
     }
 }
 
@@ -289,51 +292,51 @@ void ProjetGeometrie::EquerreOrientation(double orientation)
     if (ui.SpinBoxEquerreOrientation->value() > 360)
         ui.SpinBoxEquerreOrientation->setValue(ui.SpinBoxEquerreOrientation->value() - 360);
 
-    if (geometrie->equerre)
+    if (m_geometrie->equerre)
     {
-        geometrie->equerre->setAngle(orientation);
-        geometrie->modifEquerre = true;
-        geometrie->update();
+        m_geometrie->equerre->setAngle(orientation);
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::EquerreTracer()
 {
-    if (geometrie->equerre)
+    if (m_geometrie->equerre)
     {
-        geometrie->equerre->tracer(ui.SpinBoxEquerreTracerPoint1->value(), ui.SpinBoxEquerreTracerPoint2->value());
-        geometrie->modifEquerre = true;
-        geometrie->update();
+        m_geometrie->equerre->tracer(ui.SpinBoxEquerreTracerPoint1->value(), ui.SpinBoxEquerreTracerPoint2->value());
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
     }
 }
 //Compas
 void ProjetGeometrie::CompasPositionX(int x)
 {
-    if (geometrie->compas)
+    if (m_geometrie->compas)
     {
-        geometrie->compas->translation(x, ui.SpinBoxCompasPositionY->value());
-        geometrie->modifCompas = true;
-        geometrie->update();
+        m_geometrie->compas->translation(x, ui.SpinBoxCompasPositionY->value());
+        m_geometrie->modifCompas = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::CompasPositionY(int y)
 {
-    if (geometrie->compas)
+    if (m_geometrie->compas)
     {
-        geometrie->compas->translation(ui.SpinBoxCompasPositionX->value(), y);
-        geometrie->modifCompas = true;
-        geometrie->update();
+        m_geometrie->compas->translation(ui.SpinBoxCompasPositionX->value(), y);
+        m_geometrie->modifCompas = true;
+        m_geometrie->update();
     }
 }
 
 void ProjetGeometrie::CompasEcartement(int ecartement)
 {
-    if (geometrie->compas)
+    if (m_geometrie->compas)
     {
-        geometrie->compas->setEcartement(ecartement);
-        geometrie->modifCompas = true;
-        geometrie->update();
+        m_geometrie->compas->setEcartement(ecartement);
+        m_geometrie->modifCompas = true;
+        m_geometrie->update();
     }
 }
 
@@ -345,10 +348,28 @@ void ProjetGeometrie::CompasOrientation(double orientation)
     if (ui.SpinBoxCompasOrientation->value() > 360)
         ui.SpinBoxCompasOrientation->setValue(ui.SpinBoxCompasOrientation->value() - 360);
 
-    if (geometrie->compas)
+    if (m_geometrie->compas)
     {
-        geometrie->compas->setAngle(orientation);
-        geometrie->modifCompas = true;
-        geometrie->update();
+        m_geometrie->compas->setAngle(orientation);
+        m_geometrie->modifCompas = true;
+        m_geometrie->update();
+    }
+}
+
+void ProjetGeometrie::CompasFinTracer()
+{
+    if (m_geometrie->compas)
+        m_geometrie->compas->finTracer();
+    ui.SpinBoxCompasTracerArc->setValue(0);
+    m_geometrie->update();
+}
+
+void ProjetGeometrie::CompasAngleArriver(double angleArriver)
+{
+    if(angleArriver !=0)
+    {
+        if (m_geometrie->compas)
+            m_geometrie->compas->tracer(angleArriver);
+        m_geometrie->update();
     }
 }

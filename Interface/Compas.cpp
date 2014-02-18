@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////
 Compas::Compas(Geometrie * geometrie)
 {
-    m_pointGeometrie = geometrie;
+    m_geometrie = geometrie;
 
     m_nomFichierXML = new QString("Compas.xml");
     m_nomDocument = new QString("Compas");
@@ -82,7 +82,6 @@ Compas::~Compas()
 ///////////////////////////////////////////////////////////////////////
 double Compas::angleEcartement(double ecart, double longueurBranche) //Retourne l'écartement entre une branche et la droite milieue
 {
-    const double PI = 3.1415926;
     double teta = (ecart/2)/longueurBranche; //sin(teta) = (ecart/2)/(longueurBranche)
     teta = asin(teta); //sin-1(teta) en radian
     teta *= 180/PI; //Conversion en degrés
@@ -107,20 +106,49 @@ int Compas::hauteurCompas(double ecart, int longueurBranche)
 }
 
 ///////////////////////////////////////////////////////////////////////
-//! \author JACQUIN Dylan
+//! \author BONNIER David
 //!
-//! \param dessin Dessin du painter
-//! \param x Position en x du compas
-//! \param y Position en y du compas
-//! \param ecart Ecartement du compas
+//! \param angleArriver Angle d'arriver de l'arc
 //!
 //! \brief Cette fonction met à jour le fichier XML du compas avec le nouvel écartement du compas
 //!
 //! \date 02/02/2014
 ///////////////////////////////////////////////////////////////////////
-void Compas :: tracer ()
+void Compas :: tracer (double angleArriver)
 {
+    m_transparence = true;
+    if(m_geometrie->tableauFigure.isEmpty())
+    {
+        m_geometrie->tableauFigure.push_back(new Arc(m_positionX-m_ecartement,m_positionY-m_ecartement,
+                                                     m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
+    }
+    else
+    {
+        Arc* monArc = dynamic_cast<Arc*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(monArc && !monArc->getFin())
+        {
+            m_angle = monArc->getStart()/16 + angleArriver;
+            monArc->setSpanAngle(angleArriver*16);
+        }
+        else
+        {
+            m_geometrie->tableauFigure.push_back(new Arc(m_positionX-m_ecartement,m_positionY-m_ecartement,
+                                                         m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
+        }
+    }
+}
 
+void Compas ::finTracer()
+{
+    m_transparence = false;
+    if(!m_geometrie->tableauFigure.isEmpty())
+    {
+        Arc* monArc = dynamic_cast<Arc*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(monArc && !monArc->getFin())
+        {
+            monArc->setFin(true);
+        }
+    }
 }
 
 //***************************************Fonctions de mise à jour des valeurs***************************************
@@ -154,7 +182,7 @@ void Compas::dessinerCompas(QPainter& dessin)
 
     //Rotation
     dessin.translate(m_positionX,m_positionY);
-    dessin.rotate(m_angle);
+    dessin.rotate(-m_angle);
     dessin.translate(-m_positionX,-m_positionY);
 //Dessin de la branche avec pointe
     double teta = angleEcartement(m_ecartement, m_longueur+m_hauteurPointe);

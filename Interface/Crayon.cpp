@@ -22,7 +22,7 @@ Crayon::Crayon(Geometrie * geometrie)
     m_nomDocument = new QString("Crayon");
     m_nomElement = new QString("crayon");
 
-    m_pointGeometrie = geometrie;
+    m_geometrie = geometrie;
 
     Initialisation();
 

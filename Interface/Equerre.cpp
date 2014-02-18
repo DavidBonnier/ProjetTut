@@ -22,7 +22,7 @@ Equerre::Equerre(Geometrie * geometrie)
     m_nomDocument = new QString("Equerre");
     m_nomElement = new QString("equerre");
 
-    m_pointGeometrie = geometrie;
+    m_geometrie = geometrie;
 
     InitialisationRegle();
 

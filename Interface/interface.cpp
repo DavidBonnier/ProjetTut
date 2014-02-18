@@ -18,8 +18,7 @@ Interface::Interface(QMainWindow *parent)
 	setContextMenuPolicy(Qt::NoContextMenu);
 
     util = new User();
-    geom = new Geometrie();
-    projetGeom = new ProjetGeometrie(geom);
+    projetGeom = new ProjetGeometrie();
     ui.geomEcranScind->addWidget(projetGeom);
 
     projetGeom->ui.widget->hide();
@@ -225,9 +224,9 @@ void Interface::FullScreen_Geom()
 		ui.pushButton->hide();
 		ui.GeomPleinEcran->hide();
 
-		geom->regle = NULL;
-		geom->equerre = NULL;
-		geom->crayon = NULL;
+        projetGeom->m_geometrie->regle = NULL;
+        projetGeom->m_geometrie->equerre = NULL;
+        projetGeom->m_geometrie->crayon = NULL;
 
         projetGeom->ui.widget->show();
         projetGeom->ui.DockWidgetCompas->hide();
@@ -241,10 +240,10 @@ void Interface::FullScreen_Geom()
 	}
 	else
 	{
-        projetGeom->geometrie->compas = NULL;
-		projetGeom->geometrie->regle = NULL;
-		projetGeom->geometrie->equerre = NULL;
-		projetGeom->geometrie->crayon = NULL;
+        projetGeom->m_geometrie->compas = NULL;
+        projetGeom->m_geometrie->regle = NULL;
+        projetGeom->m_geometrie->equerre = NULL;
+        projetGeom->m_geometrie->crayon = NULL;
 		ui.LayoutGeom->addWidget(ui.Geom);
 
 		projetGeom->ui.BoutonRegle->setChecked(false);
@@ -426,11 +425,11 @@ void Interface::insererGeom()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerRegle()
 {
-	if(projetGeom->geometrie->regle == NULL)
-		geom->gererRegle();
+    if(projetGeom->m_geometrie->regle == NULL)
+        projetGeom->m_geometrie->gererRegle();
 
 	else
-		projetGeom->geometrie->regle = NULL;
+        projetGeom->m_geometrie->regle = NULL;
 	
 	ui.Geom->update();
 }
@@ -443,11 +442,11 @@ void Interface::creerRegle()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerEquerre()
 {
-	if(projetGeom->geometrie->equerre == NULL)
-		geom->gererEquerre();
+    if(projetGeom->m_geometrie->equerre == NULL)
+        projetGeom->m_geometrie->gererEquerre();
 
 	else
-		projetGeom->geometrie->equerre = NULL;
+        projetGeom->m_geometrie->equerre = NULL;
 
 	ui.Geom->update();	
 }
@@ -460,11 +459,11 @@ void Interface::creerEquerre()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerCrayon()
 {
-	if(projetGeom->geometrie->crayon == NULL)
-		geom->gererCrayon();
+    if(projetGeom->m_geometrie->crayon == NULL)
+        projetGeom->m_geometrie->gererCrayon();
 
 	else
-		projetGeom->geometrie->crayon = NULL;
+        projetGeom->m_geometrie->crayon = NULL;
 
 	
 	ui.Geom->update();
@@ -547,6 +546,6 @@ void Interface::showParamCrayon()
 void Interface::afficherGrille()
 {
 	projetGeom->ui.CheckBoxGrille->setChecked(ui.actionGrille->isChecked()); //Mise à jour de la checkbox Grille dans ProjetGeometrie
-	projetGeom->geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
+    projetGeom->m_geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
 	ui.Geom->update();
 }

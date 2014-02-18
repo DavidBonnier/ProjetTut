@@ -54,7 +54,6 @@ class Interface : public QMainWindow
 public:
 	Interface(QMainWindow *parent = 0);
 	~Interface();
-	Geometrie* geom;
 private:
     Ui::InterfaceClass ui;
 	void closeEvent(QCloseEvent *event);

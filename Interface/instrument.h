@@ -5,6 +5,10 @@
 #include <QFile>
 #include <QtSvg/QSvgGenerator>
 #include <QtSvg/QSvgRenderer>
+#include "math.h"
+
+#define PI 3.14159265358979323846264279502884
+
 #include "arc.h"
 #include "ligne.h"
 
@@ -52,8 +56,9 @@ protected:
     QString* m_nomElement;
 
     void Initialisation();
+    double toGradian(double angle);
 
-    Geometrie * m_pointGeometrie;
+    Geometrie * m_geometrie;
 };
 
 #endif // INSTRUMENT_H

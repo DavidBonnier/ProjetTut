@@ -29,6 +29,8 @@
 
 #include "figure.h"
 
+class ProjetGeometrie;
+
 ///////////////////////////////////////////////////////////////////////////
 //! \class Geometrie
 //!
@@ -37,8 +39,10 @@
 class Geometrie : public QWidget
 {
 public:
-    Geometrie(QWidget* parent = 0);
+    Geometrie(ProjetGeometrie * projetGeometrie);
     ~Geometrie();
+
+    ProjetGeometrie * m_projetGeometrie;
 
     Compas* compas;
     Crayon* crayon;

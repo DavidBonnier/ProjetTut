@@ -16,7 +16,6 @@
 #include <QTextStream>
 #include <QMouseEvent>
 #include "instrument.h"
-#include "math.h"
 
 class Geometrie;
 
@@ -34,7 +33,9 @@ public:
     double angleEcartement(double ecart, double longueurBranche);
     int hauteurCompas(double ecart, int longueurBranche);
 
-    void tracer();
+    void tracer(double angleArriver);
+    void finTracer();
+
     void setEcartement(double ecartement);
 
     void dessinerCompas(QPainter& dessin);
