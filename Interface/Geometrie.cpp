@@ -260,6 +260,11 @@ void Geometrie::paintEvent (QPaintEvent *event)
 				dessin.drawLine(0,i, width(),i);
 	}
 	
+	QPainter * dessinTrait;
+    dessinTrait = new QPainter(this);
+    dessinerFigure(dessinTrait);
+    delete dessinTrait;
+
     //Parcours du tableau pour tracer les instruments (à l'envers car trace du fond au dessus)
     for (int i=4 ; i>=0 ; i--)
     {
@@ -277,10 +282,7 @@ void Geometrie::paintEvent (QPaintEvent *event)
                 crayon->dessinerCrayon(dessin);
     }
 
-    QPainter * dessinTrait;
-    dessinTrait = new QPainter(this);
-    dessinerFigure(dessinTrait);
-    delete dessinTrait;
+    
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -294,6 +296,8 @@ void Geometrie::paintEvent (QPaintEvent *event)
 ///////////////////////////////////////////////////////////////////////
 void Geometrie::dessinerFigure(QPainter* dessinTrait)
 {
+	dessinTrait->setPen(Qt::blue); //Changement de couleur pour plus de clareté entre les traits et la grille / instruments
+
     QSvgGenerator * generator;
     generator = new QSvgGenerator;
     generator->setFileName(*nomFichierTemp);
