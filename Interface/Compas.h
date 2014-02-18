@@ -38,6 +38,10 @@ public:
 
     void setEcartement(double ecartement);
 
+    void setTransparence(bool transparence);
+    void translation(double positionX , double positionY);
+    void setAngle(double angle);
+
     void dessinerCompas(QPainter& dessin);
 
 private:

@@ -78,10 +78,10 @@ void Instrument::Initialisation()
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param newx Nouvelle position en x
-//! \param newy Nouvelle position en y
+//! \param positionX Nouvelle position en x
+//! \param positionY Nouvelle position en y
 //!
-//! \brief Cette fonction met à jour le fichier XML du compas avec les nouvelles position en x et y.
+//! \brief Cette fonction met à jour les nouvelles position en x et y et met a jour ui.
 //!
 //! \date 15/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -89,6 +89,7 @@ void Instrument::translation(double positionX , double positionY)
 {
     m_positionX = positionX;
     m_positionY = positionY;
+
     update();
 }
 

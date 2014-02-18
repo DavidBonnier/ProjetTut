@@ -275,9 +275,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-45</y>
         <width>227</width>
-        <height>872</height>
+        <height>897</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -295,7 +295,7 @@
          <property name="maximumSize">
           <size>
            <width>524287</width>
-           <height>160</height>
+           <height>180</height>
           </size>
          </property>
          <property name="layoutDirection">
@@ -337,7 +337,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxCrayonPositionX">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1600</number>
                 </property>
                </widget>
               </item>
@@ -351,7 +351,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxCrayonPositionY">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1100</number>
                 </property>
                </widget>
               </item>
@@ -409,7 +409,7 @@
          <property name="maximumSize">
           <size>
            <width>524287</width>
-           <height>220</height>
+           <height>230</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -442,7 +442,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxReglePositionX">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1600</number>
                 </property>
                </widget>
               </item>
@@ -456,7 +456,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxReglePositionY">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1100</number>
                 </property>
                </widget>
               </item>
@@ -542,13 +542,13 @@
          <property name="minimumSize">
           <size>
            <width>182</width>
-           <height>220</height>
+           <height>222</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>524287</width>
-           <height>220</height>
+           <height>230</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -578,7 +578,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxEquerrePositionX">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1600</number>
                 </property>
                </widget>
               </item>
@@ -592,7 +592,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxEquerrePositionY">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1100</number>
                 </property>
                </widget>
               </item>
@@ -675,13 +675,13 @@
          <property name="minimumSize">
           <size>
            <width>209</width>
-           <height>231</height>
+           <height>254</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>524287</width>
-           <height>235</height>
+           <height>300</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -711,7 +711,7 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxCompasPositionX">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1600</number>
                 </property>
                </widget>
               </item>
@@ -725,11 +725,18 @@
               <item>
                <widget class="QSpinBox" name="SpinBoxCompasPositionY">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>1100</number>
                 </property>
                </widget>
               </item>
              </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="CheckBoxCompasTransparence">
+             <property name="text">
+              <string>transparence</string>
+             </property>
             </widget>
            </item>
            <item>

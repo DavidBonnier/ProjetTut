@@ -8,6 +8,7 @@
 
 #include "Equerre.h"
 #include "Geometrie.h"
+#include "projetgeometrie.h"
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -54,6 +55,25 @@ QPointF Equerre::Thales(double longueur, double largeur, double transp, int x, i
 {
     double longueurTransp =  longueur*( (largeur-transp)/largeur); //Calcul de la longueur du segment délimitant la transparence
     return QPointF(x+longueurTransp, y+transp); //Retourne les coordonnée du point de l'intersection de ce segment avec l'hypoténuse
+}
+
+void Equerre::setTransparence(bool transparence)
+{
+    Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
+}
+
+void Equerre::translation(double positionX , double positionY)
+{
+    Instrument::translation(positionX,positionY);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionX->setValue(positionX);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionY->setValue(positionY);
+}
+
+void Equerre::setAngle(double angle)
+{
+    Instrument::setAngle(angle);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////

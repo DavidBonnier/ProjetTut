@@ -37,6 +37,10 @@ public:
     void tracer(double graduation1 , double graduation2);
     void setGraduation(int graduation);
 
+    void setTransparence(bool transparence);
+    void translation(double positionX , double positionY);
+    void setAngle(double angle);
+
     void dessinerRegle(QPainter& dessin);
 
 protected:

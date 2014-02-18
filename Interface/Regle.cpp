@@ -8,6 +8,7 @@
 
 #include "Regle.h"
 #include "Geometrie.h"
+#include "projetgeometrie.h"
 
 Regle::Regle()
 {
@@ -194,6 +195,26 @@ void Regle::setGraduation(int graduation)
     file->close();
     m_graduation = graduation;
     update();
+}
+
+
+void Regle::setTransparence(bool transparence)
+{
+    Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
+}
+
+void Regle::translation(double positionX , double positionY)
+{
+    Instrument::translation(positionX,positionY);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionX->setValue(positionX);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionY->setValue(positionY);
+}
+
+void Regle::setAngle(double angle)
+{
+    Instrument::setAngle(angle);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////

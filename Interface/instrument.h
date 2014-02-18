@@ -26,9 +26,9 @@ public:
     void move(QMouseEvent *move);
     void deselectionner();
 
-    void setTransparence(bool transparence);
-    void translation(double positionX , double positionY);
-    void setAngle(double angle);
+    virtual void setTransparence(bool transparence);
+    virtual void translation(double positionX , double positionY);
+    virtual void setAngle(double angle);
 
     bool m_moveSelected;
     bool m_rotateSelectedRight;

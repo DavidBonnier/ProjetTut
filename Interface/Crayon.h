@@ -30,6 +30,10 @@ class Crayon : public Instrument
 public:
     Crayon(Geometrie * geometrie);
 
+    void setTransparence(bool transparence);
+    void translation(double positionX , double positionY);
+    void setAngle(double angle);
+
     void dessinerCrayon(QPainter& dessin);
 
 private:

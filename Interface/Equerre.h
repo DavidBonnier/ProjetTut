@@ -34,6 +34,10 @@ public:
     Equerre(Geometrie * geometrie);
     ~Equerre();
 
+    void setTransparence(bool transparence);
+    void translation(double positionX , double positionY);
+    void setAngle(double angle);
+
     QPointF Thales(double longueur, double largeur, double transp, int x, int m_positionY);
 
     void dessinerEquerre(QPainter& dessin);

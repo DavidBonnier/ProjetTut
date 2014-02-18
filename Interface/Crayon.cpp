@@ -8,6 +8,7 @@
 
 #include "Crayon.h"
 #include "Geometrie.h"
+#include "projetgeometrie.h"
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -58,6 +59,26 @@ Crayon::Crayon(Geometrie * geometrie)
 
     update();
 }
+
+void Crayon::setTransparence(bool transparence)
+{
+    Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxCrayonTransparence->setChecked(transparence);
+}
+
+void Crayon::translation(double positionX , double positionY)
+{
+    Instrument::translation(positionX,positionY);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonPositionX->setValue(positionX);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonPositionY->setValue(positionY);
+}
+
+void Crayon::setAngle(double angle)
+{
+    Instrument::setAngle(angle);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonOrientation->setValue(angle);
+}
+
 //***************************************Fonctions de mise à jour des valeurs***************************************
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan

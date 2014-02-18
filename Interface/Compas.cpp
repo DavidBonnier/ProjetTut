@@ -8,6 +8,7 @@
 
 #include "Compas.h"
 #include "Geometrie.h"
+#include "projetgeometrie.h"
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -164,7 +165,28 @@ void Compas ::finTracer()
 void Compas::setEcartement(double ecartement)
 {
     m_ecartement = ecartement;
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCompasEcartement->setValue(ecartement);
     update();
+}
+
+
+void Compas::setTransparence(bool transparence)
+{
+    Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxCompasTransparence->setChecked(transparence);
+}
+
+void Compas::translation(double positionX , double positionY)
+{
+    Instrument::translation(positionX,positionY);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCompasPositionX->setValue(positionX);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCompasPositionY->setValue(positionY);
+}
+
+void Compas::setAngle(double angle)
+{
+    Instrument::setAngle(angle);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxCompasOrientation->setValue(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
