@@ -8,5 +8,13 @@
         <file>Resources/SortieFullscreen.gif</file>
         <file>Resources/Texte.gif</file>
         <file>Resources/Trait.gif</file>
+        <file>Resources/fontColor.png</file>
+    </qresource>
+    <qresource prefix="/XML">
+        <file>Resources/XML/Compas.xml</file>
+        <file>Resources/XML/Crayon.xml</file>
+        <file>Resources/XML/Regle.xml</file>
+        <file>Resources/XML/Utilisateurs.xml</file>
+        <file>Resources/XML/Equerre.xml</file>
     </qresource>
 </RCC>

@@ -112,7 +112,7 @@ void ProjetGeometrie::Point()
 		if(!m_geometrie->clickPoint)
 		{
 			m_geometrie->clickPoint = true;
-			QCursor Souris(QPixmap("Resources/curseur-point.png"),-1,-1);
+            QCursor Souris(QPixmap(":/Interface/Resources/curseur-point.png"),-1,-1);
 			QApplication::setOverrideCursor(Souris);
 			ui.BoutonPoint->setChecked(true);
 		}
@@ -165,7 +165,7 @@ void ProjetGeometrie::zoneTexte()
 		}
 		else
 		{
-			QCursor Souris(QPixmap("Resources/curseur-zoneTexte.png"),-1,-1);
+            QCursor Souris(QPixmap(":/Interface/Resources/curseur-zoneTexte.png"),-1,-1);
 			QApplication::setOverrideCursor(Souris);
 			m_geometrie->clickTxt = true;
 			ui.BoutonTexte->setChecked(true);

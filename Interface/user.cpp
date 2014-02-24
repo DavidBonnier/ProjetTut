@@ -15,6 +15,7 @@ User::User(QDialog *parent)
 {
     user_actuel_IsAdmin = false;
 	premUtil = false;
+
 }
 
 User::~User()
@@ -70,7 +71,7 @@ void User::Connexion()
                                     else
                                         user_actuel_IsAdmin = false;
                                     QMessageBox* success = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Bienvenue, " + id);
-                                    success->setIconPixmap(QPixmap("Resources/validationConnexion.png"));
+                                    success->setIconPixmap(QPixmap(":/Interface/Resources/validationConnexion.png"));
                                     success->show();
                                     file.close();
                                     return;
@@ -78,7 +79,7 @@ void User::Connexion()
                                 else
                                 {
                                     QMessageBox* password_error = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Mot de passe invalide !");
-                                    password_error->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+                                    password_error->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
                                     password_error->show();
                                     if(password_error->exec() == QMessageBox::Ok)
                                     {
@@ -100,7 +101,7 @@ void User::Connexion()
                 child = child.nextSibling().toElement();
             }
             QMessageBox* id_error = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Identifiant invalide !");
-            id_error->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+            id_error->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
             id_error->show();
             if(id_error->exec() == QMessageBox::Ok)
             {
@@ -146,7 +147,7 @@ void User::Enregistrement()
                 if(ligne.contains(id))
                 {
                     QMessageBox* user_exists = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Identifiant déjà utilisé !");
-                    user_exists->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+                    user_exists->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
                     user_exists->show();
                     return;
                 }
@@ -169,7 +170,7 @@ void User::Enregistrement()
 						else
 						{
 							QMessageBox* invalid_data = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Données saisies invalides ! ");
-							invalid_data->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+                            invalid_data->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
 							invalid_data->show();
 							if(invalid_data->exec() == QMessageBox::Ok)
 							{
@@ -211,7 +212,7 @@ void User::Enregistrement()
                 in << temp;
                 tempFile.close();
                 QMessageBox* success = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Utilisateur créé avec succès.");
-                success->setIconPixmap(QPixmap("Resources/validationConnexion.png"));
+                success->setIconPixmap(QPixmap(":/Interface/Resources/validationConnexion.png"));
                 success->show();
             }
         }
@@ -224,7 +225,7 @@ void User::Enregistrement()
     else if (!user_actuel_IsAdmin)
     {
         QMessageBox* notAdmin = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Vous devez disposer de droits d'administrateur pour effectuer cette action.");
-        notAdmin->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+        notAdmin->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
         notAdmin->show();
         return;
     }
@@ -277,7 +278,7 @@ void User::RemoveUtil()
             if(!id_exists)
             {
                 QMessageBox* id_error = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Identifiant invalide !");
-                id_error->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+                id_error->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
                 id_error->show();
                 if(id_error->exec() == QMessageBox::Ok)
                 {
@@ -293,7 +294,7 @@ void User::RemoveUtil()
 
             }
             QMessageBox* success = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "L'utilisateur " + id + " a bien été supprimé.");
-            success->setIconPixmap(QPixmap("Resources/validationConnexion.png"));
+            success->setIconPixmap(QPixmap(":/Interface/Resources/validationConnexion.png"));
             success->show();
 
             file.close();
@@ -307,7 +308,7 @@ void User::RemoveUtil()
     else
     {
         QMessageBox* notAdmin = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Vous devez disposer de droits d'administrateur pour effectuer cette action.");
-        notAdmin->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+        notAdmin->setIconPixmap(QPixmap(":/Interface/Resources/erreurConnexion.png"));
         notAdmin->show();
         return;
     }

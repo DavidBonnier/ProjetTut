@@ -20,7 +20,7 @@
 ///////////////////////////////////////////////////////////////////////
 Equerre::Equerre(Geometrie * geometrie)
 {
-    m_nomFichierXML = new QString("Equerre.xml");
+    m_nomFichierXML = new QString(":/XML/Resources/XML/Equerre.xml");
     m_nomDocument = new QString("Equerre");
     m_nomElement = new QString("equerre");
 
