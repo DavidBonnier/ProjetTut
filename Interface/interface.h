@@ -101,6 +101,7 @@ public slots:
     void ApercuAvtImpr();
     void Impression();
     void Aide();
+	void APropos();
 
     void insererGeom();
 

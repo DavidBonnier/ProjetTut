@@ -27,7 +27,8 @@
 	text-decoration : none;
 	width: 200px;
     max-width: 120%;
-	height: 35px;	
+	height: 35px;
+	border-radius: 10px;	
 }
 
 #menu li /* Elements des listes */      
@@ -118,7 +119,7 @@ p
 }
 #compas-p
 {
-	padding-top: 24%; 
+	padding-top: 29%; 
 }
 #crayon-p
 {
@@ -131,6 +132,11 @@ p
 #equerre-p, #regle-p
 {
 	padding-top: 24%;
+}
+
+#zoneTexte-p
+{
+	padding-top: 22%;
 }
 #last-p
 {
@@ -154,6 +160,47 @@ body
 {
 	background-color: #DFAF2C;
 }
+#footer-grille
+{
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #E21313;
+	color: white;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 20%;
+	max-height: 10%;
+	text-align: center;
+	border-radius: 10px;
+}
+
+#footer-compas
+{
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #E21313;
+	color: white;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 16%;
+	max-height: 10%;
+	text-align: center;
+	border-radius: 10px;
+}
+
+#footer-crayon
+{
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #E21313;
+	color: white;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 18%;
+	max-height: 10%;
+	text-align: center;
+	border-radius: 10px;
+}
 
 #footer
 {
@@ -166,7 +213,42 @@ body
 	margin-top: 19%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
+
+#footer-point
+{
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #E21313;
+	color: white;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 20%;
+	max-height: 10%;
+	text-align: center;
+	border-radius: 10px;
+}
+#footer-p-point
+{
+	padding-top: 1%;
+	font-size: 17px;
+	padding-left: 0%;
+}
+#footer-zoneTexte
+{
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #E21313;
+	color: white;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 17%;
+	max-height: 10%;
+	text-align: center;
+	border-radius: 10px;
+}
+
 #footer-fig
 {
 	font-family: Arial;
@@ -178,6 +260,7 @@ body
 	margin-top: 17%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-contact-html
 {
@@ -187,12 +270,19 @@ body
 	background-color: #E21313;
 	color: white;
 	margin-left: 35%;
-	margin-right: 30%;
+	margin-right: 20%;
 	margin-top: 14%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-p-contact
+{
+	padding-top: 2%;
+	font-size: 15px;
+	padding-left: 0%;
+}
+#footer-p-zonetexte
 {
 	padding-top: 2%;
 	font-size: 15px;
@@ -209,6 +299,7 @@ body
 	margin-top: 18.5%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-magne-html
 {
@@ -218,9 +309,10 @@ body
 	color: white;
 	margin-left: 30%;
 	margin-right: 30%;
-	margin-top: 14%;
+	margin-top: 16%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-enre-html
 {
@@ -233,6 +325,7 @@ body
 	margin-top: 12%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-file-html
 {
@@ -245,6 +338,7 @@ body
 	margin-top: 10%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-co-html
 {
@@ -254,9 +348,10 @@ body
 	color: white;
 	margin-left: 30%;
 	margin-right: 30%;
-	margin-top: 7%;
+	margin-top: 5.5%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 #footer-suppr-html
 {
@@ -269,12 +364,13 @@ body
 	margin-top: 16%;
 	max-height: 10%;
 	text-align: center;
+	border-radius: 10px;
 }
 
 #footer-p
 {
-	padding-top: 5.25%;
-	font-size: 15px;
+	padding-top: 2%;
+	font-size: 17px;
 	padding-left: 0%;
 }
 

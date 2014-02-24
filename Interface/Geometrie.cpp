@@ -19,30 +19,36 @@
 Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
 {
     m_projetGeometrie = projetGeometrie;
-
+	
+	id_point = 0;
     clickTxt = false;
+	clickPoint = false;
     txtSelectionne = false;
+	dessinOK = false;
     stockTxt.clear();
+	stockPoints.clear();
     setMouseTracking(true);
 
     regle = NULL;
     compas = NULL;
     equerre = NULL;
     crayon = NULL;
-	grille = false;
+	grille = true;
 
     modifCompas = false;
     modifCrayon = false;
     modifEquerre = false;
     modifRegle = false;
-
+	
+	
     ordreInstruments[0] = 'C'; //Crayon
     ordreInstruments[1] = 'e';
     ordreInstruments[2] = 'r';
     ordreInstruments[3] = 'c'; //Compas
 
-    nomFichierTemp = new QString("temps.svg");
-    nomFichier = new QString("enregistrement.svg");
+    m_nomFichierTemp = new QString("temps.svg");
+    m_nomFichier = new QString("enregistrement.svg");
+    m_rectangleViewport = new QRect (0,0,1500,1500);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -59,6 +65,7 @@ Geometrie::~Geometrie()
     delete equerre;
     delete crayon;
     stockTxt.clear();
+	stockPoints.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -73,12 +80,16 @@ bool Geometrie::gererRegle()
     if (regle == NULL)
     {
         regle = new Regle(this);
+		dessinOK = true;
+		repaint();
         return true;
     }
     else
     {
         delete regle;
-        regle = NULL;
+        regle = NULL;	
+		dessinOK = true;
+		repaint();
         return false;
     }
 }
@@ -234,34 +245,49 @@ void Geometrie::paintEvent (QPaintEvent *event)
     }
 
     QPainter dessin(this);
+    dessin.setWindow(0,0,width(),height());
+    dessin.setViewport(*m_rectangleViewport);
+
 	//Dessin ou non de la grille
 	if (grille)
-	{
+    {
+        int hauteur = dessin.viewport().height();
+        int largeur = dessin.viewport().width();
+        const int espacement = 50;
+
 		//Graduations verticales
-		for (int i=0 ; i<width() ; i+=50)
-			if(i-25<=width()/2 && i+25>=width()/2) //Graduation du milieu en vertical
+        for (int i=0 ; i<largeur ; i+=espacement)
+            if(i-espacement/2<=largeur/2 && i+espacement/2>=largeur/2) //Graduation du milieu en vertical
 			{
-				dessin.drawLine(i-1,0 , i-1, height());
-				dessin.drawLine(i,0 , i, height());
-				dessin.drawLine(i+1,0 , i+1, height());
+                dessin.drawLine(i-1,0 , i-1, hauteur);
+                dessin.drawLine(i,0 , i, hauteur);
+                dessin.drawLine(i+1,0 , i+1, hauteur);
 			}
 			else
-				dessin.drawLine(i,0 , i,height());
+                dessin.drawLine(i,0 , i,hauteur);
 
 		//Horizontales
-		for (int i=0 ; i<height() ; i+=50)
-			if(i-25<=height()/2 && i+25>=height()/2) //Graduation du milieu en vertical
+        for (int i=0 ; i<hauteur ; i+=espacement)
+            if(i-espacement/2<=hauteur/2 && i+espacement/2>=hauteur/2) //Graduation du milieu en vertical
 			{
-				dessin.drawLine(0,i-1 , width(), i-1);
-				dessin.drawLine(0,i , width(), i);
-				dessin.drawLine(0,i+1 , width(), i+1);
+                dessin.drawLine(0,i-1 , largeur, i-1);
+                dessin.drawLine(0,i , largeur, i);
+                dessin.drawLine(0,i+1 , largeur, i+1);
 			}
 			else
-				dessin.drawLine(0,i, width(),i);
+                dessin.drawLine(0,i, largeur,i);
 	}
-	
-	QPainter * dessinTrait;
+
+    QPainter * dessinTrait;
     dessinTrait = new QPainter(this);
+    dessinTrait->setWindow(0,0,width(),height());
+    dessinTrait->setViewport(*m_rectangleViewport);
+
+    QPen pen;
+    pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
+	pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
+
+	dessinTrait->setPen(pen);
     dessinerFigure(dessinTrait);
     delete dessinTrait;
 
@@ -281,8 +307,6 @@ void Geometrie::paintEvent (QPaintEvent *event)
             if(crayon != NULL)
                 crayon->dessinerCrayon(dessin);
     }
-
-    
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -296,19 +320,17 @@ void Geometrie::paintEvent (QPaintEvent *event)
 ///////////////////////////////////////////////////////////////////////
 void Geometrie::dessinerFigure(QPainter* dessinTrait)
 {
-	dessinTrait->setPen(Qt::blue); //Changement de couleur pour plus de clareté entre les traits et la grille / instruments
-
     QSvgGenerator * generator;
     generator = new QSvgGenerator;
-    generator->setFileName(*nomFichierTemp);
+    generator->setFileName(*m_nomFichierTemp);
     generator->setTitle(tr("Generation de SVG pour le tracage de geometrie"));
     generator->setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
 
     dessinTrait->begin(generator);
-    if(QFile::exists(*nomFichier))
+    if(QFile::exists(*m_nomFichier))
     {
         QSvgRenderer * renderer;
-        renderer = new QSvgRenderer(*nomFichier);
+        renderer = new QSvgRenderer(*m_nomFichier);
         renderer->render(dessinTrait);
         delete renderer;
     }
@@ -326,6 +348,15 @@ void Geometrie::dessinerFigure(QPainter* dessinTrait)
             Ligne* maLigne = dynamic_cast<Ligne*> (tableauFigure[i]);
             if(maLigne!=NULL)
                 dessinTrait->drawLine(maLigne->getQLine());
+            else
+            {
+                Point* monPoint = dynamic_cast<Point*> (tableauFigure[i]);
+                if(monPoint!=NULL)
+                {
+                    dessinTrait->drawLine(monPoint->getHorizontalLine());
+                    dessinTrait->drawLine(monPoint->getVerticalLine());
+                }
+            }
         }
     }
     dessinTrait->end();
@@ -353,12 +384,16 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps de la règle
 		regle->clic(clic,false);
+		dessinOK = true; 
+		repaint();
 	}
 
 	if(detec == QColor(127,255,255))
 	{
 		//Le bouton de rotation de la règle
 		regle->clic(clic,true);
+		dessinOK = true; 
+		repaint();
 	}
 
 	//Équerre--------------------------------------------------------
@@ -366,12 +401,16 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps de l'équerre
 		equerre->clic(clic,false);
+		dessinOK = true; 
+		repaint();
 	}
 
 	if(detec == QColor(126,255,255))
 	{
 		//Le bouton de rotation de l'équerre
 		equerre->clic(clic,true);
+		dessinOK = true; 
+		repaint();
 	}
 
 	//Crayon--------------------------------------------------------
@@ -379,12 +418,16 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps du crayon
 		crayon->clic(clic,false);
+		dessinOK = true; 
+		repaint();
 	}
 
 	if(detec == QColor(125,255,255))
 	{
 		//Le bouton de rotation de la règle
 		crayon->clic(clic,true);
+		dessinOK = true; 
+		repaint();
 	}
 
 	//Compas--------------------------------------------------------
@@ -392,15 +435,19 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps du crayon
 		compas->clic(clic,false);
+		dessinOK = true; 
+		repaint();
 	}
 
 	if(detec == QColor(124,255,255))
 	{
 		//Le bouton de rotation du crayon
 		compas->clic(clic,true);
+		dessinOK = true; 
+		repaint();
 	}
 
-	//Désélection sion clique sur un pixel blanc ou noir
+	//Désélection si on clique sur un pixel blanc ou noir
 	if(detec == QColor(240,240,240) || detec == QColor(0,0,0))
 	{
 		if(regle != NULL)
@@ -414,6 +461,7 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	}
 	//-------------------------------------------------------------
 
+	//Création des zones de texte
     if(clickTxt)
     {
         txt = new QTextEdit(this);
@@ -422,18 +470,29 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 		txt->setFixedWidth(100);
 		txt->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-        txt->move(clic->pos().x(), clic->pos().y());
+        txt->move(clic->x(), clic->y());
         txt->setContextMenuPolicy(Qt::NoContextMenu);
         txt->show();
         stockTxt.push_back(txt);
         clickTxt = false;
 		emit curseur();
     }
+    //Création des points
+    else if(clickPoint)
+	{
+        Point * nouveauPoint;
+        nouveauPoint = new Point(clic->pos());
+        tableauFigure.push_back(nouveauPoint);
+
+        clickPoint = false;
+        emit pointcree();
+    }
 }
 
 bool Geometrie::eventFilter(QObject * obj, QEvent * e)
 {
-    if(e->type() == QEvent::MouseButtonPress)
+	//Gestion du texte
+    if(e->type() == QEvent::MouseButtonPress) //Clic de souris
     {
         if(!txtSelectionne)
         {
@@ -466,6 +525,22 @@ bool Geometrie::eventFilter(QObject * obj, QEvent * e)
         }
     }
 
+	//Gestion de la suppression des tracés
+	if (e->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent* me = static_cast <QMouseEvent*> (e);
+        if (me->button() == Qt::RightButton) //Clic droit de la souris
+		{
+			for(int i=0; tableauFigure.size(); i++)
+			{
+				if(obj == tableauFigure[i])
+				{
+					tableauFigure.removeAt(i);
+				}
+			}
+		}
+	}
+
     return QObject::eventFilter(obj, e);
 }
 
@@ -479,6 +554,8 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			regle->move(move);
 			modifRegle = true;
 			update();
+			dessinOK = true; 
+			repaint();
 		}
 	}
 	//Equerre--------------------------------------------------------
@@ -488,7 +565,9 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 		{
 			equerre->move(move);
 			modifEquerre = true;
-			update();
+			update();			
+			dessinOK = true; 
+			repaint();
 		}
 	}
 	//Crayon--------------------------------------------------------
@@ -499,6 +578,8 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			crayon->move(move);
 			modifCrayon = true;
 			update();
+			dessinOK = true; 
+			repaint();
 		}
 	}
 	//Compas--------------------------------------------------------
@@ -509,6 +590,8 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			compas->move(move);
 			modifCompas = true;
 			update();
+			dessinOK = true; 
+			repaint();
 		}
 	}
 
@@ -516,5 +599,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
     {
         stockTxt[id_txtSelectionne]->move(move->pos().x(), move->pos().y());
         update();
+		dessinOK = true; 
+		repaint();
     }
 }

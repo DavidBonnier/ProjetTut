@@ -4,26 +4,34 @@ ProjetGeometrie::ProjetGeometrie()
 {
     ui.setupUi(this);
     m_geometrie = new Geometrie(this);
+	m_couleurTrait = Qt::blue;
 
     ui.DessinLayout->addWidget(m_geometrie);
-
+	ui.CheckBoxGrille->setChecked(true);
 //Connexions des boutons
+	ui.BoutonCrayon->setToolTip("Outil Crayon");
+	ui.BoutonCompas->setToolTip("Outil Compas");
+	ui.BoutonRegle->setToolTip("Outil Règle");
+	ui.BoutonPoint->setToolTip("Outil Point");
+	ui.BoutonEquerre->setToolTip("Outil Équerre");
+	ui.BoutonPleinEcran->setToolTip("Revenir en écran scindé");
+	ui.BoutonCouleur->setToolTip("Afficher la palette de couleurs");
 
     //Boutons outils
     connect(ui.BoutonPleinEcran, SIGNAL(clicked(bool)), this, SLOT(sortieFullScreen()));
 	
 	connect(m_geometrie, SIGNAL(curseur()), this, SLOT(restoreCursor()));
+	connect(m_geometrie, SIGNAL(pointcree()), this, SLOT(restorePoint()));
 
     connect(ui.BoutonCrayon, SIGNAL(clicked(bool)), this, SLOT(Crayon()));
     connect(ui.BoutonEquerre, SIGNAL(clicked(bool)), this, SLOT(Equerre()));
     connect(ui.BoutonRegle, SIGNAL(clicked(bool)), this, SLOT(Regle()));
     connect(ui.BoutonCompas, SIGNAL(clicked(bool)), this, SLOT(Compas()));
-    connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(Point(bool)));
+    connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(Point()));
     connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(zoneTexte()));
-    connect(ui.BoutonEpaisseur, SIGNAL(clicked(bool)), this, SLOT(Epaisseur(bool)));
+	connect(ui.spinBoxEpaisseur, SIGNAL(valueChanged(int)), this, SLOT(Epaisseur(int)));
     connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille(bool)));
-    //Boutons couleurs
-    connect(ui.BoutonNoir, SIGNAL(triggered(bool)), this, SLOT(Noir()));
+	connect(ui.BoutonCouleur, SIGNAL(clicked(bool)), this, SLOT(Couleur()));
 //Instruments
     //Crayon
     connect(ui.SpinBoxCrayonPositionX, SIGNAL(valueChanged(int)), this, SLOT(CrayonPositionX(int)));
@@ -57,12 +65,14 @@ ProjetGeometrie::~ProjetGeometrie()
     delete m_geometrie;
 }
 
-//****************************************SLOTS*******************************
+//****************************************SLOTS****************************************//
 //Outils
 void ProjetGeometrie::sortieFullScreen()
 {
     emit clickSortieFullScreen();
+	update();
 }
+
 void ProjetGeometrie::Crayon()
 {
     emit clickCrayon();
@@ -84,7 +94,7 @@ void ProjetGeometrie::Regle()
     emit clickRegle();
     m_geometrie->gererRegle();
     m_geometrie->modifRegle = true;
-    m_geometrie->update();
+	m_geometrie->update();
 }
 
 void ProjetGeometrie::Compas()
@@ -97,12 +107,38 @@ void ProjetGeometrie::Compas()
 
 void ProjetGeometrie::Point()
 {
-
+	if(!m_geometrie->clickTxt)
+	{
+		if(!m_geometrie->clickPoint)
+		{
+			m_geometrie->clickPoint = true;
+			QCursor Souris(QPixmap("Resources/curseur-point.png"),-1,-1);
+			QApplication::setOverrideCursor(Souris);
+			ui.BoutonPoint->setChecked(true);
+		}
+		else
+		{
+			m_geometrie->clickPoint = false;
+			QApplication::restoreOverrideCursor();
+			ui.BoutonPoint->setChecked(false);
+		}
+	}
+	else
+	{
+		ui.BoutonPoint->setChecked(false);
+		return;
+	}
 }
 
-void ProjetGeometrie::Epaisseur(bool b)
+void ProjetGeometrie::restorePoint()
 {
+	QApplication::restoreOverrideCursor();
+	ui.BoutonPoint->setChecked(false);
+}
 
+void ProjetGeometrie::Epaisseur(int e)
+{
+	m_geometrie->update();
 }
 
 void ProjetGeometrie::Grille(bool b)
@@ -114,47 +150,39 @@ void ProjetGeometrie::Grille(bool b)
 void ProjetGeometrie::restoreCursor()
 {
 	QApplication::restoreOverrideCursor();
+	ui.BoutonTexte->setChecked(false);
 }
 
 void ProjetGeometrie::zoneTexte()
 {
-    if(m_geometrie->clickTxt)
-    {
-        m_geometrie->clickTxt = false;
-        QApplication::restoreOverrideCursor();
-    }
-    else
-    {
-        QCursor Souris(QPixmap("Resources/curseur-zoneTexte.png"),-1,-1);
-        QApplication::setOverrideCursor(Souris);
-        m_geometrie->clickTxt = true;
-    }
+	if(!m_geometrie->clickPoint)
+	{
+		if(m_geometrie->clickTxt)
+		{
+			m_geometrie->clickTxt = false;
+			QApplication::restoreOverrideCursor();
+			ui.BoutonTexte->setChecked(false);
+		}
+		else
+		{
+			QCursor Souris(QPixmap("Resources/curseur-zoneTexte.png"),-1,-1);
+			QApplication::setOverrideCursor(Souris);
+			m_geometrie->clickTxt = true;
+			ui.BoutonTexte->setChecked(true);
+		}
+	}
+	else
+	{
+		ui.BoutonTexte->setChecked(false);
+		return;
+	}
 }
 
 //Couleurs
-void ProjetGeometrie::Noir()
+void ProjetGeometrie::Couleur()
 {
-    int noir[3] = {0,0,0};
-}
-
-void ProjetGeometrie::Bleu()
-{
-    int bleu[3] = {0,0,255};
-}
-
-void ProjetGeometrie::Vert()
-{
-    int vert[3] = {0,255,0};
-}
-
-void ProjetGeometrie::Jaune()
-{
-    int jaune[3] = {0,255,255};
-}
-
-void ProjetGeometrie::Rouge()
-{
-    int rouge[3] = {255,0,0};
+    m_couleurTrait = QColorDialog::getColor(Qt::white, this);
+	m_geometrie->update();
 }
 
 //Instruments

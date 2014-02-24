@@ -61,6 +61,12 @@ Interface::Interface(QMainWindow *parent)
 	actionCrayon->setToolTip("Outil Crayon");
 	actionEquerre->setToolTip("Outil Équerre");
 
+	ui.boutonInsertionGeom->setToolTip("Insérer la géométrie dans le cahier ouvert");
+	ui.GeomPleinEcran->setToolTip("Travailler la géométrie en Plein Écran");
+	ui.PleinEcranCours->setToolTip("Écrire sur vos cahiers en Plein Écran");
+	ui.PleinEcranExo->setToolTip("Écrire sur vos cahiers en Plein Écran");
+	ui.PleinEcranEval->setToolTip("Écrire sur vos cahiers en Plein Écran");
+
     actionTailleTexte->setIcon(QIcon("Resources/fontSize.png"));
 	actionCouleurTexte->setIcon(QIcon("Resources/fontColor.png"));
 	actionRegle->setIcon(QIcon("Resources/regle.gif"));
@@ -118,9 +124,10 @@ Interface::Interface(QMainWindow *parent)
 	connect(ui.PleinEcranExo, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
 	connect(projetGeom, SIGNAL(clickSortieFullScreen()), this, SLOT(FullScreen_Geom()));
 	connect(ui.GeomPleinEcran, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Geom()));
-	connect(ui.pushButton, SIGNAL(clicked(bool)), this,SLOT(insererGeom()));
+	connect(ui.boutonInsertionGeom, SIGNAL(clicked(bool)), this,SLOT(insererGeom()));
 	connect(ui.actionImprimer, SIGNAL(triggered(bool)),this,SLOT(Impression()));
 	connect(ui.actionDocumentation_Utilisateur, SIGNAL(triggered(bool)), this,SLOT(Aide()));
+	connect(ui.A_propos, SIGNAL(triggered(bool)), this, SLOT(APropos()));
 
 	connect(ui.actionRaccourcis_Clavier, SIGNAL(triggered(bool)),this,SLOT(AffichageRaccourcis()));
 
@@ -221,22 +228,25 @@ void Interface::FullScreen_Geom()
 	{
         projetGeom->setParent(0);
         projetGeom->showFullScreen();
-		ui.pushButton->hide();
+		projetGeom->m_geometrie->update();
+		
+		ui.boutonInsertionGeom->hide();
 		ui.GeomPleinEcran->hide();
 
         projetGeom->m_geometrie->regle = NULL;
         projetGeom->m_geometrie->equerre = NULL;
         projetGeom->m_geometrie->crayon = NULL;
-
+			
+		projetGeom->m_geometrie->dessinOK = true;
+		ui.Geom->update();
         projetGeom->ui.widget->show();
         projetGeom->ui.DockWidgetCompas->hide();
         projetGeom->ui.DockWidgetCrayon->hide();
         projetGeom->ui.DockWidgetEquerre->hide();
         projetGeom->ui.DockWidgetRegle->hide();
-        projetGeom->ui.ScrollAreaOptionsOutils->hide();
-
+        projetGeom->ui.ScrollAreaOptionsOutils->show();
+		
 		widgetIsFullscreen = true;
-		return;
 	}
 	else
 	{
@@ -244,8 +254,9 @@ void Interface::FullScreen_Geom()
         projetGeom->m_geometrie->regle = NULL;
         projetGeom->m_geometrie->equerre = NULL;
         projetGeom->m_geometrie->crayon = NULL;
-		ui.LayoutGeom->addWidget(ui.Geom);
 
+		ui.LayoutGeom->addWidget(ui.Geom);
+		
 		projetGeom->ui.BoutonRegle->setChecked(false);
 		projetGeom->ui.BoutonEquerre->setChecked(false);
 		projetGeom->ui.BoutonCompas->setChecked(false);
@@ -253,7 +264,9 @@ void Interface::FullScreen_Geom()
 
         ui.geomEcranScind->addWidget(projetGeom);
         projetGeom->showNormal();
-		ui.pushButton->show();
+		projetGeom->m_geometrie->dessinOK = true;
+		ui.Geom->repaint();
+		ui.boutonInsertionGeom->show();
         ui.GeomPleinEcran->show();
         projetGeom->ui.widget->hide();
 		projetGeom->ui.ScrollAreaOptionsOutils->hide();
@@ -261,6 +274,7 @@ void Interface::FullScreen_Geom()
 		widgetIsFullscreen = false;
 	}
 }
+
 // Fermeture du programme
 void Interface::closeEvent(QCloseEvent *event)
 {
@@ -431,6 +445,8 @@ void Interface::creerRegle()
 	else
         projetGeom->m_geometrie->regle = NULL;
 	
+	projetGeom->m_geometrie->dessinOK = true;
+	ui.Geom->repaint();
 	ui.Geom->update();
 }
 
@@ -465,7 +481,7 @@ void Interface::creerCrayon()
 	else
         projetGeom->m_geometrie->crayon = NULL;
 
-	
+
 	ui.Geom->update();
 }
 
@@ -548,4 +564,38 @@ void Interface::afficherGrille()
 	projetGeom->ui.CheckBoxGrille->setChecked(ui.actionGrille->isChecked()); //Mise à jour de la checkbox Grille dans ProjetGeometrie
     projetGeom->m_geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
 	ui.Geom->update();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author JACQUIN Dylan
+//! \date 23/02/2014
+//!
+//! Fonction gérant affichant le 'A Propos'.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::APropos()
+{
+	QMessageBox info;
+	info.setText("A Propos de ce logiciel");
+	info.setInformativeText("Ce logiciel a été réalisé par des étudiants de l'<strong>IUT du Puy-en-Velay</strong> dans le cadre d'un projet tuteuré visant à aider les personnes en situation de handicap dans les mathématiques."
+							"<br/><br/>" 
+							"Enseignant référant :<strong> MONCORGÉ Dominque</strong>"
+							"<br/>""<br/>"
+							"Étudiants ayant pris part au projet :"
+							"<br/><br/>"
+							"2013/2014 : Création du logiciel et intégration du module de géométrie"
+							"<br/>""<br/>"
+							"-<em>ADAMONY Ravel</em>"
+							"<br/>"
+							"-<em>BIOLLEY Pierre</em>"
+							"<br/>"
+							"-<em>BONNIER David</em>"
+							"<br/>"
+							"-<em>JACQUIN Dylan</em>"
+							"<br/>"
+							"-<em>ROCHE Hugo</em>");
+	//To be continued...
+	info.setIcon(QMessageBox::Information);
+	info.setStandardButtons(QMessageBox::Ok);
+
+	info.exec();
 }

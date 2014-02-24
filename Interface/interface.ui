@@ -342,7 +342,7 @@
           </spacer>
          </item>
          <item row="0" column="9">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="boutonInsertionGeom">
            <property name="text">
             <string/>
            </property>
@@ -436,6 +436,8 @@
     </property>
     <addaction name="actionRaccourcis_Clavier"/>
     <addaction name="actionDocumentation_Utilisateur"/>
+    <addaction name="separator"/>
+    <addaction name="A_propos"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menu_dition"/>
@@ -641,11 +643,19 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Grille</string>
+   </property>
+  </action>
+  <action name="A_propos">
+   <property name="text">
+    <string>À propos</string>
    </property>
   </action>
  </widget>

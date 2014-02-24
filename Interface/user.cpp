@@ -129,7 +129,7 @@ void User::Enregistrement()
 {
     if(premUtil || user_actuel_IsAdmin)
     {
-        bool ok_id, ok_mdp, ok_admin, id_pris = false;
+        bool ok_id, ok_mdp, ok_admin;
         QString id, mdp, admin, temp;
         id = QInputDialog::getText(this, tr("Gestion des utilisateurs "),
                     tr("Identifiant : "), QLineEdit::Normal, QString(), &ok_id);
@@ -155,61 +155,64 @@ void User::Enregistrement()
                 tr("Mot de passe : "), QLineEdit::Password, QString(), &ok_mdp);
             if(!mdp.isEmpty() && ok_mdp)
             {
-                admin = QInputDialog::getText(this, tr("Gestion des utilisateurs "),
-                    tr("Administrateur(O/N) : "), QLineEdit::Normal, QString(), &ok_admin);
+				if(!premUtil)
+				{
+					 admin = QInputDialog::getText(this, tr("Gestion des utilisateurs "),
+						tr("Administrateur(O/N) : "), QLineEdit::Normal, QString(), &ok_admin);
 
-                if(!admin.isEmpty() && ok_admin)
+					if(!admin.isEmpty() && ok_admin)
+					{
+						if (admin == "O" || admin == "o")
+							admin = "true";
+						else if (admin == "N" || admin == "n")
+							admin = "false";
+						else
+						{
+							QMessageBox* invalid_data = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Données saisies invalides ! ");
+							invalid_data->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
+							invalid_data->show();
+							if(invalid_data->exec() == QMessageBox::Ok)
+							{
+								Enregistrement();
+								file.close();
+								return;
+							}
+							else
+							{
+								file.close();
+								return;
+							}
+						}
+					}
+				}
+				else
+					admin = "true";
+				
+				file.close();
+                QFile tempFile("Utilisateurs.xml");
+                if(!tempFile.open(QIODevice::ReadWrite))
+                    return;
+                QTextStream in(&tempFile);
+                QString ligne_a_rajouter = "<utilisateur> \n <identifiant>" + id + "</identifiant> \n <password>" + mdp + "</password> \n <admin> " + admin + "</admin> \n </utilisateur> \n </utilisateurs>";
+                while (!in.atEnd())
                 {
-                    if (admin == "O" || admin == "o")
-                        admin = "true";
-                    else if (admin == "N" || admin == "n")
-                        admin = "false";
+                    QString ligne = in.readLine();
+                    if(ligne.contains("</utilisateurs>"))
+                    {
+                        temp.append(ligne_a_rajouter);
+                        break;
+                    }
                     else
                     {
-                        QMessageBox* invalid_data = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Données saisies invalides ! ");
-                        invalid_data->setIconPixmap(QPixmap("Resources/erreurConnexion.png"));
-                        invalid_data->show();
-                        if(invalid_data->exec() == QMessageBox::Ok)
-                        {
-                            Enregistrement();
-                            file.close();
-                            return;
-                        }
-                        else
-                        {
-                            file.close();
-                            return;
-                        }
-                    }
-                    if(!id_pris)
-                    {
-                        file.close();
-                        QFile tempFile("Utilisateurs.xml");
-                        if(!tempFile.open(QIODevice::ReadWrite))
-                            return;
-                        QTextStream in(&tempFile);
-                        QString ligne_a_rajouter = "<utilisateur> \n <identifiant>" + id + "</identifiant> \n <password>" + mdp + "</password> \n <admin> " + admin + "</admin> \n </utilisateur> \n </utilisateurs>";
-                        while (!in.atEnd())
-                        {
-                            QString ligne = in.readLine();
-                            if(ligne.contains("</utilisateurs>"))
-                            {
-                                temp.append(ligne_a_rajouter);
-                                break;
-                            }
-                            else
-                            {
-                                temp.append(ligne + "\n");
-                            }
-                        }
-                        tempFile.resize(0);
-                        in << temp;
-                        tempFile.close();
-                        QMessageBox* success = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Utilisateur créé avec succès.");
-                        success->setIconPixmap(QPixmap("Resources/validationConnexion.png"));
-                        success->show();
+                        temp.append(ligne + "\n");
                     }
                 }
+                tempFile.resize(0);
+                in << temp;
+                tempFile.close();
+                QMessageBox* success = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Utilisateur créé avec succès.");
+                success->setIconPixmap(QPixmap("Resources/validationConnexion.png"));
+                success->show();
             }
         }
         else
@@ -217,6 +220,7 @@ void User::Enregistrement()
             return;
         }
     }
+
     else if (!user_actuel_IsAdmin)
     {
         QMessageBox* notAdmin = new QMessageBox(QMessageBox::NoIcon, "Gestion des utilisateurs", "Vous devez disposer de droits d'administrateur pour effectuer cette action.");

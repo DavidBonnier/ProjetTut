@@ -4,6 +4,7 @@
 #include <QtWidgets/QWidget>
 #include "ui_projetgeometrie.h"
 #include "Geometrie.h"
+#include <qcolordialog.h>
 ///////////////////////////////////////////////////////////////////////////
 //! \class ProjetGeometrie
 //!
@@ -19,6 +20,7 @@ public:
     ~ProjetGeometrie();
     Geometrie* m_geometrie;
     Ui::ProjetGeometrieClass ui;
+    QColor m_couleurTrait;
 
 signals:
     void clickSortieFullScreen();
@@ -30,6 +32,7 @@ signals:
 public slots :
     //Outils
 	void restoreCursor();
+	void restorePoint();
     void sortieFullScreen();
     void Crayon();
     void Equerre();
@@ -38,14 +41,9 @@ public slots :
     void Point();
     void zoneTexte();
 
-    void Epaisseur(bool b);
+    void Epaisseur(int e);
     void Grille(bool b);
-    //Couleur
-    void Noir();
-    void Bleu();
-    void Vert();
-    void Rouge();
-    void Jaune();
+    void Couleur();
 //Intruments
     //Crayon
     void CrayonPositionX(int x);

@@ -13,8 +13,10 @@
 #include "Crayon.h"
 #include "Equerre.h"
 #include "Regle.h"
+
 #include "arc.h"
 #include "ligne.h"
+#include "point.h"
 
 #include <QDomDocument>
 #include <QFile>
@@ -65,11 +67,14 @@ public:
 	//Affichage de la grille
 	bool grille;
 
-    int id_txtSelectionne;
+    int id_txtSelectionne, id_point;
     bool clickTxt, txtSelectionne;
+	bool clickPoint, dessinOK;
+	
     QTextEdit* txt;
     QVector<QTextEdit *> stockTxt;
-
+	QVector<Point *> stockPoints;
+	
     //Gère le dessin des intruments
     void paintEvent (QPaintEvent *event);
 	void mousePressEvent(QMouseEvent *clic);
@@ -77,14 +82,16 @@ public:
     bool eventFilter(QObject * obj, QEvent * e);
 
 private:
-    char ordreInstruments[4]; //4 instruments, une info quel intrument, une quelle position
+    char ordreInstruments[4]; //Tableau de positions
 
     void dessinerFigure(QPainter* dessinTrait);
-    QString * nomFichier;
-    QString * nomFichierTemp;
+    QString * m_nomFichier;
+    QString * m_nomFichierTemp;
+    QRect * m_rectangleViewport;
 
 signals:
 	void curseur();
+	void pointcree();
 };
 
 #endif

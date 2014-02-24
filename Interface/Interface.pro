@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     arc.cpp \
     ligne.cpp \
     instrument.cpp \
-    figure.cpp
+    figure.cpp \
+    point.cpp
 
 HEADERS  += interface.h \
     Compas.h \
@@ -40,7 +41,9 @@ HEADERS  += interface.h \
     arc.h \
     ligne.h \
     instrument.h \
-    figure.h
+    figure.h \
+    arc.h \
+    point.h
 
 FORMS    += interface.ui \
     projetgeometrie.ui
