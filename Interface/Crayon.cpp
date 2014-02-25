@@ -16,7 +16,8 @@
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Crayon::Crayon(ProjetGeometrie * projetGeometrie)
+Crayon::Crayon(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent) :
+    Instrument(parent)
 {
     m_projetGeometrie = projetGeometrie;
 
@@ -38,8 +39,6 @@ Crayon::Crayon(ProjetGeometrie * projetGeometrie)
         {
             if (element.tagName() == "hauteurPointe")
                 m_hauteurPointe = element.text().toInt();
-            if (element.tagName() == "epaisseur")
-                m_epaisseur = element.text().toInt();
         }
         noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
     }
@@ -67,6 +66,11 @@ void Crayon::setAngle(double angle)
     m_projetGeometrie->ui.SpinBoxCrayonOrientation->setValue(angle);
 }
 
+QRectF Crayon::boundingRect(void)
+{
+    return Instrument::boundingRect();
+}
+
 //***************************************Fonctions de mise à jour des valeurs***************************************
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -86,7 +90,7 @@ void Crayon::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, Q
     else //Pas de transparence
         dessin->setBrush(Qt::black); //Couleur de la mine
 
-    int epaisseurMine = m_epaisseur/2;
+    int epaisseurMine = m_largeur/2;
     int hauteurMine = m_hauteurPointe/3;
     //Rotation
     dessin->translate(x(),y());
@@ -97,16 +101,16 @@ void Crayon::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, Q
     //Dessin du reste de la pointe
     dessin->setBrush(QColor(255,203,96)); //Mise en couleur de la pointe
     QPointF pointe[4] = {QPointF(x()-(epaisseurMine/2), y()+hauteurMine), QPointF(x()+epaisseurMine/2, y()+hauteurMine),
-                         QPointF(x()+m_epaisseur/2, y()+m_hauteurPointe), QPointF(x()-(m_epaisseur/2), y()+m_hauteurPointe)}; //Points du triangle principal
+                         QPointF(x()+m_largeur/2, y()+m_hauteurPointe), QPointF(x()-(m_largeur/2), y()+m_hauteurPointe)}; //Points du triangle principal
     dessin->drawConvexPolygon(pointe, 4); //Pointe du crayon
     //Dessin du corps du crayon
     dessin->setBrush(QColor(255,255,49));
-    dessin->drawRect(x()-(m_epaisseur/2), y()+m_hauteurPointe, m_epaisseur, m_longueur);
+    dessin->drawRect(x()-(m_largeur/2), y()+m_hauteurPointe, m_largeur, m_longueur);
     //Dessin du bouton rotation
     dessin->setBrush(QColor(125,255,255));
     dessin->drawRect(x()-epaisseurMine, y()+250, 2*epaisseurMine, 8*epaisseurMine);
     //Dessin de 2 traits sur le corps
-    dessin->drawLine(x()-(m_epaisseur/5),y()+m_hauteurPointe, x()-(m_epaisseur/5),y()+m_hauteurPointe+m_longueur-30);
-    dessin->drawLine(x()+m_epaisseur/5,y()+m_hauteurPointe, x()+m_epaisseur/5,y()+m_hauteurPointe+m_longueur-30);
+    dessin->drawLine(x()-(m_largeur/5),y()+m_hauteurPointe, x()-(m_largeur/5),y()+m_hauteurPointe+m_longueur-30);
+    dessin->drawLine(x()+m_largeur/5,y()+m_hauteurPointe, x()+m_largeur/5,y()+m_hauteurPointe+m_longueur-30);
     dessin->restore();
 }

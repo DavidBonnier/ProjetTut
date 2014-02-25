@@ -30,8 +30,8 @@ class ProjetGeometrie;
 class Regle : public Instrument
 {
 public:
-    Regle();
-    Regle(ProjetGeometrie * projetGeometrie);
+    Regle(QGraphicsItem *parent = 0);
+    Regle(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent = 0);
     ~Regle();
 
     void tracer(double graduation1 , double graduation2);
@@ -40,6 +40,8 @@ public:
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);
     void setAngle(double angle);
+
+    QRectF boundingRect(void);
 
     void paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 

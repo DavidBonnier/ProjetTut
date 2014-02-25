@@ -31,12 +31,14 @@ class ProjetGeometrie;
 class Equerre : public Regle
 {
 public:
-    Equerre(ProjetGeometrie * projetGeometrie);
+    Equerre(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent = 0);
     ~Equerre();
 
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);
     void setAngle(double angle);
+
+    QRectF boundingRect(void);
 
     QPointF Thales(double longueur, double largeur, double transp, int x, int y);
 

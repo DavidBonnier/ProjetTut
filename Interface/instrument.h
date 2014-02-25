@@ -18,13 +18,13 @@ class ProjetGeometrie;
 class Instrument : public QGraphicsItem
 {
 public:
-    Instrument();
+    Instrument(QGraphicsItem * parent);
     ~Instrument();
 
     virtual void setTransparence(bool transparence);
-
-    void translation(double positionX , double positionY);
+    virtual void translation(double positionX , double positionY);
     virtual void setAngle(double angle);
+    QRectF boundingRect(void);
 
     inline int getLongueur(){return m_longueur;}
     inline int getLargeur(){return m_largeur;}
@@ -36,7 +36,6 @@ protected:
     bool m_transparence;
     int m_longueur;
     int m_largeur;
-    int m_epaisseur;
 
     QString* m_nomFichierXML;
     QString* m_nomDocument;

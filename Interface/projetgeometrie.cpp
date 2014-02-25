@@ -6,6 +6,16 @@ ProjetGeometrie::ProjetGeometrie(Geometrie* geometrie)
 	m_couleurTrait = Qt::blue;
 
     m_geometrie = geometrie;
+
+    /*m_regle = new Regle(this);
+    m_geometrie->addItem(m_regle);*/
+    m_equerre = new Equerre(this);
+    m_geometrie->addItem(m_equerre);
+    /*m_compas = new Compas(this);
+    m_geometrie->addItem(m_compas);
+    m_crayon = new Crayon(this);
+    m_geometrie->addItem(m_crayon);*/
+
     m_viewGraph = new QGraphicsView(m_geometrie);
 
     ui.DessinLayout->addWidget(m_viewGraph);
@@ -22,14 +32,14 @@ ProjetGeometrie::ProjetGeometrie(Geometrie* geometrie)
     //Boutons outils
     connect(ui.BoutonPleinEcran, SIGNAL(clicked(bool)), this, SLOT(sortieFullScreen()));
 
-    connect(ui.BoutonCrayon, SIGNAL(clicked(bool)), this, SLOT(Crayon()));
-    connect(ui.BoutonEquerre, SIGNAL(clicked(bool)), this, SLOT(Equerre()));
-    connect(ui.BoutonRegle, SIGNAL(clicked(bool)), this, SLOT(Regle()));
-    connect(ui.BoutonCompas, SIGNAL(clicked(bool)), this, SLOT(Compas()));
-    connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(Point()));
-    connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(zoneTexte()));
+    connect(ui.BoutonCrayon, SIGNAL(clicked(bool)), this, SLOT(crayon(bool)));
+    connect(ui.BoutonEquerre, SIGNAL(clicked(bool)), this, SLOT(equerre(bool)));
+    connect(ui.BoutonRegle, SIGNAL(clicked(bool)), this, SLOT(regle(bool)));
+    connect(ui.BoutonCompas, SIGNAL(clicked(bool)), this, SLOT(compas(bool)));
+    connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(point(bool)));
+    connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(zoneTexte(bool)));
 	connect(ui.spinBoxEpaisseur, SIGNAL(valueChanged(int)), this, SLOT(Epaisseur(int)));
-    connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille(bool)));
+    connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(grille(bool)));
 	connect(ui.BoutonCouleur, SIGNAL(clicked(bool)), this, SLOT(Couleur()));
 //Instruments DockWidget
     //Crayon
@@ -71,28 +81,29 @@ void ProjetGeometrie::sortieFullScreen()
 	update();
 }
 
-void ProjetGeometrie::Crayon()
-{
-}
-
-void ProjetGeometrie::Equerre()
-{
-}
-
-void ProjetGeometrie::Regle()
-{
-}
-
-void ProjetGeometrie::Compas()
-{
-}
-
-void ProjetGeometrie::Point()
+void ProjetGeometrie::crayon(bool check)
 {
 
 }
 
-void ProjetGeometrie::Grille(bool b)
+void ProjetGeometrie::equerre(bool check)
+{
+}
+
+void ProjetGeometrie::regle(bool check)
+{
+}
+
+void ProjetGeometrie::compas(bool check)
+{
+}
+
+void ProjetGeometrie::point(bool check)
+{
+
+}
+
+void ProjetGeometrie::grille(bool b)
 {
 
 }
@@ -115,7 +126,7 @@ void ProjetGeometrie::restoreCursor()
 	ui.BoutonTexte->setChecked(false);
 }
 
-void ProjetGeometrie::zoneTexte()
+void ProjetGeometrie::zoneTexte(bool check)
 {
 
 }

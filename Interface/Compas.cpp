@@ -17,7 +17,8 @@
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Compas::Compas(ProjetGeometrie * projetGeometrie)
+Compas::Compas(ProjetGeometrie * projetGeometrie,QGraphicsItem *parent) :
+    Instrument(parent)
 {
     m_projetGeometrie = projetGeometrie;
 
@@ -130,6 +131,11 @@ void Compas::setAngle(double angle)
 {
     Instrument::setAngle(angle);
     m_projetGeometrie->ui.SpinBoxCompasOrientation->setValue(angle);
+}
+
+QRectF Compas::boundingRect(void)
+{
+    return Instrument::boundingRect();
 }
 
 ///////////////////////////////////////////////////////////////////////

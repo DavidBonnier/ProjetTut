@@ -27,7 +27,7 @@ class ProjetGeometrie;
 class Compas : public Instrument
 {
 public:
-    Compas(ProjetGeometrie *projetGeometrie);
+    Compas(ProjetGeometrie *projetGeometrie, QGraphicsItem *parent = 0);
     ~Compas();
 
     double angleEcartement(double ecart, double longueurBranche);
@@ -37,10 +37,11 @@ public:
     void finTracer();
 
     void setEcartement(double ecartement);
-
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);
     void setAngle(double angle);
+
+    QRectF boundingRect(void);
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 

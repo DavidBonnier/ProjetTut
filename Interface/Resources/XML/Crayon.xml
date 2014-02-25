@@ -13,7 +13,7 @@
     <posClicX>0</posClicX>
     <posClicY>0</posClicY>
     <!--Constantes-->
-    <epaisseur>16</epaisseur>
+    <largeur>16</largeur>
     <longueur>250</longueur>
     <hauteurPointe>30</hauteurPointe>
 </crayon>

@@ -1,7 +1,8 @@
 #include "instrument.h"
 #include "Geometrie.h"
 
-Instrument::Instrument()
+Instrument::Instrument(QGraphicsItem *parent) :
+    QGraphicsItem(parent)
 {
 }
 
@@ -52,8 +53,6 @@ void Instrument::Initialisation()
                 m_longueur = element.text().toInt();
             if (element.tagName() == "largeur")
                 m_largeur = element.text().toInt();
-            if (element.tagName() == "epaisseur")
-                m_epaisseur = element.text().toInt();
         }
         noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
     }
@@ -91,3 +90,11 @@ void Instrument::translation(double positionX , double positionY)
    setPos(positionX, positionY);
    update();
 }
+
+QRectF Instrument::boundingRect(void)
+{
+    qreal epaisseurTrait = 2;
+    return QRectF(x()-epaisseurTrait/2, y()-epaisseurTrait/2, getLargeur()+epaisseurTrait,
+                  getLongueur()+epaisseurTrait);
+}
+

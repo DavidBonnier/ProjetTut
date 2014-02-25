@@ -9,18 +9,20 @@
 #include "Regle.h"
 #include "projetgeometrie.h"
 
-Regle::Regle()
+Regle::Regle(QGraphicsItem *parent) :
+    Instrument(parent)
 {
 }
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \brief Constructeur de la règle, initialise toutes les valeurs du fichier XML à 0.
+//! \brief Constructeur de la règle, charge les valeurs du XML.
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Regle::Regle(ProjetGeometrie * projetGeometrie)
+Regle::Regle(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent) :
+    Instrument(parent)
 {
     m_projetGeometrie = projetGeometrie;
 
@@ -112,6 +114,14 @@ void Regle::setAngle(double angle)
     m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
 }
 
+QRectF Regle::boundingRect(void)
+{
+    qreal epaisseurTrait = 2;
+    qreal hauteurTransparence = 20;
+    return QRectF(x()-epaisseurTrait/2, y()-epaisseurTrait/2-hauteurTransparence,
+                  getLargeur()+epaisseurTrait, getLongueur()+epaisseurTrait);
+}
+
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
@@ -130,9 +140,6 @@ void Regle::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QW
     else //Pas de transparence
         dessin->setBrush(QColor(255,255,153)); //Couleur du petit rectangle
 
-    //Rotation
-    dessin->translate(x(),y());
-    dessin->translate(-x(),-y());
     //Dessin des rectangles
     dessin->drawRect(x(), y(), m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)
     dessin->setBrush(QColor(255,255,51)); //Mise en couleur de la partie principale de la regle

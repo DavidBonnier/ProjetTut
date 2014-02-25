@@ -18,7 +18,8 @@
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Equerre::Equerre(ProjetGeometrie * projetGeometrie)
+Equerre::Equerre(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent) :
+    Regle(parent)
 {
     m_projetGeometrie = projetGeometrie;
 
@@ -75,6 +76,11 @@ void Equerre::setAngle(double angle)
 {
     Instrument::setAngle(angle);
     m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
+}
+
+QRectF Equerre::boundingRect(void)
+{
+    return Regle::boundingRect();
 }
 
 ///////////////////////////////////////////////////////////////////////
