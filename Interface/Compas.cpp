@@ -121,7 +121,7 @@ void Compas :: tracer (double angleArriver)
     if(m_geometrie->tableauFigure.isEmpty())
     {
         m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
-                                                     m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
+                                                     m_ecartement*2,m_ecartement*2,m_angle*16,new double (angleArriver*16)));
     }
     else
     {
@@ -134,7 +134,7 @@ void Compas :: tracer (double angleArriver)
         else
         {
             m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
-                                                         m_ecartement*2,m_ecartement*2,m_angle*16,angleArriver*16));
+                                                         m_ecartement*2,m_ecartement*2,m_angle*16,new double (angleArriver*16)));
         }
     }
 }

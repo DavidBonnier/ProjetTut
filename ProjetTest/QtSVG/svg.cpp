@@ -11,8 +11,7 @@ svg::svg(QWidget *parent) :
     connect(ui->pushContinueTracer, SIGNAL(pressed()), this, SLOT(ContinuerTracer()));
     connect(ui->pushFinGene, SIGNAL(pressed()), this, SLOT(FinGeneration()));
 
-    peintre = new QPainter;
-    peintre->setViewport(0,0,50,50);
+    peintre = new QPainter(this);
 
     nomFichier = new QString("./enregistrement.svg");
     nomFichierTemp = new QString("./temps.svg");
@@ -30,13 +29,9 @@ void svg::DebutTracer()
 {
     generator = new QSvgGenerator;
     generator->setFileName(*nomFichierTemp);
-    generator->setSize(QSize(50, 50));
-    generator->setViewBox(QRect(0, 0, 50, 50));
-    generator->setTitle(tr("SVG Generator Example Drawing"));
-    generator->setDescription(tr("An SVG drawing created by the SVG Generator"));
 
     peintre->begin(generator);
-    peintre->drawLine(0,0,10,10);
+    //peintre->drawLine(0,0,10,10);
 }
 
 void svg::DebutGeneration()

@@ -423,7 +423,7 @@ void Interface::insererGeom()
     QTextCursor cursor = txtCours->textCursor();
     QTextImageFormat imageFormat;
     imageFormat.setWidth( img->width() );
-    imageFormat.setHeight( img->height() );
+    imageFormat.setHeight( img->hauteur );
     imageFormat.setName( Uri.toString() );
     cursor.insertImage(imageFormat);*/
 }

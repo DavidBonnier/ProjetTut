@@ -88,6 +88,9 @@ private:
     QString * m_nomFichierTemp;
     QRect * m_rectangleViewport;
 
+    int m_minDimFenetre;
+    int m_nbGraduation;
+
 signals:
 	void curseur();
 	void pointcree();

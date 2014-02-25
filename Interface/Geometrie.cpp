@@ -44,9 +44,10 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
     ordreInstruments[2] = 'r';
     ordreInstruments[3] = 'c'; //Compas
 
-    m_nomFichierTemp = new QString("temps.svg");
-    m_nomFichier = new QString("enregistrement.svg");
+    m_nomFichierTemp = new QString("./temps.svg");
+    m_nomFichier = new QString("./enregistrement.svg");
     m_rectangleViewport = new QRect (0,0,1500,1500);
+    m_nbGraduation = 500;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -158,7 +159,7 @@ bool Geometrie::gererEquerre()
 //!
 //! \param event Evenement de tracé.
 //!
-//! \brief Cette fonction trie le tableau des positions des intruments et les dessine dans l'ordre, elle trace aussi la grille.
+//! \brief Cette fonction trie le tableau des positions des intruments et les dessine dans l'ordre,elle trace aussi la grille.
 //!
 //! \date 31/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -237,6 +238,8 @@ void Geometrie::paintEvent (QPaintEvent *event)
         }
     }
 
+    m_minDimFenetre = qMin(width(),height());
+
     QPainter dessin(this);
 
 	//Dessin ou non de la grille
@@ -248,43 +251,48 @@ void Geometrie::paintEvent (QPaintEvent *event)
 		EpaisseurGrille.setWidth(1);
 		EpaisseurGrilleCentre.setWidth(3);
 
+        int hauteur = height();
+        int largeur = width();
+
 		//Graduations verticales
-		for (int i=0 ; i<width() ; i+=50)
-			if(i-25<=width()/2 && i+25>=width()/2) //Graduation du milieu en vertical
+        for (int i=0 ; i<largeur ; i+=50)
+            if(i-25<=largeur/2 && i+25>=largeur/2) //Graduation du milieu en vertical
 			{
-				dessin.setPen(EpaisseurGrilleCentre);
-				dessin.drawLine(i,0 , i, height());
+                dessin.setPen(EpaisseurGrilleCentre);
+                dessin.drawLine(i,0 , i, hauteur);
 			}
 			else
 			{
 				dessin.setPen(EpaisseurGrille);
-				dessin.drawLine(i,0 , i,height());
+                dessin.drawLine(i,0 , i,hauteur);
 			}
 
 		//Horizontales
-		for (int i=0 ; i<height() ; i+=50)
-			if(i-25<=height()/2 && i+25>=height()/2) //Graduation du milieu en vertical
+        for (int i=0 ; i<hauteur ; i+=50)
+            if(i-25<=hauteur/2 && i+25>=hauteur/2) //Graduation du milieu en vertical
 			{
 				dessin.setPen(EpaisseurGrilleCentre);
-				dessin.drawLine(0,i , width(), i);
+                dessin.drawLine(0,i , largeur, i);
 			}
 			else
 			{
 				dessin.setPen(EpaisseurGrille);
-				dessin.drawLine(0,i, width(),i);
+                dessin.drawLine(0,i, largeur,i);
 			}
 
 		dessin.restore();
 	}
 
-	QPainter * dessinTrait;
+    QPainter * dessinTrait;
     dessinTrait = new QPainter(this);
+    dessinTrait->setViewport((width()-m_minDimFenetre)/2,(height()-m_minDimFenetre)/2,m_minDimFenetre,m_minDimFenetre);
+    dessinTrait->setWindow(-m_nbGraduation,m_nbGraduation,2*m_nbGraduation,-2*m_nbGraduation);
 
     QPen pen;
     pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
 	pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
 
-	dessinTrait->setPen(pen);
+    dessinTrait->setPen(pen);
     dessinerFigure(dessinTrait);
     delete dessinTrait;
 
@@ -317,19 +325,16 @@ void Geometrie::paintEvent (QPaintEvent *event)
 ///////////////////////////////////////////////////////////////////////
 void Geometrie::dessinerFigure(QPainter* dessinTrait)
 {
-    QSvgGenerator * generator;
-    generator = new QSvgGenerator;
-    generator->setFileName(*m_nomFichierTemp);
-    generator->setTitle(tr("Generation de SVG pour le tracage de geometrie"));
-    generator->setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
+    QSvgGenerator generator;
+    generator.setFileName(*m_nomFichierTemp);
+    generator.setTitle(tr("Generation de SVG pour le tracage de geometrie"));
+    generator.setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
 
-    dessinTrait->begin(generator);
+    dessinTrait->begin(&generator);
     if(QFile::exists(*m_nomFichier))
     {
-        QSvgRenderer * renderer;
-        renderer = new QSvgRenderer(*m_nomFichier);
-        renderer->render(dessinTrait);
-        delete renderer;
+        QSvgRenderer renderer(*m_nomFichier);
+        renderer.render(dessinTrait);
     }
 	
     for (int i = 0; i<tableauFigure.size(); i++)
@@ -338,7 +343,7 @@ void Geometrie::dessinerFigure(QPainter* dessinTrait)
         if(monArc!=NULL)
         {
             if(monArc->getSpan() != NULL)
-                dessinTrait->drawArc(monArc->getRectangle(),monArc->getStart(),monArc->getSpan());
+                dessinTrait->drawArc(monArc->getRectangle(),monArc->getStart(),*monArc->getSpan());
         }
         else
         {
@@ -358,7 +363,6 @@ void Geometrie::dessinerFigure(QPainter* dessinTrait)
 		tableauFigure[i]->installEventFilter(this); //Mise en place de l'event filter pour pouvoir l'effacer
     }
     dessinTrait->end();
-    delete generator;
 
     /*QFile sauvegardeFichier (*nomFichierTemp);
     sauvegardeFichier.copy(*nomFichier);*/
@@ -517,7 +521,7 @@ bool Geometrie::eventFilter(QObject * obj, QEvent * e)
 	if (e->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent* me = static_cast <QMouseEvent*> (e);
-		if (me->button() == Qt::MouseButton::RightButton) //Clic droit de la souris
+        if (me->button() == Qt::RightButton) //Clic droit de la souris
 		{
 			for(int i=0; tableauFigure.size(); i++)
 			{

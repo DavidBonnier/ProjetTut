@@ -29,7 +29,7 @@ ProjetGeometrie::ProjetGeometrie()
     connect(ui.BoutonCompas, SIGNAL(clicked(bool)), this, SLOT(Compas()));
     connect(ui.BoutonPoint, SIGNAL(clicked(bool)), this, SLOT(Point()));
     connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(zoneTexte()));
-	connect(ui.spinBoxEpaisseur, SIGNAL(valueChanged(int)), this, SLOT(Epaisseur(int)));
+    connect(ui.spinBoxEpaisseur, SIGNAL(valueChanged(int)), this, SLOT(Epaisseur()));
     connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille(bool)));
 	connect(ui.BoutonCouleur, SIGNAL(clicked(bool)), this, SLOT(Couleur()));
 //Instruments
@@ -138,7 +138,7 @@ void ProjetGeometrie::restorePoint()
 	m_geometrie->update();
 }
 
-void ProjetGeometrie::Epaisseur(int e)
+void ProjetGeometrie::Epaisseur()
 {
 	m_geometrie->update();
 }

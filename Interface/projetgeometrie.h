@@ -41,7 +41,7 @@ public slots :
     void Point();
     void zoneTexte();
 
-    void Epaisseur(int e);
+    void Epaisseur();
     void Grille(bool b);
     void Couleur();
 //Intruments

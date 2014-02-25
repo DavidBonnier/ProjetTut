@@ -8,8 +8,8 @@ class Arc : public Figure
 {
 public:
     Arc();
-    Arc(int x, int m_positionY, int w, int h, double startAngle, double spanAngle = NULL);
-    Arc(QRectF rectangle, double startAngle, double spanAngle = NULL);
+    Arc(int x, int m_positionY, int w, int h, double startAngle, double * spanAngle = NULL);
+    Arc(QRectF rectangle, double startAngle, double * spanAngle = NULL);
 
 private:
     QRectF m_rectangle;
@@ -26,7 +26,7 @@ public:
 
     inline QRectF getRectangle() {return m_rectangle;}
     inline double getStart() {return m_startAngle;}
-    inline double getSpan() {return *m_spanAngle;}
+    inline double * getSpan() {return m_spanAngle;}
     inline bool getFin(){return m_finTracer;}
 };
 

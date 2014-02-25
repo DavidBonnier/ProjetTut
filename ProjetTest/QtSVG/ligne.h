@@ -9,8 +9,8 @@ class Ligne : public QWidget
     Q_OBJECT
 public:
     Ligne(QWidget *parent = 0);
-    inline QLineF* getQLine() {return line;};
-    inline void setQLine(QLineF * ligne) {line = ligne;};
+    inline QLineF* getQLine() {return line;}
+    inline void setQLine(QLineF * ligne) {line = ligne;}
 
 private:
     QLineF * line;
