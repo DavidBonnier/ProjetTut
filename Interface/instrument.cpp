@@ -244,5 +244,5 @@ void Instrument::deselectionner()
 
 double Instrument::toGradian(double angle)
 {
-    return PI*(angle/180);
+    return M_PI*(angle/180);
 }

@@ -278,11 +278,12 @@ void Geometrie::paintEvent (QPaintEvent *event)
 	}
 
 	QPainter * dessinTrait;
-	QPen pen;
-	
     dessinTrait = new QPainter(this);
+
+    QPen pen;
     pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
 	pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
+
 	dessinTrait->setPen(pen);
     dessinerFigure(dessinTrait);
     delete dessinTrait;

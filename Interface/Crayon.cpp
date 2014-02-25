@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////
 Crayon::Crayon(Geometrie * geometrie)
 {
-    m_nomFichierXML = new QString("Crayon.xml");
+    m_nomFichierXML = new QString(":/Instrument/Resources/XML/Crayon.xml");
     m_nomDocument = new QString("Crayon");
     m_nomElement = new QString("crayon");
 

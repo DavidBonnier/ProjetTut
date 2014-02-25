@@ -67,11 +67,11 @@ Interface::Interface(QMainWindow *parent)
 	ui.PleinEcranExo->setToolTip("Écrire sur vos cahiers en Plein Écran");
 	ui.PleinEcranEval->setToolTip("Écrire sur vos cahiers en Plein Écran");
 
-    actionTailleTexte->setIcon(QIcon("Resources/fontSize.png"));
-	actionCouleurTexte->setIcon(QIcon("Resources/fontColor.png"));
-	actionRegle->setIcon(QIcon("Resources/regle.gif"));
-	actionCrayon->setIcon(QIcon("Resources/crayon.gif"));
-	actionEquerre->setIcon(QIcon("Resources/equerre.gif"));
+    actionTailleTexte->setIcon(QIcon(":/Interface/Resources/fontSize.png"));
+    actionCouleurTexte->setIcon(QIcon(":/Interface/Resources/fontColor.png"));
+    actionRegle->setIcon(QIcon(":/ProjetGeometrie/Resources/regle.gif"));
+    actionCrayon->setIcon(QIcon(":/ProjetGeometrie/Resources/crayon.gif"));
+    actionEquerre->setIcon(QIcon(":/ProjetGeometrie/Resources/equerre.gif"));
 
 	actionEquerre->setCheckable(false);
 	actionRegle->setCheckable(false);
@@ -197,9 +197,9 @@ void Interface::FullScreen_Cahiers()
 	{
 		ui.Onglets->setParent(0);
 		ui.Onglets->showFullScreen();
-		ui.PleinEcranCours->setIcon(QIcon("Resources/SortieFullscreen.gif"));
-		ui.PleinEcranEval->setIcon(QIcon("Resources/SortieFullscreen.gif"));
-		ui.PleinEcranExo->setIcon(QIcon("Resources/SortieFullscreen.gif"));
+        ui.PleinEcranCours->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
+        ui.PleinEcranEval->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
+        ui.PleinEcranExo->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
 		widgetIsFullscreen = true;
 		return;
 	}
@@ -208,9 +208,9 @@ void Interface::FullScreen_Cahiers()
 		ui.LayoutCahiers->addWidget(ui.Onglets);
 		ui.Onglets->showNormal();
 		
-		ui.PleinEcranCours->setIcon(QIcon("Resources/Fullscreen.gif"));
-		ui.PleinEcranEval->setIcon(QIcon("Resources/Fullscreen.gif"));
-		ui.PleinEcranExo->setIcon(QIcon("Resources/Fullscreen.gif"));
+        ui.PleinEcranCours->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
+        ui.PleinEcranEval->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
+        ui.PleinEcranExo->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
 		widgetIsFullscreen = false;
 		return;
 	}
@@ -353,7 +353,7 @@ void Interface::AffichageRaccourcis()
 {
 	QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p> <p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p><p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p><p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p><p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p><p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p><p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p><p> <strong> - F12 </strong>: Sauvegarder Sous. </p><p> <strong> - Ctrl + P </strong>: Imprimer. </p><p> <strong> - Alt + P </strong>: Aperçu avant impression. </p><p> <strong> - F1 </strong>: Affichage de l'aide. </p><p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p><p> <strong> - Alt + F4 </strong>: Quitter le programme.");
 	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", msg);
-	shortcuts->setIconPixmap(QPixmap("Resources/raccourcisClavier.png"));
+    shortcuts->setIconPixmap(QPixmap(":/Interface/Resources/raccourcisClavier.png"));
 	shortcuts->show();
 }
 
@@ -405,7 +405,7 @@ void Interface::Impression()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::Aide()
 {
-	QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath()+"/Resources/Aide/index.html"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath()+":/Aide/Resources/Aide/index.html"));
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -417,7 +417,7 @@ void Interface::Aide()
 void Interface::insererGeom()
 {
 	/*ui.imgLabel->setPixmap(pix);
-	QUrl Uri ( QString ( "Resources/img_Clone.jpg"));
+    QUrl Uri ( QString ( ":/Interface/Resources/img_Clone.jpg"));
 	QTextDocument * textDocument = txtCours->document();
     textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( *img ) );
     QTextCursor cursor = txtCours->textCursor();

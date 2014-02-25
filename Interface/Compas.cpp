@@ -21,7 +21,7 @@ Compas::Compas(Geometrie * geometrie)
 {
     m_geometrie = geometrie;
 
-    m_nomFichierXML = new QString("Compas.xml");
+    m_nomFichierXML = new QString(":/Instrument/Resources/XML/Compas.xml");
     m_nomDocument = new QString("Compas");
     m_nomElement = new QString("compas");
 
@@ -85,7 +85,7 @@ double Compas::angleEcartement(double ecart, double longueurBranche) //Retourne 
 {
     double teta = (ecart/2)/longueurBranche; //sin(teta) = (ecart/2)/(longueurBranche)
     teta = asin(teta); //sin-1(teta) en radian
-    teta *= 180/PI; //Conversion en degrés
+    teta *= 180/M_PI; //Conversion en degrés
     return teta;
 }
 

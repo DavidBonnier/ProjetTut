@@ -23,7 +23,7 @@ Regle::Regle()
 ///////////////////////////////////////////////////////////////////////
 Regle::Regle(Geometrie * geometrie)
 {
-    m_nomFichierXML = new QString("Regle.xml");
+    m_nomFichierXML = new QString(":/Instrument/Resources/XML/Regle.xml");
     m_nomDocument = new QString("Regle");
     m_nomElement = new QString("regle");
 

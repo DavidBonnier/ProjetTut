@@ -27,5 +27,37 @@
         <file>Resources/SortieFullscreen.gif</file>
         <file>Resources/supprUti.png</file>
         <file>Resources/validationConnexion.png</file>
+        <file>Resources/curseur-point.png</file>
+        <file>Resources/curseur-zoneTexte.png</file>
+        <file>Resources/img_Clone.jpg</file>
+        <file>Resources/Point.gif</file>
+        <file>Resources/Texte.gif</file>
+        <file>Resources/Trait.gif</file>
+    </qresource>
+    <qresource prefix="/Aide">
+        <file>Resources/Aide/compas.html</file>
+        <file>Resources/Aide/connexion.html</file>
+        <file>Resources/Aide/contact.html</file>
+        <file>Resources/Aide/crayon.html</file>
+        <file>Resources/Aide/enregistrement.html</file>
+        <file>Resources/Aide/equerre.html</file>
+        <file>Resources/Aide/fichiers.html</file>
+        <file>Resources/Aide/figures.html</file>
+        <file>Resources/Aide/grille.html</file>
+        <file>Resources/Aide/index.html</file>
+        <file>Resources/Aide/magnestisme.html</file>
+        <file>Resources/Aide/menu.js</file>
+        <file>Resources/Aide/point.html</file>
+        <file>Resources/Aide/regle.html</file>
+        <file>Resources/Aide/style.css</file>
+        <file>Resources/Aide/suppr.html</file>
+        <file>Resources/Aide/texte.html</file>
+        <file>Resources/Aide/zoneTexte.html</file>
+        <file>Resources/Aide/Images/ajouterUti.png</file>
+        <file>Resources/Aide/Images/fontColor.png</file>
+        <file>Resources/Aide/Images/fontSize.png</file>
+        <file>Resources/Aide/Images/info.png</file>
+        <file>Resources/Aide/Images/panneau_attention.png</file>
+        <file>Resources/Aide/Images/Texte.gif</file>
     </qresource>
 </RCC>
