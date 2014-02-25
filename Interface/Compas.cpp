@@ -146,59 +146,58 @@ void Compas::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, Q
     dessin->save();
 
     //Rotation
-    dessin->translate(m_position.x(),m_position.y());
-    dessin->rotate(-m_angle);
-    dessin->translate(-m_position.x(),-m_position.y());
+    dessin->translate(x(),y());
+    dessin->translate(-x(),-y());
 //Dessin de la branche avec pointe
     double teta = angleEcartement(m_ecartement, m_longueur+m_hauteurPointe);
     dessin->save();
     //Rotation de la tige
-    dessin->translate(m_position.x(),m_position.y());
+    dessin->translate(x(),y());
     dessin->rotate(-teta);
-    dessin->translate(-m_position.x(),-m_position.y());
+    dessin->translate(-x(),-y());
     //Dessin
     dessin->setPen(Qt::black);
-    QPointF pointe[3] = {QPointF(m_position.x(),m_position.y()), QPointF(m_position.x(), m_position.y()+m_hauteurPointe), QPointF(m_position.x()-m_largeur/2, m_position.y()+m_hauteurPointe)}; //Points de la pointe
+    QPointF pointe[3] = {QPointF(x(),y()), QPointF(x(), y()+m_hauteurPointe), QPointF(x()-m_largeur/2, y()+m_hauteurPointe)}; //Points de la pointe
     dessin->drawConvexPolygon(pointe, 3); //Dessin de la pointe
     dessin->setBrush(Qt::gray);
-    dessin->drawRect(m_position.x()-m_largeur, m_position.y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec pointe
+    dessin->drawRect(x()-m_largeur, y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec pointe
     dessin->restore();
 
 //Dessin de la branche avec mine
     dessin->save();
     //Rotation de la tige
-    dessin->translate(m_position.x()+m_ecartement,m_position.y());
+    dessin->translate(x()+m_ecartement,y());
     dessin->rotate(teta);
-    dessin->translate(-m_position.x() -m_ecartement,-m_position.y());
+    dessin->translate(-x() -m_ecartement,-y());
     //Dessin
     dessin->setBrush(Qt::black);
-    QPointF mine[4] = {QPointF(m_position.x()+m_ecartement,m_position.y()), QPointF(m_position.x()+m_ecartement, m_position.y()+m_hauteurPointe),
-                      QPointF(m_position.x()+m_largeur/2+m_ecartement, m_position.y()+m_hauteurPointe), QPointF(m_position.x()+m_largeur/3+m_ecartement, m_position.y()+m_hauteurPointe/3)}; //Points de la mine
+    QPointF mine[4] = {QPointF(x()+m_ecartement,y()), QPointF(x()+m_ecartement, y()+m_hauteurPointe),
+                      QPointF(x()+m_largeur/2+m_ecartement, y()+m_hauteurPointe), QPointF(x()+m_largeur/3+m_ecartement, y()+m_hauteurPointe/3)}; //Points de la mine
     dessin->drawConvexPolygon(mine, 4); //Dessin de la mine
     dessin->setBrush(Qt::gray);
-    dessin->drawRect(m_position.x()+m_ecartement, m_position.y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec mine
+    dessin->drawRect(x()+m_ecartement, y()+m_hauteurPointe, m_largeur, m_longueur); //Branche avec mine
     dessin->restore();
 
 //Dessin du centre
     dessin->setBrush(Qt::blue);
     int hauteurcentre = hauteurCompas(m_ecartement, m_longueur);
-    dessin->drawRect(m_position.x()+(m_ecartement/2)-m_largeur, m_position.y()+hauteurcentre, 2*m_largeur, m_hauteurBase); //Base du compas
-    dessin->drawRect(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2); //Bout du compas
+    dessin->drawRect(x()+(m_ecartement/2)-m_largeur, y()+hauteurcentre, 2*m_largeur, m_hauteurBase); //Base du compas
+    dessin->drawRect(x()+(m_ecartement/2)-m_largeur/2, y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2); //Bout du compas
     //Dessin du bouton de rotation;
     dessin->setBrush(QColor(124,255,255));
-    dessin->drawRect(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2);
+    dessin->drawRect(x()+(m_ecartement/2)-m_largeur/2, y()+hauteurcentre+m_hauteurBase, m_largeur, m_hauteurBase/2);
 
 //Dessin de la vis
     //Rotation
     dessin->save();
-    dessin->translate(m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+5*m_hauteurBase/8);
+    dessin->translate(x()+(m_ecartement/2), y()+hauteurcentre+5*m_hauteurBase/8);
     dessin->rotate(teta/2);
-    dessin->translate(-m_position.x()-(m_ecartement/2), -m_position.y()-hauteurcentre-5*m_hauteurBase/8);
+    dessin->translate(-x()-(m_ecartement/2), -y()-hauteurcentre-5*m_hauteurBase/8);
     //Dessin
     dessin->setBrush(Qt::gray);
-    dessin->drawEllipse(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+m_hauteurBase/2, m_largeur, m_largeur); //Cercle
-    dessin->drawLine(m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+m_hauteurBase/2, m_position.x()+(m_ecartement/2), m_position.y()+hauteurcentre+3*m_hauteurBase/4); //Trait vertical
-    dessin->drawLine(m_position.x()+(m_ecartement/2)-m_largeur/2, m_position.y()+hauteurcentre+5*m_hauteurBase/8, m_position.x()+(m_ecartement/2)+m_largeur/2, m_position.y()+hauteurcentre+5*m_hauteurBase/8); //Trait horizontal
+    dessin->drawEllipse(x()+(m_ecartement/2)-m_largeur/2, y()+hauteurcentre+m_hauteurBase/2, m_largeur, m_largeur); //Cercle
+    dessin->drawLine(x()+(m_ecartement/2), y()+hauteurcentre+m_hauteurBase/2, x()+(m_ecartement/2), y()+hauteurcentre+3*m_hauteurBase/4); //Trait vertical
+    dessin->drawLine(x()+(m_ecartement/2)-m_largeur/2, y()+hauteurcentre+5*m_hauteurBase/8, x()+(m_ecartement/2)+m_largeur/2, y()+hauteurcentre+5*m_hauteurBase/8); //Trait horizontal
     dessin->restore();
     dessin->restore();
 }

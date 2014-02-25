@@ -93,7 +93,6 @@ void Regle::setGraduation(int graduation)
     update();
 }
 
-
 void Regle::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
@@ -133,7 +132,6 @@ void Regle::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QW
 
     //Rotation
     dessin->translate(x(),y());
-    dessin->rotate(m_angle);
     dessin->translate(-x(),-y());
     //Dessin des rectangles
     dessin->drawRect(x(), y(), m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)

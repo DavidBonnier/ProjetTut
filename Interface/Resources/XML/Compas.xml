@@ -4,8 +4,6 @@
         <!--bool-->
         <transparence>0</transparence>
         <moveSelected>0</moveSelected>
-        <rotateSelectedRight>0</rotateSelectedRight>
-        <rotateSelectedLeft>0</rotateSelectedLeft>
     <positionX>10</positionX>
     <positionY>10</positionY>
     <angle>90</angle>
