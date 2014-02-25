@@ -20,7 +20,7 @@
 #include "instrument.h"
 #include "ligne.h"
 
-class ProjetGeometrie;
+class Geometrie;
 
 ///////////////////////////////////////////////////////////////////////////
 //! \class Regle
@@ -30,8 +30,8 @@ class ProjetGeometrie;
 class Regle : public Instrument
 {
 public:
-    Regle(QGraphicsItem *parent = 0);
-    Regle(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent = 0);
+    Regle();
+    Regle(Geometrie * geometrie);
     ~Regle();
 
     void tracer(double graduation1 , double graduation2);
@@ -41,9 +41,7 @@ public:
     void translation(double positionX , double positionY);
     void setAngle(double angle);
 
-    QRectF boundingRect(void);
-
-    void paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
+    void dessinerRegle(QPainter& dessin);
 
 protected:
     int m_graduation;

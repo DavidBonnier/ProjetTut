@@ -4,16 +4,7 @@
 #include <QtWidgets/QWidget>
 #include "ui_projetgeometrie.h"
 #include "Geometrie.h"
-
-#include "Crayon.h"
-#include "Compas.h"
-#include "Regle.h"
-#include "Equerre.h"
-
 #include <qcolordialog.h>
-
-#include <QGraphicsScene>
-#include <QGraphicsView>
 ///////////////////////////////////////////////////////////////////////////
 //! \class ProjetGeometrie
 //!
@@ -25,20 +16,11 @@ class ProjetGeometrie : public QWidget
     Q_OBJECT
 
 public:
-    ProjetGeometrie(Geometrie* geometrie);
+    ProjetGeometrie();
     ~ProjetGeometrie();
     Geometrie* m_geometrie;
-    QGraphicsView * m_viewGraph;
-
     Ui::ProjetGeometrieClass ui;
     QColor m_couleurTrait;
-
-private:
-    Compas * m_compas;
-    Regle * m_regle;
-    Equerre * m_equerre;
-    Crayon * m_crayon;
-
 
 signals:
     void clickSortieFullScreen();
@@ -52,15 +34,15 @@ public slots :
 	void restoreCursor();
 	void restorePoint();
     void sortieFullScreen();
-    void crayon(bool check);
-    void equerre(bool check);
-    void regle(bool check);
-    void compas(bool check);
-    void point(bool check);
-    void zoneTexte(bool check);
+    void Crayon();
+    void Equerre();
+    void Regle();
+    void Compas();
+    void Point();
+    void zoneTexte();
 
     void Epaisseur(int e);
-    void grille(bool b);
+    void Grille(bool b);
     void Couleur();
 //Intruments
     //Crayon

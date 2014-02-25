@@ -18,14 +18,13 @@
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Equerre::Equerre(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent) :
-    Regle(parent)
+Equerre::Equerre(Geometrie * geometrie)
 {
-    m_projetGeometrie = projetGeometrie;
-
-    m_nomFichierXML = new QString(":/XML/Resources/XML/Equerre.xml");
+    m_nomFichierXML = new QString("Equerre.xml");
     m_nomDocument = new QString("Equerre");
     m_nomElement = new QString("equerre");
+
+    m_geometrie = geometrie;
 
     InitialisationRegle();
 
@@ -62,25 +61,20 @@ QPointF Equerre::Thales(double longueur, double largeur, double transp, int x, i
 void Equerre::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
-    m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
 }
 
 void Equerre::translation(double positionX , double positionY)
 {
     Instrument::translation(positionX,positionY);
-    m_projetGeometrie->ui.SpinBoxEquerrePositionX->setValue(positionX);
-    m_projetGeometrie->ui.SpinBoxEquerrePositionY->setValue(positionY);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionX->setValue(positionX);
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionY->setValue(positionY);
 }
 
 void Equerre::setAngle(double angle)
 {
     Instrument::setAngle(angle);
-    m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
-}
-
-QRectF Equerre::boundingRect(void)
-{
-    return Regle::boundingRect();
+    m_geometrie->m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -92,33 +86,34 @@ QRectF Equerre::boundingRect(void)
 //!
 //! \date 17/01/2014
 ///////////////////////////////////////////////////////////////////////
-void Equerre::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget)
+void Equerre::dessinerEquerre(QPainter& dessin)
 {
-    dessin->save();
+    dessin.save();
 
     int hauteurZoneTransp = m_largeur/7;
 
     if (m_transparence) //S'il y a de la transparence
-        dessin->setPen(Qt::black);
+        dessin.setPen(Qt::black);
     else //Pas de transparence
-        dessin->setBrush(QColor(255,255,152)); //Couleur du petit rectangle
+        dessin.setBrush(QColor(255,255,152)); //Couleur du petit rectangle
 
     //Rotation
-    dessin->translate(x(),y());
-    dessin->translate(-x(),-y());
+    dessin.translate(m_position.x(),m_position.y());
+    dessin.rotate(m_angle);
+    dessin.translate(-m_position.x(),-m_position.y());
     //Dessin de la zone transparente
-    QPointF pointHyp = Thales(m_longueur, m_largeur, hauteurZoneTransp, x(), y());
-    QPointF pointsZoneTranparent[4] = {QPointF(x(), y()), QPointF(x()+m_longueur, y()), pointHyp, QPointF(x(), y()+hauteurZoneTransp)}; //Points de la zone transparente
-    dessin->drawConvexPolygon(pointsZoneTranparent, 4); //Dessin de la zone transparente
+    QPointF pointHyp = Thales(m_longueur, m_largeur, hauteurZoneTransp, m_position.x(), m_position.y());
+    QPointF pointsZoneTranparent[4] = {QPointF(m_position.x(), m_position.y()), QPointF(m_position.x()+m_longueur, m_position.y()), pointHyp, QPointF(m_position.x(), m_position.y()+hauteurZoneTransp)}; //Points de la zone transparente
+    dessin.drawConvexPolygon(pointsZoneTranparent, 4); //Dessin de la zone transparente
     //Dessin de la zone principale
-    dessin->setBrush(QColor(255,255,50)); //Mise en couleur de la partie principale de l'equerre
-    QPointF triangle[3] = {pointHyp, QPointF(x(), y()+hauteurZoneTransp), QPointF(x(), y()+m_largeur)}; //Points du triangle principal
-    dessin->drawConvexPolygon(triangle, 3); //Triangle principal
+    dessin.setBrush(QColor(255,255,50)); //Mise en couleur de la partie principale de l'equerre
+    QPointF triangle[3] = {pointHyp, QPointF(m_position.x(), m_position.y()+hauteurZoneTransp), QPointF(m_position.x(), m_position.y()+m_largeur)}; //Points du triangle principal
+    dessin.drawConvexPolygon(triangle, 3); //Triangle principal
     //Dessin du bouton rotation
-    dessin->setBrush(QColor(126,255,255));
-    dessin->drawEllipse(QPointF(x()+250,y()+50),15,15);
+    dessin.setBrush(QColor(126,255,255));
+    dessin.drawEllipse(QPointF(m_position.x()+250,m_position.y()+50),15,15);
     //Dessin des graduations
-    dessin->setFont(QFont("Arial", 8)); //Police et taille des charactères
+    dessin.setFont(QFont("Arial", 8)); //Police et taille des charactères
     int chiffre = 0; //Chiffre actuel sur l'équerre
     QString grad[] = {"0","1","2","3","4","5","6","7"}; //Chiffres sur l'équerre
     int hauteurMaxGrad = hauteurZoneTransp/2;
@@ -126,15 +121,15 @@ void Equerre::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, 
     {
         if (i%50 == 0) //Graduation cm
         {
-            dessin->drawLine(x()+i,y(), x()+i,y()+hauteurMaxGrad);
-            dessin->drawText(x()+2+i, y()-3+m_largeur/8, grad[chiffre]); //Affichage des chiffres
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad);
+            dessin.drawText(m_position.x()+2+i, m_position.y()-3+m_largeur/8, grad[chiffre]); //Affichage des chiffres
             chiffre++;
         }
         else if (i%25 == 0) //Graduation 1/2 cm
-            dessin->drawLine(x()+i,y(), x()+i,y()+hauteurMaxGrad/2);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/2);
         else //Graduation mm
-            dessin->drawLine(x()+i,y(), x()+i,y()+hauteurMaxGrad/4);
+            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/4);
     }
-    dessin->restore();
+    dessin.restore();
 }
 

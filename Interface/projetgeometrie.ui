@@ -27,7 +27,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/equerre.gif</normaloff>:/ProjetGeometrie/Resources/equerre.gif</iconset>
+          <normaloff>Resources/equerre.gif</normaloff>Resources/equerre.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -53,7 +53,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/crayon.gif</normaloff>:/ProjetGeometrie/Resources/crayon.gif</iconset>
+          <normaloff>Resources/crayon.gif</normaloff>Resources/crayon.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -88,7 +88,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/SortieFullscreen.gif</normaloff>:/ProjetGeometrie/Resources/SortieFullscreen.gif</iconset>
+          <normaloff>Resources/SortieFullscreen.gif</normaloff>Resources/SortieFullscreen.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -127,7 +127,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/Point.gif</normaloff>:/ProjetGeometrie/Resources/Point.gif</iconset>
+          <normaloff>Resources/Point.gif</normaloff>Resources/Point.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -150,7 +150,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/Texte.gif</normaloff>:/ProjetGeometrie/Resources/Texte.gif</iconset>
+          <normaloff>Resources/Texte.gif</normaloff>Resources/Texte.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -173,7 +173,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/regle.gif</normaloff>:/ProjetGeometrie/Resources/regle.gif</iconset>
+          <normaloff>Resources/regle.gif</normaloff>Resources/regle.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -193,7 +193,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/compas.gif</normaloff>:/ProjetGeometrie/Resources/compas.gif</iconset>
+          <normaloff>Resources/compas.gif</normaloff>Resources/compas.gif</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -250,7 +250,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/fontColor.png</normaloff>:/ProjetGeometrie/Resources/fontColor.png</iconset>
+          <normaloff>Resources/fontColor.png</normaloff>Resources/fontColor.png</iconset>
         </property>
         <property name="iconSize">
          <size>

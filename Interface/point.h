@@ -24,7 +24,6 @@ public:
 
     inline QLineF getHorizontalLine(){return m_ligneHorizontal;}
     inline QLineF getVerticalLine(){return m_ligneVertical;}
-
     void setLargeurPoint(int largeurPoint);
     void setPointBase(QPoint pointBase);
 

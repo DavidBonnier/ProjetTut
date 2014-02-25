@@ -21,7 +21,7 @@
 #include "math.h"
 #include "Regle.h"
 
-class ProjetGeometrie;
+class Geometrie;
 
 ///////////////////////////////////////////////////////////////////////////
 //! \class Equerre
@@ -31,18 +31,17 @@ class ProjetGeometrie;
 class Equerre : public Regle
 {
 public:
-    Equerre(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent = 0);
+    Equerre(Geometrie * geometrie);
     ~Equerre();
 
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);
     void setAngle(double angle);
 
-    QRectF boundingRect(void);
-
     QPointF Thales(double longueur, double largeur, double transp, int x, int y);
 
-    void paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
+    void dessinerEquerre(QPainter& dessin);
+	void MagnetiserEquerre (QList <Figure *> tableauFigure);
 };
 
 #endif

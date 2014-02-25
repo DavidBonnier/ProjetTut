@@ -633,7 +633,7 @@
   <action name="actionDocumentation_Utilisateur">
    <property name="icon">
     <iconset>
-     <normaloff>:/Interface/Resources/aide.png</normaloff>:/Interface/Resources/aide.png</iconset>
+     <normaloff>Resources/aide.png</normaloff>Resources/aide.png</iconset>
    </property>
    <property name="text">
     <string>Documentation Utilisateur</string>

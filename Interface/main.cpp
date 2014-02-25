@@ -5,10 +5,6 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-
-    a.setApplicationName("Yolo");
-    a.setOrganizationName("IUT du Puy");
-
 	Interface w;
 	User util;
 	if(util.firstUse())

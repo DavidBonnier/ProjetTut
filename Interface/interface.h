@@ -35,9 +35,6 @@
 #include "Geometrie.h"
 #include "Crayon.h"
 #include "Equerre.h"
-
-#include <QGraphicsScene>
-#include <QGraphicsView>
 /////////////////////////////////////////////////////////////////////////// 
 //! \class Interface
 //! 
@@ -76,9 +73,7 @@ private:
 	QWidget* container;
 	User* util;
 	
-    Geometrie * m_geometrie;
 	ProjetGeometrie* projetGeom;
-    QGraphicsView * m_viewGraph;
 
 	//Toolbar écran scindé
 	QAction* actionTailleTexte;

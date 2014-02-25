@@ -18,7 +18,7 @@
 #include "math.h"
 #include "instrument.h"
 
-class ProjetGeometrie;
+class Geometrie;
 
 ///////////////////////////////////////////////////////////////////////////
 //! \class Crayon
@@ -28,18 +28,17 @@ class ProjetGeometrie;
 class Crayon : public Instrument
 {
 public:
-    Crayon(ProjetGeometrie * projetGeometrie, QGraphicsItem *parent = 0);
+    Crayon(Geometrie * geometrie);
 
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);
     void setAngle(double angle);
 
-    QRectF boundingRect(void);
-
-    void paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
+    void dessinerCrayon(QPainter& dessin);
 
 private:
     int m_hauteurPointe;
+    int m_epaisseur;
 };
 
 #endif
