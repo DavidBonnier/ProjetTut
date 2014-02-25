@@ -24,9 +24,7 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
     clickTxt = false;
 	clickPoint = false;
     txtSelectionne = false;
-	dessinOK = false;
     stockTxt.clear();
-	stockPoints.clear();
     setMouseTracking(true);
 
     regle = NULL;
@@ -65,7 +63,6 @@ Geometrie::~Geometrie()
     delete equerre;
     delete crayon;
     stockTxt.clear();
-	stockPoints.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -80,16 +77,12 @@ bool Geometrie::gererRegle()
     if (regle == NULL)
     {
         regle = new Regle(this);
-		dessinOK = true;
-		repaint();
         return true;
     }
     else
     {
         delete regle;
         regle = NULL;	
-		dessinOK = true;
-		repaint();
         return false;
     }
 }
@@ -250,43 +243,63 @@ void Geometrie::paintEvent (QPaintEvent *event)
 
 	//Dessin ou non de la grille
 	if (grille)
-    {
-        int hauteur = dessin.viewport().height();
-        int largeur = dessin.viewport().width();
-        const int espacement = 50;
+	{
+		//Préparation de la grille
+		dessin.save();
+		QPen EpaisseurGrille, EpaisseurGrilleCentre;
+		EpaisseurGrille.setWidth(1);
+		EpaisseurGrilleCentre.setWidth(3);
 
 		//Graduations verticales
-        for (int i=0 ; i<largeur ; i+=espacement)
-            if(i-espacement/2<=largeur/2 && i+espacement/2>=largeur/2) //Graduation du milieu en vertical
+		for (int i=0 ; i<width() ; i+=50)
+			if(i-25<=width()/2 && i+25>=width()/2) //Graduation du milieu en vertical
 			{
-                dessin.drawLine(i-1,0 , i-1, hauteur);
-                dessin.drawLine(i,0 , i, hauteur);
-                dessin.drawLine(i+1,0 , i+1, hauteur);
+
+				dessin.setPen(EpaisseurGrilleCentre);
+				dessin.drawLine(i,0 , i, height());
+
 			}
 			else
-                dessin.drawLine(i,0 , i,hauteur);
+			{
+				dessin.setPen(EpaisseurGrille);
+				dessin.drawLine(i,0 , i,height());
+			}
 
 		//Horizontales
-        for (int i=0 ; i<hauteur ; i+=espacement)
-            if(i-espacement/2<=hauteur/2 && i+espacement/2>=hauteur/2) //Graduation du milieu en vertical
+		for (int i=0 ; i<height() ; i+=50)
+			if(i-25<=height()/2 && i+25>=height()/2) //Graduation du milieu en vertical
 			{
-                dessin.drawLine(0,i-1 , largeur, i-1);
-                dessin.drawLine(0,i , largeur, i);
-                dessin.drawLine(0,i+1 , largeur, i+1);
+
+				dessin.setPen(EpaisseurGrilleCentre);
+				dessin.drawLine(0,i , width(), i);
+
 			}
 			else
-                dessin.drawLine(0,i, largeur,i);
+			{
+				dessin.setPen(EpaisseurGrille);
+				dessin.drawLine(0,i, width(),i);
+			}
+
+		dessin.restore();
 	}
 
-    QPainter * dessinTrait;
-    dessinTrait = new QPainter(this);
-    /*dessinTrait->setWindow(0,0,width(),height());
-    dessinTrait->setViewport(*m_rectangleViewport);*/
+	if(dessinOK)
+	{
+		for (int i = 0; i < stockPoints.size(); i++)
+		{
+			dessin.drawLine(stockPoints[i]->getHorizontalLine() ); 
+			dessin.drawLine(stockPoints[i]->getVerticalLine() );
+			stockPoints[i]->raise();
+		}
+		dessinOK = false;
+	}
 
-    QPen pen;
+	QPainter * dessinTrait;
+	QPen pen;
+
+    dessinTrait = new QPainter(this);
     pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
 	pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
-
 	dessinTrait->setPen(pen);
     dessinerFigure(dessinTrait);
     delete dessinTrait;
@@ -384,16 +397,12 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps de la règle
 		regle->clic(clic,false);
-		dessinOK = true; 
-		repaint();
 	}
 
 	if(detec == QColor(127,255,255))
 	{
 		//Le bouton de rotation de la règle
 		regle->clic(clic,true);
-		dessinOK = true; 
-		repaint();
 	}
 
 	//Équerre--------------------------------------------------------
@@ -401,16 +410,12 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps de l'équerre
 		equerre->clic(clic,false);
-		dessinOK = true; 
-		repaint();
 	}
 
 	if(detec == QColor(126,255,255))
 	{
 		//Le bouton de rotation de l'équerre
 		equerre->clic(clic,true);
-		dessinOK = true; 
-		repaint();
 	}
 
 	//Crayon--------------------------------------------------------
@@ -418,16 +423,12 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps du crayon
 		crayon->clic(clic,false);
-		dessinOK = true; 
-		repaint();
 	}
 
 	if(detec == QColor(125,255,255))
 	{
 		//Le bouton de rotation de la règle
 		crayon->clic(clic,true);
-		dessinOK = true; 
-		repaint();
 	}
 
 	//Compas--------------------------------------------------------
@@ -435,16 +436,12 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	{
 		//Le corps du crayon
 		compas->clic(clic,false);
-		dessinOK = true; 
-		repaint();
 	}
 
 	if(detec == QColor(124,255,255))
 	{
 		//Le bouton de rotation du crayon
 		compas->clic(clic,true);
-		dessinOK = true; 
-		repaint();
 	}
 
 	//Désélection si on clique sur un pixel blanc ou noir
@@ -486,6 +483,7 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 
         clickPoint = false;
         emit pointcree();
+		update();
     }
 }
 
@@ -554,8 +552,6 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			regle->move(move);
 			modifRegle = true;
 			update();
-			dessinOK = true; 
-			repaint();
 		}
 	}
 	//Equerre--------------------------------------------------------
@@ -565,9 +561,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 		{
 			equerre->move(move);
 			modifEquerre = true;
-			update();			
-			dessinOK = true; 
-			repaint();
+			update();	
 		}
 	}
 	//Crayon--------------------------------------------------------
@@ -578,8 +572,6 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			crayon->move(move);
 			modifCrayon = true;
 			update();
-			dessinOK = true; 
-			repaint();
 		}
 	}
 	//Compas--------------------------------------------------------
@@ -590,8 +582,6 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 			compas->move(move);
 			modifCompas = true;
 			update();
-			dessinOK = true; 
-			repaint();
 		}
 	}
 
@@ -599,7 +589,5 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
     {
         stockTxt[id_txtSelectionne]->move(move->pos().x(), move->pos().y());
         update();
-		dessinOK = true; 
-		repaint();
     }
 }
