@@ -10,6 +10,7 @@
 /////////////////////////////////////////////////////////////////////////// 
 
 #include "interface.h"
+#include <QSettings>
 
 Interface::Interface(QMainWindow *parent)
 	: QMainWindow(parent)

@@ -1,0 +1,10 @@
+Ici toutes les maj apportées au cours de la semaine (tout, y compris les tout petits trucs) :
+
+-création de la classe Point (quelques bugs quand on passe en plein écran ou en écran scindé (les points s'affichent pas, à moins d'en créer un nouveau lors du passage en plein écran)...);
+-affichage de la grille dès le lancement du logiciel;
+-rajout de 2 pages à la documentation utilisateur (point et zone de texte), amélioration du design;
+-Ajout de 'A Propos'
+-Ajout fonction épaisseur
+-Ajout de tooltip
+-Ajout changement de couleur des traits
+-Correction d'un bug des points

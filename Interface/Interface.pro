@@ -48,11 +48,7 @@ HEADERS  += interface.h \
 FORMS    += interface.ui \
     projetgeometrie.ui
 
-OTHER_FILES += Compas.xml \
-    Crayon.xml \
-    Equerre.xml \
-    Regle.xml \
-    Utilisateurs.xml
+OTHER_FILES += Utilisateurs.xml
 
 RESOURCES += interface.qrc \
     projetgeometrie.qrc

@@ -15,19 +15,9 @@ Instrument::~Instrument()
 
 void Instrument::Initialisation()
 {
+    Q_ASSERT_X(QFile::exists(*m_nomFichierXML), "Open XML", "Not find : " + *m_nomFichierXML->toStdString().c_str());
     QFile xml_doc(*m_nomFichierXML);// On choisit le fichier contenant les informations XML.
-    if(!xml_doc.open(QIODevice::ReadOnly))// Si l'on n'arrive pas à ouvrir le fichier XML.
-    {
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
-         return;
-    }
     QDomDocument dom(*m_nomDocument); // Création de l'objet DOM
-    if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
-    {
-         xml_doc.close();
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
-         return;
-    }
     QDomElement dom_element = dom.documentElement();
     QDomNode noeud = dom_element.firstChild();
     while(!noeud.isNull()) //Parours du fichier

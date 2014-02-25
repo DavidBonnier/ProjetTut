@@ -245,8 +245,8 @@ void Geometrie::paintEvent (QPaintEvent *event)
     }
 
     QPainter dessin(this);
-    dessin.setWindow(0,0,width(),height());
-    dessin.setViewport(*m_rectangleViewport);
+    /*dessin.setWindow(0,0,width(),height());
+    dessin.setViewport(*m_rectangleViewport);*/
 
 	//Dessin ou non de la grille
 	if (grille)
@@ -280,8 +280,8 @@ void Geometrie::paintEvent (QPaintEvent *event)
 
     QPainter * dessinTrait;
     dessinTrait = new QPainter(this);
-    dessinTrait->setWindow(0,0,width(),height());
-    dessinTrait->setViewport(*m_rectangleViewport);
+    /*dessinTrait->setWindow(0,0,width(),height());
+    dessinTrait->setViewport(*m_rectangleViewport);*/
 
     QPen pen;
     pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
