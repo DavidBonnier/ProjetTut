@@ -3,23 +3,22 @@
 
 #include <QWidget>
 #include <QFile>
-#include <QtSvg/QSvgGenerator>
-#include <QtSvg/QSvgRenderer>
 #include "qmath.h"
 #include <QPoint>
-
-#define PI 3.14159265358979323846264279502884
+#include <QGraphicsItem>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QDomNode>
 
 #include "arc.h"
 #include "ligne.h"
 
-class Geometrie;
+class ProjetGeometrie;
 
-class Instrument : public QWidget
+class Instrument : public QGraphicsItem
 {
-    Q_OBJECT
 public:
-    Instrument(QWidget *parent = 0);
+    Instrument();
     ~Instrument();
 
     //Fonctions de sélection avec la souris
@@ -28,12 +27,12 @@ public:
     void deselectionner();
 
     virtual void setTransparence(bool transparence);
-    virtual void translation(double positionX , double positionY);
+    /*virtual void translation(double positionX , double positionY);
     virtual void setAngle(double angle);
 
     inline int getPositionX(){return m_position.x();}
     inline int getPositionY(){return m_position.y();}
-    inline double getAngle(){return m_angle;}
+    inline double getAngle(){return m_angle;}*/
     inline int getLongueur(){return m_longueur;}
     inline int getLargeur(){return m_largeur;}
 
@@ -62,7 +61,7 @@ protected:
     void Initialisation();
     double toGradian(double angle);
 
-    Geometrie * m_geometrie;
+    ProjetGeometrie * m_projetGeometrie;
 };
 
 #endif // INSTRUMENT_H

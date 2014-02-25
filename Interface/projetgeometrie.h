@@ -5,6 +5,9 @@
 #include "ui_projetgeometrie.h"
 #include "Geometrie.h"
 #include <qcolordialog.h>
+
+#include <QGraphicsScene>
+#include <QGraphicsView>
 ///////////////////////////////////////////////////////////////////////////
 //! \class ProjetGeometrie
 //!
@@ -16,9 +19,11 @@ class ProjetGeometrie : public QWidget
     Q_OBJECT
 
 public:
-    ProjetGeometrie();
+    ProjetGeometrie(Geometrie* geometrie);
     ~ProjetGeometrie();
     Geometrie* m_geometrie;
+    QGraphicsView * m_viewGraph;
+
     Ui::ProjetGeometrieClass ui;
     QColor m_couleurTrait;
 

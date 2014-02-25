@@ -17,7 +17,7 @@
 #include <QMouseEvent>
 #include "instrument.h"
 
-class Geometrie;
+class ProjetGeometrie;
 
 ///////////////////////////////////////////////////////////////////////////
 //! \class Compas
@@ -27,7 +27,7 @@ class Geometrie;
 class Compas : public Instrument
 {
 public:
-    Compas(Geometrie * geometrie);
+    Compas(ProjetGeometrie *projetGeometrie);
     ~Compas();
 
     double angleEcartement(double ecart, double longueurBranche);
@@ -42,7 +42,7 @@ public:
     void translation(double positionX , double positionY);
     void setAngle(double angle);
 
-    void dessinerCompas(QPainter& dessin);
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
 private:
     int m_hauteurPointe;

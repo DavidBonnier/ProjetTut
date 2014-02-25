@@ -19,11 +19,13 @@ Interface::Interface(QMainWindow *parent)
 	setContextMenuPolicy(Qt::NoContextMenu);
 
     util = new User();
-    projetGeom = new ProjetGeometrie();
-    ui.geomEcranScind->addWidget(projetGeom);
-
-    projetGeom->ui.widget->hide();
-    projetGeom->ui.ScrollAreaOptionsOutils->hide();
+    m_geometrie = new Geometrie();
+    projetGeom = new ProjetGeometrie(m_geometrie);
+    m_viewGraph = new QGraphicsView(m_geometrie);
+    ui.geomEcranScind->addWidget(m_viewGraph);
+    projetGeom->setParent(0);
+    projetGeom->showFullScreen();
+    projetGeom->hide();
 
 	printer = new QPrinter;
 	container = new QWidget();
@@ -227,50 +229,25 @@ void Interface::FullScreen_Geom()
 {
 	if(!widgetIsFullscreen)
 	{
-        projetGeom->setParent(0);
-        projetGeom->showFullScreen();
-		projetGeom->m_geometrie->update();
+        projetGeom->show();
+        projetGeom->m_viewGraph->update();
 		
-		ui.boutonInsertionGeom->hide();
-		ui.GeomPleinEcran->hide();
-
-        projetGeom->m_geometrie->regle = NULL;
-        projetGeom->m_geometrie->equerre = NULL;
-        projetGeom->m_geometrie->crayon = NULL;
-			
-		projetGeom->m_geometrie->dessinOK = true;
-		ui.Geom->update();
-        projetGeom->ui.widget->show();
         projetGeom->ui.DockWidgetCompas->hide();
         projetGeom->ui.DockWidgetCrayon->hide();
         projetGeom->ui.DockWidgetEquerre->hide();
         projetGeom->ui.DockWidgetRegle->hide();
-        projetGeom->ui.ScrollAreaOptionsOutils->show();
 		
 		widgetIsFullscreen = true;
 	}
 	else
-	{
-        projetGeom->m_geometrie->compas = NULL;
-        projetGeom->m_geometrie->regle = NULL;
-        projetGeom->m_geometrie->equerre = NULL;
-        projetGeom->m_geometrie->crayon = NULL;
-
-		ui.LayoutGeom->addWidget(ui.Geom);
-		
-		projetGeom->ui.BoutonRegle->setChecked(false);
+    {
+        projetGeom->hide();
+        projetGeom->ui.BoutonRegle->setChecked(false);
 		projetGeom->ui.BoutonEquerre->setChecked(false);
 		projetGeom->ui.BoutonCompas->setChecked(false);
 		projetGeom->ui.BoutonCrayon->setChecked(false);
 
-        ui.geomEcranScind->addWidget(projetGeom);
-        projetGeom->showNormal();
-		projetGeom->m_geometrie->dessinOK = true;
-		ui.Geom->repaint();
-		ui.boutonInsertionGeom->show();
-        ui.GeomPleinEcran->show();
-        projetGeom->ui.widget->hide();
-		projetGeom->ui.ScrollAreaOptionsOutils->hide();
+        m_viewGraph->update();
 
 		widgetIsFullscreen = false;
 	}
@@ -440,15 +417,7 @@ void Interface::insererGeom()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerRegle()
 {
-    if(projetGeom->m_geometrie->regle == NULL)
-        projetGeom->m_geometrie->gererRegle();
 
-	else
-        projetGeom->m_geometrie->regle = NULL;
-	
-	projetGeom->m_geometrie->dessinOK = true;
-	ui.Geom->repaint();
-	ui.Geom->update();
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -459,13 +428,7 @@ void Interface::creerRegle()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerEquerre()
 {
-    if(projetGeom->m_geometrie->equerre == NULL)
-        projetGeom->m_geometrie->gererEquerre();
 
-	else
-        projetGeom->m_geometrie->equerre = NULL;
-
-	ui.Geom->update();	
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -476,14 +439,7 @@ void Interface::creerEquerre()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerCrayon()
 {
-    if(projetGeom->m_geometrie->crayon == NULL)
-        projetGeom->m_geometrie->gererCrayon();
 
-	else
-        projetGeom->m_geometrie->crayon = NULL;
-
-
-	ui.Geom->update();
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -563,7 +519,6 @@ void Interface::showParamCrayon()
 void Interface::afficherGrille()
 {
 	projetGeom->ui.CheckBoxGrille->setChecked(ui.actionGrille->isChecked()); //Mise à jour de la checkbox Grille dans ProjetGeometrie
-    projetGeom->m_geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
 	ui.Geom->update();
 }
 

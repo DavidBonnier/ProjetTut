@@ -7,7 +7,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "Crayon.h"
-#include "Geometrie.h"
 #include "projetgeometrie.h"
 
 ///////////////////////////////////////////////////////////////////////
@@ -17,29 +16,18 @@
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Crayon::Crayon(Geometrie * geometrie)
+Crayon::Crayon(ProjetGeometrie * projetGeometrie)
 {
+    m_projetGeometrie = projetGeometrie;
+
     m_nomFichierXML = new QString(":/XML/Resources/XML/Crayon.xml");
     m_nomDocument = new QString("Crayon");
     m_nomElement = new QString("crayon");
 
-    m_geometrie = geometrie;
-
     Initialisation();
 
     QFile xml_doc(*m_nomFichierXML);// On choisit le fichier contenant les informations XML.
-    if(!xml_doc.open(QIODevice::ReadOnly))// Si l'on n'arrive pas à ouvrir le fichier XML.
-    {
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
-         return;
-    }
     QDomDocument dom(*m_nomDocument); // Création de l'objet DOM
-    if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
-    {
-         xml_doc.close();
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
-         return;
-    }
     QDomElement dom_element = dom.documentElement();
     QDomNode noeud = dom_element.firstChild();
     while(!noeud.isNull()) //Parours du fichier
@@ -63,20 +51,20 @@ Crayon::Crayon(Geometrie * geometrie)
 void Crayon::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
-    m_geometrie->m_projetGeometrie->ui.CheckBoxCrayonTransparence->setChecked(transparence);
+    m_projetGeometrie->ui.CheckBoxCrayonTransparence->setChecked(transparence);
 }
 
 void Crayon::translation(double positionX , double positionY)
 {
     Instrument::translation(positionX,positionY);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonPositionX->setValue(positionX);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonPositionY->setValue(positionY);
+    m_projetGeometrie->ui.SpinBoxCrayonPositionX->setValue(positionX);
+    m_projetGeometrie->ui.SpinBoxCrayonPositionY->setValue(positionY);
 }
 
 void Crayon::setAngle(double angle)
 {
     Instrument::setAngle(angle);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonOrientation->setValue(angle);
+    m_projetGeometrie->ui.SpinBoxCrayonOrientation->setValue(angle);
 }
 
 //***************************************Fonctions de mise à jour des valeurs***************************************
@@ -89,37 +77,37 @@ void Crayon::setAngle(double angle)
 //!
 //! \date 18/01/2014
 ///////////////////////////////////////////////////////////////////////
-void Crayon::dessinerCrayon(QPainter& dessin)
+void Crayon::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-    dessin.save();
+    dessin->save();
 
     if (m_transparence) //S'il y a de la transparence
-        dessin.setPen(Qt::black);
+        dessin->setPen(Qt::black);
     else //Pas de transparence
-        dessin.setBrush(Qt::black); //Couleur de la mine
+        dessin->setBrush(Qt::black); //Couleur de la mine
 
     int epaisseurMine = m_epaisseur/2;
     int hauteurMine = m_hauteurPointe/3;
     //Rotation
-    dessin.translate(m_position.x(),m_position.y());
-    dessin.rotate(m_angle);
-    dessin.translate(-m_position.x(),-m_position.y());
+    dessin->translate(m_position.x(),m_position.y());
+    dessin->rotate(m_angle);
+    dessin->translate(-m_position.x(),-m_position.y());
     //Dessin de la mine
     QPointF pointsMine[3] = {QPointF(m_position.x(), m_position.y()), QPointF(m_position.x()-(epaisseurMine/2), m_position.y()+hauteurMine), QPointF(m_position.x()+epaisseurMine/2, m_position.y()+hauteurMine)}; //Points de la zone transparente
-    dessin.drawConvexPolygon(pointsMine, 3); //Dessin de la mine
+    dessin->drawConvexPolygon(pointsMine, 3); //Dessin de la mine
     //Dessin du reste de la pointe
-    dessin.setBrush(QColor(255,203,96)); //Mise en couleur de la pointe
+    dessin->setBrush(QColor(255,203,96)); //Mise en couleur de la pointe
     QPointF pointe[4] = {QPointF(m_position.x()-(epaisseurMine/2), m_position.y()+hauteurMine), QPointF(m_position.x()+epaisseurMine/2, m_position.y()+hauteurMine),
                          QPointF(m_position.x()+m_epaisseur/2, m_position.y()+m_hauteurPointe), QPointF(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe)}; //Points du triangle principal
-    dessin.drawConvexPolygon(pointe, 4); //Pointe du crayon
+    dessin->drawConvexPolygon(pointe, 4); //Pointe du crayon
     //Dessin du corps du crayon
-    dessin.setBrush(QColor(255,255,49));
-    dessin.drawRect(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe, m_epaisseur, m_longueur);
+    dessin->setBrush(QColor(255,255,49));
+    dessin->drawRect(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe, m_epaisseur, m_longueur);
     //Dessin du bouton rotation
-    dessin.setBrush(QColor(125,255,255));
-    dessin.drawRect(m_position.x()-epaisseurMine, m_position.y()+250, 2*epaisseurMine, 8*epaisseurMine);
+    dessin->setBrush(QColor(125,255,255));
+    dessin->drawRect(m_position.x()-epaisseurMine, m_position.y()+250, 2*epaisseurMine, 8*epaisseurMine);
     //Dessin de 2 traits sur le corps
-    dessin.drawLine(m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe, m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe+m_longueur-30);
-    dessin.drawLine(m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe, m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe+m_longueur-30);
-    dessin.restore();
+    dessin->drawLine(m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe, m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe+m_longueur-30);
+    dessin->drawLine(m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe, m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe+m_longueur-30);
+    dessin->restore();
 }

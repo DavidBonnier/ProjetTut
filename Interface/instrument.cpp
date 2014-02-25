@@ -1,8 +1,7 @@
 #include "instrument.h"
 #include "Geometrie.h"
 
-Instrument::Instrument(QWidget *parent) :
-    QWidget(parent)
+Instrument::Instrument()
 {
 }
 
@@ -38,11 +37,11 @@ void Instrument::Initialisation()
 
             //Variable
             if (element.tagName() == "positionX")
-                m_position.setX(element.text().toInt());
+                setX(element.text().toInt());
             if (element.tagName() == "positionY")
-                m_position.setY(element.text().toInt());
+                setY(element.text().toInt());
             if (element.tagName() == "angle")
-                m_angle = element.text().toDouble();
+                setRotation(element.text().toDouble());
             if (element.tagName() == "offsetX")
                 m_offset.setX(element.text().toInt());
             if (element.tagName() == "offsetY")
@@ -68,23 +67,6 @@ void Instrument::Initialisation()
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param positionX Nouvelle position en x
-//! \param positionY Nouvelle position en y
-//!
-//! \brief Cette fonction met à jour les nouvelles position en x et y et met a jour ui.
-//!
-//! \date 15/01/2014
-///////////////////////////////////////////////////////////////////////
-void Instrument::translation(double positionX , double positionY)
-{
-    m_position.setX(positionX);
-    m_position.setY(positionY);
-    update();
-}
-
-///////////////////////////////////////////////////////////////////////
-//! \author JACQUIN Dylan
-//!
 //! \param transparence Change le paramètre de la transparence
 //!
 //! \brief Cette fonction choisit si on affiche les instrments en transparence ou pas.
@@ -94,21 +76,6 @@ void Instrument::translation(double positionX , double positionY)
 void Instrument::setTransparence(bool transparence)
 {
     m_transparence = transparence;
-    update();
-}
-
-///////////////////////////////////////////////////////////////////////
-//! \author JACQUIN Dylan
-//!
-//! \param newangle Nouvelle orientation
-//!
-//! \brief Cette fonction met à jour le fichier XML de la règle avec sa nouvelle orientation
-//!
-//! \date 15/01/2014
-///////////////////////////////////////////////////////////////////////
-void Instrument::setAngle(double angle)
-{
-    m_angle = angle;
     update();
 }
 
@@ -123,8 +90,8 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation)
     if(!boutonRotation)
     {
         m_moveSelected = true;
-        m_offset.setX(clic->x() - m_position.x());
-        m_offset.setY(clic->y() - m_position.y());
+        m_offset.setX(clic->x() - x());
+        m_offset.setY(clic->y() - y());
     }
 
     else
@@ -146,31 +113,31 @@ void Instrument::move(QMouseEvent *move)
     {
         translation(move->x() - m_offset.x(), move->y() - m_offset.y());
         //Pom_position.x()es positions négatives
-        if (m_position.x() < 0)
+        if (x() < 0)
         {
             m_offset.setX(move->x());
-            translation(0,m_position.y());
+            setPos(0,y());
         }
 
-        if (m_position.y() < 0)
+        if (y() < 0)
         {
-            m_offset.setX(m_position.x());
-            translation(m_position.x(),0);
+            m_offset.setX(x());
+            setPos(x(),0);
         }
     }
 
     if (m_rotateSelectedRight || m_rotateSelectedLeft)
     {
-        double xA = m_posClic.x() -m_position.x();
-        double yA = m_posClic.y() -m_position.y();
-        double xB = move->x() - m_position.x();
-        double yB = move->y() - m_position.y();
+        double xA = m_posClic.x() -x();
+        double yA = m_posClic.y() -y();
+        double xB = move->x() - x();
+        double yB = move->y() - y();
         double cosTheta = (xA*xB + yA*yB)/(sqrt(pow(xA,2)+pow(yA,2)) * sqrt(pow(xB,2)+pow(yB,2)));
         double thetaRadians = acos(cosTheta);
         double theta = (180*thetaRadians)/3.14159265359;
         //On regarde si la souris est au dessus de la droite (posClic, pos)
-        double cd =m_position.x();
-        double h = m_position.x()-cd*m_position.y();
+        double cd =x();
+        double h = x()-cd*y();
         if (move->y() < cd * move->x() + h)
             theta = -theta;
         double newAngle;
@@ -182,7 +149,7 @@ void Instrument::move(QMouseEvent *move)
             newAngle +=360;
         if (newAngle > 360)
             newAngle -= 360;
-        setAngle(newAngle);
+        setRotation(newAngle);
     }
     update();
 }
@@ -196,5 +163,5 @@ void Instrument::deselectionner()
 
 double Instrument::toGradian(double angle)
 {
-    return PI*(angle/180);
+    return M_PI*(angle/180);
 }

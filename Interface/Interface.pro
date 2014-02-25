@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     Compas.cpp \
     Crayon.cpp \
     Equerre.cpp \
-    Geometrie.cpp \
     projetgeometrie.cpp \
     Regle.cpp \
     user.cpp \
@@ -28,7 +27,8 @@ SOURCES += main.cpp\
     ligne.cpp \
     instrument.cpp \
     figure.cpp \
-    point.cpp
+    point.cpp \
+    Geometrie.cpp
 
 HEADERS  += interface.h \
     Compas.h \

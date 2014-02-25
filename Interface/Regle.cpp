@@ -7,7 +7,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "Regle.h"
-#include "Geometrie.h"
 #include "projetgeometrie.h"
 
 Regle::Regle()
@@ -21,13 +20,13 @@ Regle::Regle()
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-Regle::Regle(Geometrie * geometrie)
+Regle::Regle(ProjetGeometrie * projetGeometrie)
 {
+    m_projetGeometrie = projetGeometrie;
+
     m_nomFichierXML = new QString(":/XML/Resources/XML/Regle.xml");
     m_nomDocument = new QString("Regle");
     m_nomElement = new QString("regle");
-
-    m_geometrie = geometrie;
 
     InitialisationRegle();
 
@@ -39,18 +38,7 @@ void Regle::InitialisationRegle()
     Initialisation();
 
     QFile xml_doc(*m_nomFichierXML);// On choisit le fichier contenant les informations XML.
-    if(!xml_doc.open(QIODevice::ReadOnly))// Si l'on n'arrive pas à ouvrir le fichier XML.
-    {
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
-         return;
-    }
     QDomDocument dom(*m_nomDocument); // Création de l'objet DOM
-    if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
-    {
-         xml_doc.close();
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
-         return;
-    }
     QDomElement dom_element = dom.documentElement();
     QDomNode noeud = dom_element.firstChild();
     while(!noeud.isNull()) //Parours du fichier
@@ -74,91 +62,6 @@ Regle::~Regle()
 
 }
 
-///////////////////////////////////////////////////////////////////////
-//! \author  BONNIER David
-//!
-//! \param grad1 Graduation de départ du trait
-//! \param grad2 Graduation de fin du trait
-//!
-//! \brief Cette fonction permet de tracer un trait entre grad1 et grad2.
-//!
-//! \date 17/02/2014
-///////////////////////////////////////////////////////////////////////
-void Regle :: tracer (double graduation1 , double graduation2 )
-{
-    graduation1 *= 50;
-    graduation2 *= 50;
-
-    QPointF * debTrait = NULL;
-    QPointF * finTrait = NULL;
-
-    const int angleDroit = 90;
-    const int decalageRegle = 1;
-
-    if(m_angle == 0 || m_angle == 360)
-    {
-        debTrait = new QPointF(m_position.x() + graduation1, m_position.y() - decalageRegle);
-        finTrait = new QPointF(m_position.x() + graduation2, m_position.y() - decalageRegle);
-    }
-    else if(m_angle < 90)
-    {
-        const double x1 = cos(toGradian(m_angle)) * graduation1;
-        const double y1 = sin(toGradian(m_angle)) * graduation1;
-        const double x2 = cos(toGradian(m_angle)) * graduation2;
-        const double y2 = sin(toGradian(m_angle)) * graduation2;
-        debTrait = new QPointF(m_position.x() + x1 + decalageRegle, m_position.y() + y1);
-        finTrait = new QPointF(m_position.x() + x2 + decalageRegle, m_position.y() + y2);
-    }
-    else if(m_angle == 90)
-    {
-        debTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation1);
-        finTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation2);
-    }
-    else if(m_angle < 180)
-    {
-        const double angleEcartement = m_angle - angleDroit;
-        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
-        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() - x1, m_position.y() + y1 + decalageRegle);
-        finTrait = new QPointF(m_position.x() - x2, m_position.y() + y2 + decalageRegle);
-    }
-    else if(m_angle == 180)
-    {
-        debTrait = new QPointF(m_position.x() - graduation1, m_position.y() + decalageRegle);
-        finTrait = new QPointF(m_position.x() - graduation2, m_position.y() + decalageRegle);
-    }
-    else if(m_angle < 270)
-    {
-        const double angleEcartement = m_angle - 2*angleDroit;
-        const double x1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double y1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double x2 = cos(toGradian(angleEcartement)) * graduation2;
-        const double y2 = sin(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() - x1 - decalageRegle, m_position.y() - y1);
-        finTrait = new QPointF(m_position.x() - x2 - decalageRegle, m_position.y() - y2);
-    }
-    else if(m_angle == 270)
-    {
-        debTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation1);
-        finTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation2);
-    }
-    else if(m_angle < 360)
-    {
-        const double angleEcartement = m_angle - 3*angleDroit;
-        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
-        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() + x1, m_position.y() - y1 - decalageRegle);
-        finTrait = new QPointF(m_position.x() + x2, m_position.y() - y2 - decalageRegle);
-    }
-
-    if (debTrait && finTrait)
-        m_geometrie->tableauFigure.push_back(new Ligne(QLineF(*debTrait, *finTrait)));
-}
-
 //***************************************Fonctions de mise à jour des valeurs***************************************
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
@@ -172,14 +75,6 @@ void Regle :: tracer (double graduation1 , double graduation2 )
 void Regle::setGraduation(int graduation)
 {
     QFile *file = new QFile(*m_nomFichierXML);
-
-    if (!file->open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-        QMessageBox::critical(this,"Erreur","Impossible d'ouvrir le ficher XML");
-        file->close();
-        return;
-    }
-
     QString graduationString = QString::number(graduation); //Cast de bool en QString
 
     QByteArray xmlData(file->readAll());
@@ -202,20 +97,20 @@ void Regle::setGraduation(int graduation)
 void Regle::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
-    m_geometrie->m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
+    m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
 }
 
 void Regle::translation(double positionX , double positionY)
 {
     Instrument::translation(positionX,positionY);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionX->setValue(positionX);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionY->setValue(positionY);
+    m_projetGeometrie->ui.SpinBoxReglePositionX->setValue(positionX);
+    m_projetGeometrie->ui.SpinBoxReglePositionY->setValue(positionY);
 }
 
 void Regle::setAngle(double angle)
 {
     Instrument::setAngle(angle);
-    m_geometrie->m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
+    m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -227,44 +122,44 @@ void Regle::setAngle(double angle)
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
-void Regle::dessinerRegle(QPainter& dessin)
+void Regle::paint(QPainter * dessin, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-    dessin.save();
+    dessin->save();
 
     if (m_transparence) //S'il y a de la transparence
-        dessin.setPen(Qt::black);
+        dessin->setPen(Qt::black);
     else //Pas de transparence
-        dessin.setBrush(QColor(255,255,153)); //Couleur du petit rectangle
+        dessin->setBrush(QColor(255,255,153)); //Couleur du petit rectangle
 
     //Rotation
-    dessin.translate(m_position.x(),m_position.y());
-    dessin.rotate(m_angle);
-    dessin.translate(-m_position.x(),-m_position.y());
+    dessin->translate(x(),y());
+    dessin->rotate(m_angle);
+    dessin->translate(-x(),-y());
     //Dessin des rectangles
-    dessin.drawRect(m_position.x(), m_position.y(), m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)
-    dessin.setBrush(QColor(255,255,51)); //Mise en couleur de la partie principale de la regle
-    dessin.drawRect(m_position.x(), m_position.y()+m_largeur/4, m_longueur, m_largeur);
+    dessin->drawRect(x(), y(), m_longueur, m_largeur/4); //Rectangle plein ou vide (1/4 du rectangle principal)
+    dessin->setBrush(QColor(255,255,51)); //Mise en couleur de la partie principale de la regle
+    dessin->drawRect(x(), y()+m_largeur/4, m_longueur, m_largeur);
     //Dessin du bouton de rotation
-    dessin.setBrush(QColor(127,255,255));
-    dessin.drawEllipse(QPointF(m_position.x()+500,m_position.y()+50),15,15);
+    dessin->setBrush(QColor(127,255,255));
+    dessin->drawEllipse(QPointF(x()+500,y()+50),15,15);
 
 //Dessin des graduations
     int hauteurMaxGrad = m_largeur/6;
-    dessin.setFont(QFont("Arial", 8)); //Police et taille des charactères
+    dessin->setFont(QFont("Arial", 8)); //Police et taille des charactères
     int chiffre = 0; //Chiffre actuel sur la règle
     QString grad[] = {"0","1","2","3","4","5","6","7","8","9","10","11","12"}; //Chiffres sur la règle
     for (int i=0 ; i<m_longueur ; i+=m_graduation*5) //5 pixels entre chaque graduations
     {
         if (i%50 == 0) //Graduation cm
         {
-            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad);
-            dessin.drawText(m_position.x()+2+i, m_position.y()-3+m_largeur/2, grad[chiffre]); //Affichage des chiffres
+            dessin->drawLine(x()+i,y(), x()+i,y()+hauteurMaxGrad);
+            dessin->drawText(x()+2+i, y()-3+m_largeur/2, grad[chiffre]); //Affichage des chiffres
             chiffre++;
         }
         else if (i%25 == 0) //Graduation 1/2 cm
-            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+2*hauteurMaxGrad/3);
+            dessin->drawLine(x()+i,y(), x()+i,y()+2*hauteurMaxGrad/3);
         else //Graduation mm
-            dessin.drawLine(m_position.x()+i,m_position.y(), m_position.x()+i,m_position.y()+hauteurMaxGrad/3);
+            dessin->drawLine(x()+i,y(), x()+i,y()+hauteurMaxGrad/3);
     }
-    dessin.restore();
+    dessin->restore();
 }
