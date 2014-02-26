@@ -301,7 +301,7 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
         {
             //Lecture Regle
             QDomDocument dom("Regle"); // Création de l'objet DOM
-            QFile xml_doc("Regle.xml"); // On choisit le fichier contenant les informations XML.
+            QFile xml_doc(":/Instrument/Resources/XML/Regle.xml"); // On choisit le fichier contenant les informations XML.
             if(!xml_doc.open(QIODevice::ReadOnly)) // Si l'on n'arrive pas à ouvrir le fichier XML.
             {
                     QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
