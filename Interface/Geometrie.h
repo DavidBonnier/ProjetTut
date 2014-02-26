@@ -73,6 +73,8 @@ public:
 	
     QTextEdit* txt;
     QVector<QTextEdit *> stockTxt;
+
+    QString generationSVG();
 	
     //Gère le dessin des intruments
     void paintEvent (QPaintEvent *event);
@@ -83,8 +85,7 @@ public:
 private:
     char ordreInstruments[4]; //Tableau de positions
 
-    void dessinerFigure(QPainter* dessinTrait);
-    QString * m_nomFichier;
+    void dessinerFigure(QPainter * peintre);
     QString * m_nomFichierTemp;
     QRect * m_rectangleViewport;
 

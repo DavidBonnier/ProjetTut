@@ -84,7 +84,6 @@ private:
 
 	QPrinter* printer;
 	QImage* img;
-	QPixmap pix;
 
 public slots:
     void Connexion();

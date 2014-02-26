@@ -6,6 +6,8 @@
 //! \date 12/01/2014
 ///////////////////////////////////////////////////////////////////////////
 
+#include <QDateTime>
+
 #include "Geometrie.h"
 #include "projetgeometrie.h"
 
@@ -45,7 +47,6 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
     ordreInstruments[3] = 'c'; //Compas
 
     m_nomFichierTemp = new QString("./temps.svg");
-    m_nomFichier = new QString("./enregistrement.svg");
     m_rectangleViewport = new QRect (0,0,1500,1500);
     m_nbGraduation = 500;
 }
@@ -283,18 +284,10 @@ void Geometrie::paintEvent (QPaintEvent *event)
 		dessin.restore();
 	}
 
-    QPainter * dessinTrait;
-    dessinTrait = new QPainter(this);
-    dessinTrait->setViewport((width()-m_minDimFenetre)/2,(height()-m_minDimFenetre)/2,m_minDimFenetre,m_minDimFenetre);
-    dessinTrait->setWindow(-m_nbGraduation,m_nbGraduation,2*m_nbGraduation,-2*m_nbGraduation);
-
-    QPen pen;
-    pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
-	pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
-
-    dessinTrait->setPen(pen);
-    dessinerFigure(dessinTrait);
-    delete dessinTrait;
+    QPainter * peintre;
+    peintre = new QPainter(this);
+    dessinerFigure(peintre);
+    delete peintre;
 
     //Parcours du tableau pour tracer les instruments (à l'envers car trace du fond au dessus)
     for (int i=4 ; i>=0 ; i--)
@@ -323,49 +316,74 @@ void Geometrie::paintEvent (QPaintEvent *event)
 //!
 //! \date 01/02/2014
 ///////////////////////////////////////////////////////////////////////
-void Geometrie::dessinerFigure(QPainter* dessinTrait)
+void Geometrie::dessinerFigure(QPainter * peintre)
 {
-    QSvgGenerator generator;
-    generator.setFileName(*m_nomFichierTemp);
-    generator.setTitle(tr("Generation de SVG pour le tracage de geometrie"));
-    generator.setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
+    /*peintre->setViewport((width()-m_minDimFenetre)/2,(height()-m_minDimFenetre)/2,m_minDimFenetre,m_minDimFenetre);
+    peintre->setWindow(-m_nbGraduation,m_nbGraduation,2*m_nbGraduation,-2*m_nbGraduation);*/
 
-    dessinTrait->begin(&generator);
-    if(QFile::exists(*m_nomFichier))
-    {
-        QSvgRenderer renderer(*m_nomFichier);
-        renderer.render(dessinTrait);
-    }
-	
+    QPen pen;
+    pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
+    pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
+
+    peintre->setPen(pen);
+
     for (int i = 0; i<tableauFigure.size(); i++)
     {
         Arc* monArc = dynamic_cast<Arc*> (tableauFigure[i]);
         if(monArc!=NULL)
         {
             if(monArc->getSpan() != NULL)
-                dessinTrait->drawArc(monArc->getRectangle(),monArc->getStart(),*monArc->getSpan());
+                peintre->drawArc(monArc->getRectangle(),monArc->getStart(),*monArc->getSpan());
         }
         else
         {
             Ligne* maLigne = dynamic_cast<Ligne*> (tableauFigure[i]);
             if(maLigne!=NULL)
-                dessinTrait->drawLine(maLigne->getQLine());
+                peintre->drawLine(maLigne->getQLine());
             else
             {
                 Point* monPoint = dynamic_cast<Point*> (tableauFigure[i]);
                 if(monPoint!=NULL)
                 {
-                    dessinTrait->drawLine(monPoint->getHorizontalLine());
-                    dessinTrait->drawLine(monPoint->getVerticalLine());
+                    peintre->drawLine(monPoint->getHorizontalLine());
+                    peintre->drawLine(monPoint->getVerticalLine());
                 }
             }
         }
 		tableauFigure[i]->installEventFilter(this); //Mise en place de l'event filter pour pouvoir l'effacer
     }
-    dessinTrait->end();
+}
 
-    /*QFile sauvegardeFichier (*nomFichierTemp);
-    sauvegardeFichier.copy(*nomFichier);*/
+QString Geometrie::generationSVG()
+{
+    QPainter * peintreGeneration;
+    peintreGeneration = new QPainter;
+
+    QSvgGenerator * generator;
+    generator = new QSvgGenerator;
+    generator->setFileName(*m_nomFichierTemp);
+    generator->setTitle(tr("Generation de SVG pour le tracage de geometrie"));
+    generator->setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
+
+    peintreGeneration->begin(generator);
+    dessinerFigure(peintreGeneration);
+    peintreGeneration->end();
+    delete generator;
+    delete peintreGeneration;
+
+    QFile * sauvegardeFichier;
+    sauvegardeFichier = new QFile(*m_nomFichierTemp);
+
+    QDateTime courantDateTime = QDateTime::currentDateTime();
+    QString nomFichier ("./" + courantDateTime.toString("dd-MM-yyyy_hh-mm-ss")+".svg");
+    if(QFile::exists(nomFichier))
+        QFile::remove(nomFichier);
+    sauvegardeFichier->copy(nomFichier);
+    sauvegardeFichier->close();
+    delete sauvegardeFichier;
+    QFile::remove(*m_nomFichierTemp);
+
+    return nomFichier;
 }
 
 void Geometrie::mousePressEvent(QMouseEvent *clic)

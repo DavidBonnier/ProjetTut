@@ -250,7 +250,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>:/ProjetGeometrie/Resources/fontColor.png</normaloff>:/ProjetGeometrie/Resources/fontColor.png</iconset>
+          <normaloff>:/Interface/Resources/fontColor.png</normaloff>:/Interface/Resources/fontColor.png</iconset>
         </property>
         <property name="iconSize">
          <size>

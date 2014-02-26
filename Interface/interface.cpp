@@ -416,8 +416,11 @@ void Interface::Aide()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::insererGeom()
 {
-	/*ui.imgLabel->setPixmap(pix);
-    QUrl Uri ( QString ( ":/Interface/Resources/img_Clone.jpg"));
+    QString nomImage (projetGeom->m_geometrie->generationSVG());
+    /*QPixmap pix;
+    ui.imgLabel->setPixmap(pix);
+    QUrl Uri (nomImage);
+    //QUrl Uri ( QString ( ":/Interface/Resources/img_Clone.jpg"));
 	QTextDocument * textDocument = txtCours->document();
     textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( *img ) );
     QTextCursor cursor = txtCours->textCursor();
