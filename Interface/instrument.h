@@ -47,7 +47,6 @@ protected:
     bool m_transparence;
     int m_longueur;
     int m_largeur;
-    int m_epaisseur;
     //Vecteur Instrument -> Souris
     QPoint m_offset;
     //Rotation

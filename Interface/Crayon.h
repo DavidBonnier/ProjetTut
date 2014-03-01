@@ -38,7 +38,6 @@ public:
 
 private:
     int m_hauteurPointe;
-    int m_epaisseur;
 };
 
 #endif
