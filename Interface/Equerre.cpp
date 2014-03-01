@@ -21,7 +21,7 @@
 ///////////////////////////////////////////////////////////////////////
 Equerre::Equerre(Geometrie * geometrie)
 {
-    m_nomFichierXML = new QString(":/Instrument/Resources/XML/Equerre.xml");
+    m_nomFichierXML = new QString("Resources/XML/Equerre.xml");
     m_nomDocument = new QString("Equerre");
     m_nomElement = new QString("equerre");
 
@@ -141,7 +141,7 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
 
     //recherche des valeurs du XML------------------------------------------------------------
     QDomDocument dom("Equerre"); // Création de l'objet DOM
-    QFile xml_doc(":/Instrument/Resources/XML/Equerre.xml"); // On choisit le fichier contenant les informations XML.
+    QFile xml_doc("Resources/XML/Equerre.xml"); // On choisit le fichier contenant les informations XML.
     if(!xml_doc.open(QIODevice::ReadOnly)) // Si l'on n'arrive pas à ouvrir le fichier XML.
     {
             QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
@@ -301,7 +301,7 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
         {
             //Lecture Regle
             QDomDocument dom("Regle"); // Création de l'objet DOM
-            QFile xml_doc(":/Instrument/Resources/XML/Regle.xml"); // On choisit le fichier contenant les informations XML.
+            QFile xml_doc("Resources/XML/Regle.xml"); // On choisit le fichier contenant les informations XML.
             if(!xml_doc.open(QIODevice::ReadOnly)) // Si l'on n'arrive pas à ouvrir le fichier XML.
             {
                     QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");

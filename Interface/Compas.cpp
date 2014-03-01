@@ -21,7 +21,7 @@ Compas::Compas(Geometrie * geometrie)
 {
     m_geometrie = geometrie;
 
-    m_nomFichierXML = new QString(":/Instrument/Resources/XML/Compas.xml");
+    m_nomFichierXML = new QString("Resources/XML/Compas.xml");
     m_nomDocument = new QString("Compas");
     m_nomElement = new QString("compas");
 
