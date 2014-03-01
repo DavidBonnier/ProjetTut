@@ -50,6 +50,8 @@ Crayon::Crayon(Geometrie * geometrie)
         {
             if (element.tagName() == "hauteurPointe")
                 m_hauteurPointe = element.text().toInt();
+            if (element.tagName() == "epaisseur")
+                m_epaisseur = element.text().toInt();
         }
         noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
     }
@@ -96,7 +98,7 @@ void Crayon::dessinerCrayon(QPainter& dessin)
     else //Pas de transparence
         dessin.setBrush(Qt::black); //Couleur de la mine
 
-    int epaisseurMine = m_largeur/2;
+    int epaisseurMine = m_epaisseur/2;
     int hauteurMine = m_hauteurPointe/3;
     //Rotation
     dessin.translate(m_position.x(),m_position.y());
@@ -108,16 +110,16 @@ void Crayon::dessinerCrayon(QPainter& dessin)
     //Dessin du reste de la pointe
     dessin.setBrush(QColor(255,203,96)); //Mise en couleur de la pointe
     QPointF pointe[4] = {QPointF(m_position.x()-(epaisseurMine/2), m_position.y()+hauteurMine), QPointF(m_position.x()+epaisseurMine/2, m_position.y()+hauteurMine),
-                         QPointF(m_position.x()+m_largeur/2, m_position.y()+m_hauteurPointe), QPointF(m_position.x()-(m_largeur/2), m_position.y()+m_hauteurPointe)}; //Points du triangle principal
+                         QPointF(m_position.x()+m_epaisseur/2, m_position.y()+m_hauteurPointe), QPointF(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe)}; //Points du triangle principal
     dessin.drawConvexPolygon(pointe, 4); //Pointe du crayon
     //Dessin du corps du crayon
     dessin.setBrush(QColor(255,255,49));
-    dessin.drawRect(m_position.x()-(m_largeur/2), m_position.y()+m_hauteurPointe, m_largeur, m_longueur);
+    dessin.drawRect(m_position.x()-(m_epaisseur/2), m_position.y()+m_hauteurPointe, m_epaisseur, m_longueur);
     //Dessin du bouton rotation
     dessin.setBrush(QColor(125,255,255));
     dessin.drawRect(m_position.x()-epaisseurMine, m_position.y()+250, 2*epaisseurMine, 8*epaisseurMine);
     //Dessin de 2 traits sur le corps
-    dessin.drawLine(m_position.x()-(m_largeur/5),m_position.y()+m_hauteurPointe, m_position.x()-(m_largeur/5),m_position.y()+m_hauteurPointe+m_longueur-30);
-    dessin.drawLine(m_position.x()+m_largeur/5,m_position.y()+m_hauteurPointe, m_position.x()+m_largeur/5,m_position.y()+m_hauteurPointe+m_longueur-30);
+    dessin.drawLine(m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe, m_position.x()-(m_epaisseur/5),m_position.y()+m_hauteurPointe+m_longueur-30);
+    dessin.drawLine(m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe, m_position.x()+m_epaisseur/5,m_position.y()+m_hauteurPointe+m_longueur-30);
     dessin.restore();
 }

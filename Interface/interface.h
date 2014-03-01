@@ -27,6 +27,7 @@
 #include "QtPrintSupport\qprinter.h"
 #include "QtPrintSupport\qprintdialog.h"
 #include "QtPrintSupport\qprintpreviewdialog.h"
+#include "qdesktopwidget.h"
 #include "qimage.h"
 #include "Compas.h"
 #include "qtextcodec.h"
@@ -61,7 +62,7 @@ private:
 	int fontSize;
 
 	QColor fontColor;
-	bool widgetIsFullscreen;
+	bool widgetIsFullscreen, impressionLanceViaApercu, txtModifie, newFile;
 
     QVBoxLayout* layoutCours;
 	QVBoxLayout* layoutExo;
@@ -82,10 +83,24 @@ private:
 	QAction* actionRegle;
 	QAction* actionCrayon;
 
-	QPrinter* printer;
 	QImage* img;
+	QPixmap pix;
+
+	//Outils de sauvegarde et ouverture
+	QString repSauvegarde;
+	QString nomFichier;
+	QFileDialog fichierOuvert;
+	QFile* file;
+	void sauvegarder();
 
 public slots:
+	void nouveauFichier();
+	void sauver();
+	void sauverSous();
+	void ouvrir();
+	void fermerFichier();
+	void ModificationTexte();
+
     void Connexion();
     void NouvelUtil();
     void SupprimerUtil();
@@ -98,7 +113,8 @@ public slots:
 
     void AffichageRaccourcis();
     void ApercuAvtImpr();
-    void Impression();
+    void Impression(QPrinter* p);
+
     void Aide();
 	void APropos();
 

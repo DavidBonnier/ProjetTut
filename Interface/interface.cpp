@@ -15,7 +15,10 @@ Interface::Interface(QMainWindow *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	setWindowTitle("Logiciel de Mathématiques");
 	setContextMenuPolicy(Qt::NoContextMenu);
+
+	file = new QFile();
 
     util = new User();
     projetGeom = new ProjetGeometrie();
@@ -24,29 +27,36 @@ Interface::Interface(QMainWindow *parent)
     projetGeom->ui.widget->hide();
     projetGeom->ui.ScrollAreaOptionsOutils->hide();
 
-	printer = new QPrinter;
 	container = new QWidget();
 	layoutCours = new QVBoxLayout();	
 	layoutEval = new QVBoxLayout();	
 	layoutExo = new QVBoxLayout();	
+
 	ui.scrollAreaCours->setWidget(container);
 	ui.scrollAreaCours->setLayout(layoutCours);
+
 	ui.scrollAreaExo->setWidget(container);
 	ui.scrollAreaExo->setLayout(layoutExo);
+
 	ui.scrollAreaEval->setWidget(container);
 	ui.scrollAreaEval->setLayout(layoutEval);
 
 	txtCours = new QTextEdit(ui.scrollAreaCours);
 	txtExo = new QTextEdit(ui.scrollAreaExo);
 	txtEval = new QTextEdit(ui.scrollAreaEval);
+
 	ui.scrollAreaExo->setWidget(txtExo);
 	ui.scrollAreaCours->setWidget(txtCours);
 	ui.scrollAreaEval->setWidget(txtEval);
+
 	layoutCours->addWidget(txtCours);
 	layoutExo->addWidget(txtExo);
 	layoutEval->addWidget(txtEval);
 
 	widgetIsFullscreen= false;
+	impressionLanceViaApercu = false;
+	txtModifie = false;
+	newFile = false;
 	fontSize = 18;
 
 	//Toolbar écran scindé
@@ -67,11 +77,11 @@ Interface::Interface(QMainWindow *parent)
 	ui.PleinEcranExo->setToolTip("Écrire sur vos cahiers en Plein Écran");
 	ui.PleinEcranEval->setToolTip("Écrire sur vos cahiers en Plein Écran");
 
-    actionTailleTexte->setIcon(QIcon(":/Interface/Resources/fontSize.png"));
-    actionCouleurTexte->setIcon(QIcon(":/Interface/Resources/fontColor.png"));
-    actionRegle->setIcon(QIcon(":/ProjetGeometrie/Resources/regle.gif"));
-    actionCrayon->setIcon(QIcon(":/ProjetGeometrie/Resources/crayon.gif"));
-    actionEquerre->setIcon(QIcon(":/ProjetGeometrie/Resources/equerre.gif"));
+    actionTailleTexte->setIcon(QIcon("Resources/fontSize.png"));
+	actionCouleurTexte->setIcon(QIcon("Resources/fontColor.png"));
+	actionRegle->setIcon(QIcon("Resources/regle.gif"));
+	actionCrayon->setIcon(QIcon("Resources/crayon.gif"));
+	actionEquerre->setIcon(QIcon("Resources/equerre.gif"));
 
 	actionEquerre->setCheckable(false);
 	actionRegle->setCheckable(false);
@@ -108,6 +118,14 @@ Interface::Interface(QMainWindow *parent)
 	ui.actionQuitter->setShortcut(tr("Alt+F4"));
 
 	// connect
+	connect(ui.actionNouveau, SIGNAL(triggered(bool)), this, SLOT(nouveauFichier()));
+	connect(ui.actionSauvegarder, SIGNAL(triggered(bool)), this, SLOT(sauver()));
+	connect(ui.actionSauvegarder_Sous, SIGNAL(triggered(bool)), this, SLOT(sauverSous()));
+	connect(ui.actionOuvrir, SIGNAL(triggered(bool)), this, SLOT(ouvrir()));
+	connect(ui.actionFermer, SIGNAL(triggered(bool)), this, SLOT(fermerFichier()));
+
+	connect(txtCours, SIGNAL(textChanged()), this, SLOT(ModificationTexte()));
+
 	connect(ui.actionConnexion, SIGNAL(triggered(bool)),this,SLOT(Connexion()));
 	connect(ui.actionNouvel_Utilisateur, SIGNAL(triggered(bool)),this,SLOT(NouvelUtil()));
 	connect(ui.actionChanger_d_Utilisateur, SIGNAL(triggered(bool)),this,SLOT(Connexion()));
@@ -116,19 +134,18 @@ Interface::Interface(QMainWindow *parent)
 	connect(actionTailleTexte, SIGNAL(triggered(bool)),this,SLOT(TailleDeTexte()));
 	connect(actionCouleurTexte, SIGNAL(triggered(bool)),this,SLOT(CouleurDeTexte()));
 
-	connect(ui.actionApercu_avant_impression, SIGNAL(triggered(bool)),this,SLOT(ApercuAvtImpr()));
-	connect(ui.actionImprimer, SIGNAL(triggered(bool)),this,SLOT(Impression()));
+	connect(ui.actionImprimer, SIGNAL(triggered(bool)),this,SLOT(ApercuAvtImpr()));
 
 	connect(ui.PleinEcranCours, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
 	connect(ui.PleinEcranEval, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
 	connect(ui.PleinEcranExo, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
+	
 	connect(projetGeom, SIGNAL(clickSortieFullScreen()), this, SLOT(FullScreen_Geom()));
 	connect(ui.GeomPleinEcran, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Geom()));
 	connect(ui.boutonInsertionGeom, SIGNAL(clicked(bool)), this,SLOT(insererGeom()));
-	connect(ui.actionImprimer, SIGNAL(triggered(bool)),this,SLOT(Impression()));
+	
 	connect(ui.actionDocumentation_Utilisateur, SIGNAL(triggered(bool)), this,SLOT(Aide()));
 	connect(ui.A_propos, SIGNAL(triggered(bool)), this, SLOT(APropos()));
-
 	connect(ui.actionRaccourcis_Clavier, SIGNAL(triggered(bool)),this,SLOT(AffichageRaccourcis()));
 
 	connect(actionRegle, SIGNAL(triggered(bool)),this,SLOT(creerRegle()));
@@ -148,6 +165,7 @@ Interface::Interface(QMainWindow *parent)
 Interface::~Interface()
 {
 	delete util;
+	delete file;
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -197,9 +215,9 @@ void Interface::FullScreen_Cahiers()
 	{
 		ui.Onglets->setParent(0);
 		ui.Onglets->showFullScreen();
-        ui.PleinEcranCours->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
-        ui.PleinEcranEval->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
-        ui.PleinEcranExo->setIcon(QIcon(":/Interface/Resources/SortieFullscreen.gif"));
+		ui.PleinEcranCours->setIcon(QIcon("Resources/SortieFullscreen.gif"));
+		ui.PleinEcranEval->setIcon(QIcon("Resources/SortieFullscreen.gif"));
+		ui.PleinEcranExo->setIcon(QIcon("Resources/SortieFullscreen.gif"));
 		widgetIsFullscreen = true;
 		return;
 	}
@@ -208,9 +226,9 @@ void Interface::FullScreen_Cahiers()
 		ui.LayoutCahiers->addWidget(ui.Onglets);
 		ui.Onglets->showNormal();
 		
-        ui.PleinEcranCours->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
-        ui.PleinEcranEval->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
-        ui.PleinEcranExo->setIcon(QIcon(":/Interface/Resources/Fullscreen.gif"));
+		ui.PleinEcranCours->setIcon(QIcon("Resources/Fullscreen.gif"));
+		ui.PleinEcranEval->setIcon(QIcon("Resources/Fullscreen.gif"));
+		ui.PleinEcranExo->setIcon(QIcon("Resources/Fullscreen.gif"));
 		widgetIsFullscreen = false;
 		return;
 	}
@@ -288,7 +306,7 @@ void Interface::TailleDeTexte()
 {
 	bool ok, txtSelectionne;
 	QTextCursor selection;
-	fontSize = QInputDialog::getInt(this, "Taille de police", "Saisir la taille d‚sir‚e :", fontSize,2,72,1,&ok,0);
+	fontSize = QInputDialog::getInt(this, "Taille de police", "Saisir la taille désirée :", fontSize,2,72,1,&ok,0);
 	if(ui.Onglets->currentIndex() == 0)
 	{
 		selection = txtCours->textCursor();
@@ -353,7 +371,7 @@ void Interface::AffichageRaccourcis()
 {
 	QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p> <p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p><p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p><p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p><p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p><p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p><p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p><p> <strong> - F12 </strong>: Sauvegarder Sous. </p><p> <strong> - Ctrl + P </strong>: Imprimer. </p><p> <strong> - Alt + P </strong>: Aperçu avant impression. </p><p> <strong> - F1 </strong>: Affichage de l'aide. </p><p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p><p> <strong> - Alt + F4 </strong>: Quitter le programme.");
 	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", msg);
-    shortcuts->setIconPixmap(QPixmap(":/Interface/Resources/raccourcisClavier.png"));
+	shortcuts->setIconPixmap(QPixmap("Resources/raccourcisClavier.png"));
 	shortcuts->show();
 }
 
@@ -366,35 +384,43 @@ void Interface::AffichageRaccourcis()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::ApercuAvtImpr()
 {
-	QPrintPreviewDialog *printDialog = new QPrintPreviewDialog(printer);
-    connect(printDialog, SIGNAL(paintRequested(QPrinter *)), this, SLOT(doSomething(QPrinter *)));
-	printDialog->setWindowTitle("Aperçu avant impression");
-    printDialog->exec();
+	QDesktopWidget screen;
+	QRect mainScreenSize = screen.availableGeometry(screen.primaryScreen());
+
+	QPrinter print(QPrinter::HighResolution);
+    QPrintPreviewDialog preview(&print, this);
+    preview.setWindowFlags ( Qt::Window );
+	preview.setFixedSize(mainScreenSize.width() - 10, mainScreenSize.height() - 10);
+
+	preview.setWindowTitle("Aperçu avant impression");
+    connect(&preview, SIGNAL(paintRequested(QPrinter *)), SLOT(Impression(QPrinter *)));
+    preview.exec();
 }
 
 /////////////////////////////////////////////////////////////////////////// 
 //! \author ROCHE Hugo
 //! \date 20/01/2014 
 //! 
-//! Ouverture d'un QPrintDialog qui va permettre de choisir l'imprimante souhaitée, le nombre de pages etc... Puis impression au moyen d'un QPainter qui va "dessiner" le contenu de la page.
+//! Ouverture d'un QPrintDialog qui va permettre de choisir l'imprimante souhaitée, le nombre de pages etc... Puis impression au moyen d'un QPainter qui va dessiner le contenu de la page.
 /////////////////////////////////////////////////////////////////////////// 
-void Interface::Impression()
+void Interface::Impression(QPrinter* p)
 {
-	 QPrintDialog *dialog = new QPrintDialog(printer, this);
-     dialog->setWindowTitle(tr("Imprimez votre travail"));
-     if (dialog->exec() != QDialog::Accepted)
-         return;
-	
-	QPainter painter;
-    painter.begin(printer);
-    double xscale = printer->pageRect().width()/double(ui.Onglets->width());
-    double yscale = printer->pageRect().height()/double(ui.Onglets->height());
+	/*QPainter painter;
+    painter.begin(p);
+    double xscale = p->pageRect().width()/ui.Onglets->width();
+    double yscale = p->pageRect().height()/ui.Onglets->height();
     double scale = qMin(xscale, yscale);
-    painter.translate(printer->paperRect().x() + printer->pageRect().width()/2, printer->paperRect().y() + printer->pageRect().height()/2);
+    painter.translate(p->paperRect().x() + p->pageRect().width()/2, p->paperRect().y() + p->pageRect().height()/2);
     painter.scale(scale, scale);
-    painter.translate(-width()/2, -height()/2);
-
-    ui.Onglets->render(&painter);
+    painter.translate(-width()/4, -height()/2);
+	
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->render(&painter);
+	else if(ui.Onglets->currentIndex() == 1)
+		txtEval->render(&painter);
+	else if(ui.Onglets->currentIndex() == 2)
+		txtExo->render(&painter);*/
+	txtCours->print(p);
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -405,7 +431,7 @@ void Interface::Impression()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::Aide()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath()+":/Aide/Resources/Aide/index.html"));
+	QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath()+"/Resources/Aide/index.html"));
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -415,20 +441,31 @@ void Interface::Aide()
 //! Fonction permettant l'insertion des figures géométriques, créées dans le module de géométrie, dans les cahiers.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::insererGeom()
-{
-    QString nomImage (projetGeom->m_geometrie->generationSVG());
-    /*QPixmap pix;
-    ui.imgLabel->setPixmap(pix);
-    QUrl Uri (nomImage);
-    //QUrl Uri ( QString ( ":/Interface/Resources/img_Clone.jpg"));
-	QTextDocument * textDocument = txtCours->document();
-    textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( *img ) );
-    QTextCursor cursor = txtCours->textCursor();
-    QTextImageFormat imageFormat;
-    imageFormat.setWidth( img->width() );
-    imageFormat.setHeight( img->hauteur );
-    imageFormat.setName( Uri.toString() );
-    cursor.insertImage(imageFormat);*/
+{	
+	QPixmap pixmap(ui.geomEcranScind->geometry().size());
+	
+	ui.Geom->render(&pixmap);
+	pixmap.size().setHeight(ui.geomEcranScind->geometry().size().height());
+	QString texteFinal;
+	pixmap.save("Resources/capture.png");
+	QString cheminImage = "Resources/capture.png";
+	if(ui.Onglets->currentIndex() == 0)
+	{
+		 texteFinal = txtCours->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
+		 txtCours->setHtml(texteFinal);
+	}
+	
+	else if(ui.Onglets->currentIndex() == 1)
+	{
+		texteFinal = txtEval->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
+		txtEval->setHtml(texteFinal);
+	}
+	
+	else if(ui.Onglets->currentIndex() == 2)
+	{
+		texteFinal = txtExo->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
+		txtExo->setHtml(texteFinal);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -596,4 +633,180 @@ void Interface::APropos()
 	info.setStandardButtons(QMessageBox::Ok);
 
 	info.exec();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author JACQUIN Dylan
+//! \date 28/02/2014
+//!
+//! Fonction permettant d'afficher une boîte de dialogue demandant de chemin où le fichier doit être sauvegarder. Elle renvoie sur la fonction de sauvegarde.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::sauverSous()
+{
+	repSauvegarde = fichierOuvert.getSaveFileName(this, tr("Enregistrer un fichier"), repSauvegarde, tr("Fichier texte (*.txt)")); //Demande du nom du chemin avant de sauvegarder
+	sauvegarder(); //Sauvegarde en ayant modifié le chemin
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author JACQUIN Dylan
+//! \date 28/02/2014
+//!
+//! Fonction qui vérifie si l'on a défini un chemin lors d'une demande de sauvegarde simple. 
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::sauver()
+{
+	if (repSauvegarde.isNull()) //Si c'est la première fois qu'on sauvegarde
+		//On lance sauvegarder sous
+		sauverSous();
+	else
+		sauvegarder();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author JACQUIN Dylan
+//! \date 28/02/2014
+//!
+//! Fonction permettant de sauvegarder le contenu des cahiers.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::sauvegarder()
+{
+	file = new QFile(repSauvegarde); //Fichier de sauvegarde
+
+	newFile = false;
+	txtModifie = false;
+
+	if(repSauvegarde == " ")
+		setWindowTitle("Logiciel de Mathématiques");
+	else
+	{
+		QStringList filePath = (QString(repSauvegarde).split("/"));
+		setWindowTitle(filePath[filePath.size() - 1]);
+	}
+
+	QTextStream FluxOut(file); //Flux pour le fichier de sauvegarde
+	FluxOut.setCodec("UTF-8"); //Passage en UTF-8
+	//Ouverture du fichier, et vérification
+    if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+	QString *texte = new QString;
+    *texte = txtCours->toHtml(); //Récupération et transcription du contenu du cahier en HTML.
+    FluxOut << *texte << endl; //Ecriture dans le fichier
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author JACQUIN Dylan
+//! \date 28/02/2014
+//!
+//! Fonction permettant l'ouverture d'un fichier.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::ouvrir()
+{
+	if(txtModifie || newFile)
+	{
+		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
+		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
+		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
+
+		int rep = msg->exec();
+		if(rep == QMessageBox::Yes)
+			sauver();
+	}
+	//Demande et récupération du ficher à ouvrir
+	repSauvegarde = fichierOuvert.getOpenFileName(this, tr("Ouverture d'un fichier texte"), repSauvegarde, tr("Fichier texte (*.txt)")); //Demande à l'utilisateur le fichier à ouvrir
+
+	QStringList filePath = (QString(repSauvegarde).split("/"));
+	setWindowTitle(filePath[filePath.size() - 1]);
+
+	QFile fichier(repSauvegarde);
+	fichier.open(QIODevice::ReadOnly | QIODevice::Text); //Ouverture du fichier
+	QTextStream flux(&fichier);
+
+	QString texte = flux.readAll(); //Lecture entière du fichier
+
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->setHtml(texte);
+	if(ui.Onglets->currentIndex() == 1)
+		txtEval->setHtml(texte);
+	if(ui.Onglets->currentIndex() == 2)
+		txtExo->setHtml(texte);
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 01/03/2014
+//!
+//! Slot permettant la fermeture d'un fichier.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::fermerFichier()
+{
+	if(txtModifie || newFile)
+	{
+		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
+		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
+		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
+		int rep = msg->exec();
+		if(rep == QMessageBox::Yes)
+			sauver();
+	}
+	if(file->isOpen())
+		file->close();
+
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->clear();
+	if(ui.Onglets->currentIndex() == 1)
+		txtEval->clear();
+	if(ui.Onglets->currentIndex() == 2)
+		txtExo->clear();
+
+	repSauvegarde= " ";
+	newFile = false;
+	txtModifie = false;
+
+	setWindowTitle("Logiciel de Mathématiques");
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 01/03/2014
+//!
+//! Slot permettant la création d'un nouveau fichier.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::nouveauFichier()
+{
+	if(txtModifie || newFile)
+	{
+		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
+		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
+		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
+		int rep = msg->exec();
+		if(rep == QMessageBox::Yes)
+			sauver();
+	}
+	if(file->isOpen())
+		file->close();
+
+	txtCours->clear();
+	txtEval->clear();
+	txtExo->clear();
+
+	setWindowTitle("Sans titre*");
+	newFile = true;
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 01/03/2014
+//!
+//! Slot appelé à chaque modification du texte. Met le booléen txtModifie à true. Rajoute une asterisque au titre de la fenêtre pour signifier que le fichier est modifié et non sauvegardé.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::ModificationTexte()
+{
+	txtModifie = true;
+	if(repSauvegarde != " ")
+	{
+		QStringList filePath = (QString(repSauvegarde).split("/"));
+		setWindowTitle(filePath[filePath.size() - 1] + "*");
+	}
+	else
+		setWindowTitle("Sans titre*");
 }

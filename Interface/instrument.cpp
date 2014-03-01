@@ -67,6 +67,8 @@ void Instrument::Initialisation()
                 m_longueur = element.text().toInt();
             if (element.tagName() == "largeur")
                 m_largeur = element.text().toInt();
+            if (element.tagName() == "epaisseur")
+                m_epaisseur = element.text().toInt();
         }
         noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
     }

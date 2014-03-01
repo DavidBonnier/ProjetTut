@@ -88,8 +88,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>777</width>
-               <height>814</height>
+               <width>770</width>
+               <height>789</height>
               </rect>
              </property>
             </widget>
@@ -389,7 +389,7 @@
      <x>0</x>
      <y>0</y>
      <width>1633</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -408,7 +408,6 @@
     <addaction name="actionSauvegarder"/>
     <addaction name="actionSauvegarder_Sous"/>
     <addaction name="separator"/>
-    <addaction name="actionApercu_avant_impression"/>
     <addaction name="actionImprimer"/>
     <addaction name="separator"/>
     <addaction name="actionQuitter"/>
@@ -543,7 +542,7 @@
   <action name="actionImprimer">
    <property name="icon">
     <iconset resource="interface.qrc">
-     <normaloff>:/Interface/Resources/apercuImpression.png</normaloff>:/Interface/Resources/apercuImpression.png</iconset>
+     <normaloff>:/Interface/Resources/imprimer.png</normaloff>:/Interface/Resources/imprimer.png</iconset>
    </property>
    <property name="text">
     <string>Imprimer</string>
@@ -633,7 +632,7 @@
   <action name="actionDocumentation_Utilisateur">
    <property name="icon">
     <iconset>
-     <normaloff>:/Interface/Resources/aide.png</normaloff>:/Interface/Resources/aide.png</iconset>
+     <normaloff>../../../.designer/backup/Resources/aide.png</normaloff>../../../.designer/backup/Resources/aide.png</iconset>
    </property>
    <property name="text">
     <string>Documentation Utilisateur</string>
