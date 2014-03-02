@@ -3,8 +3,10 @@
 //! 
 //! \brief Mise en place de toutes les fonctionnalités relatives à l'Interface. Connect/signals et slots. 
 //! 
-//! On a crée dans le .h une variable de type User qui va nous permettre d'accéder aux fonctions de cette classe. On cr‚e donc les slots qui correspondent.
-//! Pour les autres fonctionnalités, l'impression et l'aperçu avant impression par exemple,  on met simplement en place les fonctions dans ce fichier.
+//! On a crée dans le .h une variable de type User qui va nous permettre d'accéder aux fonctions de cette classe.
+//! On crée donc les slots qui correspondent.
+//! Pour les autres fonctionnalités, l'impression et l'aperçu avant impression par exemple,
+//! on met simplement en place les fonctions dans ce fichier.
 //! \date 01/02/2014
 //! \version 2.3
 /////////////////////////////////////////////////////////////////////////// 
@@ -15,7 +17,8 @@ Interface::Interface(QMainWindow *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	setWindowTitle("Logiciel de Mathématiques");
+    m_nomLogiciel = QString("Logiciel de Mathématiques");
+    setWindowTitle(m_nomLogiciel);
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	file = new QFile();
@@ -56,7 +59,6 @@ Interface::Interface(QMainWindow *parent)
 	widgetIsFullscreen= false;
 	impressionLanceViaApercu = false;
 	txtModifie = false;
-	newFile = false;
 	fontSize = 18;
 
 	//Toolbar écran scindé
@@ -173,7 +175,9 @@ Interface::~Interface()
 //! \date 01/02/2014
 //! 
 //! 
-//! Simple appel à la fonction de Connexion via l'instance de User. Ce slot est connecté à deux éléments: la connexion et le changement d'Utilisateur (qui n'est en fait que la connexion sous un autres identifiant).
+//! Simple appel à la fonction de Connexion via l'instance de User.
+//! Ce slot est connecté à deux éléments: la connexion et le changement d'Utilisateur
+//! (qui n'est en fait que la connexion sous un autres identifiant).
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::Connexion()
 {
@@ -207,7 +211,10 @@ void Interface::SupprimerUtil()
 //! \author ROCHE Hugo
 //! \date 28/01/2014
 //! 
-//! On regarde d'abord si le widget est déjà en plein écran (booléen widgetIsFullscreen). Ensuite on "détache" le QTabWidget (setParent(0)) pour pouvoir ensuite le mette en plein écran s'il ne l'était pas déjà. S'il était déjà en plein écran alors on le rattache (ajout au layout). On change l'icone du bouton en fonction de l'état dans lequel nous sommes (plein écran ou non).
+//! On regarde d'abord si le widget est déjà en plein écran (booléen widgetIsFullscreen).
+//! Ensuite on "détache" le QTabWidget (setParent(0)) pour pouvoir ensuite le mette en plein écran s'il ne l'était pas déjà.
+//! S'il était déjà en plein écran alors on le rattache (ajout au layout).
+//! On change l'icone du bouton en fonction de l'état dans lequel nous sommes (plein écran ou non).
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::FullScreen_Cahiers()
 {
@@ -238,7 +245,10 @@ void Interface::FullScreen_Cahiers()
 //! \author ROCHE Hugo 
 //! \date 28/01/2014 
 //! 
-//! On regarde tout d'abord si le widget est déjà en plein écran (booléen widgetIsFullscreen). Si ce n'est pas le cas, on le détache et on fait appel ) showFullScreen(). S'il était déjà en mode plein écran alors on le rattache et on appelle la fonction showNormal(). On change l'icone du bouton en fonction de l'état dans lequel nous sommes (plein écran ou non).
+//! On regarde tout d'abord si le widget est déjà en plein écran (booléen widgetIsFullscreen).
+//! Si ce n'est pas le cas, on le détache et on fait appel ) showFullScreen().
+//! S'il était déjà en mode plein écran alors on le rattache et on appelle la fonction showNormal().
+//! On change l'icone du bouton en fonction de l'état dans lequel nous sommes (plein écran ou non).
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::FullScreen_Geom()
 {
@@ -290,17 +300,12 @@ void Interface::FullScreen_Geom()
 	}
 }
 
-// Fermeture du programme
-void Interface::closeEvent(QCloseEvent *event)
-{
-	event->accept();
-}
-
 /////////////////////////////////////////////////////////////////////////// 
 //! \author ROCHE Hugo
 //! \date 26/01/2014 
 //! 
-//! Ouverture d'une boite de dialogue qui va demander à l'utilisateur de saisir une valeur entière pour la taille de police. Cette valeur sera ensuite assignée au QTextEdit.
+//! Ouverture d'une boite de dialogue qui va demander à l'utilisateur de saisir une valeur entière pour la taille de police.
+//! Cette valeur sera ensuite assignée au QTextEdit.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::TailleDeTexte()
 {
@@ -346,7 +351,8 @@ void Interface::TailleDeTexte()
 //! \author ROCHE Hugo
 //! \date 26/01/2014 
 //! 
-//! Ouverture d'une QColorDialog qui permet à l'utilisateur de choisir la couleur qu'il souhaite qui correspondra à la couleur de police du QTextEdit.
+//! Ouverture d'une QColorDialog qui permet à l'utilisateur de choisir la couleur
+//! qu'il souhaite qui correspondra à la couleur de police du QTextEdit.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::CouleurDeTexte()
 {
@@ -369,7 +375,19 @@ void Interface::CouleurDeTexte()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::AffichageRaccourcis()
 {
-	QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p> <p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p><p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p><p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p><p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p><p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p><p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p><p> <strong> - F12 </strong>: Sauvegarder Sous. </p><p> <strong> - Ctrl + P </strong>: Imprimer. </p><p> <strong> - Alt + P </strong>: Aperçu avant impression. </p><p> <strong> - F1 </strong>: Affichage de l'aide. </p><p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p><p> <strong> - Alt + F4 </strong>: Quitter le programme.");
+    QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p>"
+                                    "<p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p>"
+                                    "<p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p>"
+                                    "<p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p>"
+                                    "<p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p>"
+                                    "<p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p>"
+                                    "<p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p>"
+                                    "<p> <strong> - F12 </strong>: Sauvegarder Sous. </p>"
+                                    "<p> <strong> - Ctrl + P </strong>: Imprimer. </p>"
+                                    "<p> <strong> - Alt + P </strong>: Aperçu avant impression. </p>"
+                                    "<p> <strong> - F1 </strong>: Affichage de l'aide. </p>"
+                                    "<p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p>"
+                                    "<p> <strong> - Alt + F4 </strong>: Quitter le programme.");
 	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", msg);
 	shortcuts->setIconPixmap(QPixmap("Resources/raccourcisClavier.png"));
 	shortcuts->show();
@@ -401,7 +419,8 @@ void Interface::ApercuAvtImpr()
 //! \author ROCHE Hugo
 //! \date 20/01/2014 
 //! 
-//! Ouverture d'un QPrintDialog qui va permettre de choisir l'imprimante souhaitée, le nombre de pages etc... Puis impression au moyen d'un QPainter qui va dessiner le contenu de la page.
+//! Ouverture d'un QPrintDialog qui va permettre de choisir l'imprimante souhaitée, le nombre de pages etc...
+//! Puis impression au moyen d'un QPainter qui va dessiner le contenu de la page.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::Impression(QPrinter* p)
 {
@@ -442,13 +461,8 @@ void Interface::Aide()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::insererGeom()
 {	
-	QPixmap pixmap(ui.geomEcranScind->geometry().size());
-	
-	ui.Geom->render(&pixmap);
-	pixmap.size().setHeight(ui.geomEcranScind->geometry().size().height());
-	QString texteFinal;
-	pixmap.save("Resources/capture.png");
-	QString cheminImage = "Resources/capture.png";
+    QString texteFinal;
+    QString cheminImage(projetGeom->m_geometrie->generationSVG());
 	if(ui.Onglets->currentIndex() == 0)
 	{
 		 texteFinal = txtCours->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
@@ -611,7 +625,9 @@ void Interface::APropos()
 {
 	QMessageBox info;
 	info.setText("A Propos de ce logiciel");
-	info.setInformativeText("Ce logiciel a été réalisé par des étudiants de l'<strong>IUT du Puy-en-Velay</strong> dans le cadre d'un projet tuteuré visant à aider les personnes en situation de handicap dans les mathématiques."
+    info.setInformativeText("<p>Ce logiciel a été réalisé par des étudiants de l'<strong>IUT du Puy-en-Velay</strong>"
+                            "dans le cadre d'un projet tuteuré visant à aider"
+                            "les personnes en situation de handicap dans les mathématiques.</p>"
 							"<br/><br/>" 
 							"Enseignant référant :<strong> MONCORGÉ Dominque</strong>"
 							"<br/>""<br/>"
@@ -639,11 +655,13 @@ void Interface::APropos()
 //! \author JACQUIN Dylan
 //! \date 28/02/2014
 //!
-//! Fonction permettant d'afficher une boîte de dialogue demandant de chemin où le fichier doit être sauvegarder. Elle renvoie sur la fonction de sauvegarde.
+//! Fonction permettant d'afficher une boîte de dialogue demandant de chemin où le fichier doit être sauvegarder.
+//! Elle renvoie sur la fonction de sauvegarde.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::sauverSous()
 {
-	repSauvegarde = fichierOuvert.getSaveFileName(this, tr("Enregistrer un fichier"), repSauvegarde, tr("Fichier texte (*.txt)")); //Demande du nom du chemin avant de sauvegarder
+    //Demande du nom du chemin avant de sauvegarder
+    repSauvegarde = QFileDialog::getSaveFileName(this, tr("Enregistrer un fichier"), repSauvegarde, tr("Fichier texte (*.html)"));
 	sauvegarder(); //Sauvegarde en ayant modifié le chemin
 }
 
@@ -672,15 +690,14 @@ void Interface::sauvegarder()
 {
 	file = new QFile(repSauvegarde); //Fichier de sauvegarde
 
-	newFile = false;
 	txtModifie = false;
 
 	if(repSauvegarde == " ")
-		setWindowTitle("Logiciel de Mathématiques");
+        setWindowTitle(m_nomLogiciel);
 	else
 	{
 		QStringList filePath = (QString(repSauvegarde).split("/"));
-		setWindowTitle(filePath[filePath.size() - 1]);
+        setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
 	}
 
 	QTextStream FluxOut(file); //Flux pour le fichier de sauvegarde
@@ -701,34 +718,59 @@ void Interface::sauvegarder()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::ouvrir()
 {
-	if(txtModifie || newFile)
+    if(peutEtreSauver())
 	{
-		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
-		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
-		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
+        //Demande et récupération du ficher à ouvrir
+        repSauvegarde = QFileDialog::getOpenFileName(this, tr("Ouverture d'un fichier texte"),
+                                                      repSauvegarde, tr("Fichier texte (*.html)"));
 
-		int rep = msg->exec();
-		if(rep == QMessageBox::Yes)
-			sauver();
-	}
-	//Demande et récupération du ficher à ouvrir
-	repSauvegarde = fichierOuvert.getOpenFileName(this, tr("Ouverture d'un fichier texte"), repSauvegarde, tr("Fichier texte (*.txt)")); //Demande à l'utilisateur le fichier à ouvrir
+        if (!repSauvegarde.isEmpty())
+        {
+            QStringList filePath = (QString(repSauvegarde).split("/"));
+            setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
 
-	QStringList filePath = (QString(repSauvegarde).split("/"));
-	setWindowTitle(filePath[filePath.size() - 1]);
+            QFile fichier(repSauvegarde);
+            fichier.open(QIODevice::ReadOnly | QIODevice::Text); //Ouverture du fichier
+            QTextStream flux(&fichier);
 
-	QFile fichier(repSauvegarde);
-	fichier.open(QIODevice::ReadOnly | QIODevice::Text); //Ouverture du fichier
-	QTextStream flux(&fichier);
+            QString texte = flux.readAll(); //Lecture entière du fichier
 
-	QString texte = flux.readAll(); //Lecture entière du fichier
+            if(ui.Onglets->currentIndex() == 0)
+                txtCours->setHtml(texte);
+            if(ui.Onglets->currentIndex() == 1)
+                txtEval->setHtml(texte);
+            if(ui.Onglets->currentIndex() == 2)
+                txtExo->setHtml(texte);
+        }
+    }
+}
 
-	if(ui.Onglets->currentIndex() == 0)
-		txtCours->setHtml(texte);
-	if(ui.Onglets->currentIndex() == 1)
-		txtEval->setHtml(texte);
-	if(ui.Onglets->currentIndex() == 2)
-		txtExo->setHtml(texte);
+///////////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//! \date 02/03/2014
+//!
+//! Fonction qui renvois true pour continuer l'action (Fichier sauvegarder ou non).
+//! Renvois false qui stop l'action qui l'appelle (Message annuler).
+///////////////////////////////////////////////////////////////////////////
+bool Interface::peutEtreSauver()
+{
+    if(txtModifie)
+    {
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::warning(this, m_nomLogiciel,
+                    tr("Ce document a été modifier.\n"
+                    "Voulez vous sauvgarder les chnagements ?"),
+                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        if(ret == QMessageBox::Save)
+        {
+            sauver();
+            return true;
+        }
+        else if (ret == QMessageBox::Cancel)
+            return false;
+    }
+    return true;
+
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -739,30 +781,23 @@ void Interface::ouvrir()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::fermerFichier()
 {
-	if(txtModifie || newFile)
+    if(peutEtreSauver())
 	{
-		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
-		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
-		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
-		int rep = msg->exec();
-		if(rep == QMessageBox::Yes)
-			sauver();
-	}
-	if(file->isOpen())
-		file->close();
+        if(file->isOpen())
+            file->close();
 
-	if(ui.Onglets->currentIndex() == 0)
-		txtCours->clear();
-	if(ui.Onglets->currentIndex() == 1)
-		txtEval->clear();
-	if(ui.Onglets->currentIndex() == 2)
-		txtExo->clear();
+        if(ui.Onglets->currentIndex() == 0)
+            txtCours->clear();
+        if(ui.Onglets->currentIndex() == 1)
+            txtEval->clear();
+        if(ui.Onglets->currentIndex() == 2)
+            txtExo->clear();
 
-	repSauvegarde= " ";
-	newFile = false;
-	txtModifie = false;
+        repSauvegarde= " ";
+        txtModifie = false;
 
-	setWindowTitle("Logiciel de Mathématiques");
+        setWindowTitle(m_nomLogiciel);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -773,31 +808,26 @@ void Interface::fermerFichier()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::nouveauFichier()
 {
-	if(txtModifie || newFile)
+    if(peutEtreSauver())
 	{
-		QMessageBox* msg = new QMessageBox(QMessageBox::Information, "Fichier non sauvegardé", "Souhaitez-vous sauvegarder vos changements?");
-		msg->addButton(QMessageBox::StandardButton::Yes)->setText("Oui");
-		msg->addButton(QMessageBox::StandardButton::No)->setText("Non");
-		int rep = msg->exec();
-		if(rep == QMessageBox::Yes)
-			sauver();
-	}
-	if(file->isOpen())
-		file->close();
+        if(file->isOpen())
+            file->close();
 
-	txtCours->clear();
-	txtEval->clear();
-	txtExo->clear();
+        txtCours->clear();
+        txtEval->clear();
+        txtExo->clear();
 
-	setWindowTitle("Sans titre*");
-	newFile = true;
+        setWindowTitle(m_nomLogiciel);
+        txtModifie = true;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////// 
 //! \author ROCHE Hugo
 //! \date 01/03/2014
 //!
-//! Slot appelé à chaque modification du texte. Met le booléen txtModifie à true. Rajoute une asterisque au titre de la fenêtre pour signifier que le fichier est modifié et non sauvegardé.
+//! Slot appelé à chaque modification du texte. Met le booléen txtModifie à true.
+//! Rajoute une asterisque au titre de la fenêtre pour signifier que le fichier est modifié et non sauvegardé.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::ModificationTexte()
 {
@@ -805,8 +835,16 @@ void Interface::ModificationTexte()
 	if(repSauvegarde != " ")
 	{
 		QStringList filePath = (QString(repSauvegarde).split("/"));
-		setWindowTitle(filePath[filePath.size() - 1] + "*");
+        setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1] + "*");
 	}
 	else
-		setWindowTitle("Sans titre*");
+        setWindowTitle(m_nomLogiciel + " - Sans titre*");
+}
+
+void Interface::closeEvent(QCloseEvent *event)
+{
+    if(peutEtreSauver())
+       event->accept();
+    else
+       event->ignore();
 }

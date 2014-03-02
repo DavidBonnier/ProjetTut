@@ -57,12 +57,12 @@ public:
 	~Interface();
 private:
     Ui::InterfaceClass ui;
-	void closeEvent(QCloseEvent *event);
 
 	int fontSize;
+    QString m_nomLogiciel;
 
 	QColor fontColor;
-	bool widgetIsFullscreen, impressionLanceViaApercu, txtModifie, newFile;
+    bool widgetIsFullscreen, impressionLanceViaApercu, txtModifie;
 
     QVBoxLayout* layoutCours;
 	QVBoxLayout* layoutExo;
@@ -89,9 +89,11 @@ private:
 	//Outils de sauvegarde et ouverture
 	QString repSauvegarde;
 	QString nomFichier;
-	QFileDialog fichierOuvert;
 	QFile* file;
+
+    bool peutEtreSauver();
 	void sauvegarder();
+    void closeEvent(QCloseEvent *event);
 
 public slots:
 	void nouveauFichier();

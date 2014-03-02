@@ -13,6 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Interface
 TEMPLATE = app
+TRANSLATIONS = t1_fr.ts qt_fr.tss
 
 
 SOURCES += main.cpp\

@@ -1,11 +1,14 @@
+#include <QApplication>
+#include <QInputDialog>
+#include <QTranslator>
+
 #include "interface.h"
 #include "user.h"
-#include <qapplication.h>
-#include "qinputdialog.h"
+
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	Interface w;
+    Interface w;
 	User util;
 	if(util.firstUse())
 	{

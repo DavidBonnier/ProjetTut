@@ -318,9 +318,6 @@ void Geometrie::paintEvent (QPaintEvent *event)
 ///////////////////////////////////////////////////////////////////////
 void Geometrie::dessinerFigure(QPainter * peintre)
 {
-    /*peintre->setViewport((width()-m_minDimFenetre)/2,(height()-m_minDimFenetre)/2,m_minDimFenetre,m_minDimFenetre);
-    peintre->setWindow(-m_nbGraduation,m_nbGraduation,2*m_nbGraduation,-2*m_nbGraduation);*/
-
     QPen pen;
     pen.setColor(m_projetGeometrie->m_couleurTrait); //Changement de la couleur des traits
     pen.setWidth(m_projetGeometrie->ui.spinBoxEpaisseur->value()); //Changement de l'épaisseur
@@ -362,8 +359,6 @@ QString Geometrie::generationSVG()
     QSvgGenerator * generator;
     generator = new QSvgGenerator;
     generator->setFileName(*m_nomFichierTemp);
-    generator->setTitle(tr("Generation de SVG pour le tracage de geometrie"));
-    generator->setDescription(tr("Sauvgarde de SVG pour la geometrie tracer."));
 
     peintreGeneration->begin(generator);
     dessinerFigure(peintreGeneration);
