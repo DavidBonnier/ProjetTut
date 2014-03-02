@@ -73,7 +73,7 @@ private:
 
 	QWidget* container;
 	User* util;
-	
+
 	ProjetGeometrie* projetGeom;
 
 	//Toolbar écran scindé
@@ -132,6 +132,10 @@ public slots:
     void showParamCrayon();
 
     void afficherGrille();
+
+	void copier();
+	void coller();
+	void couper();
 };
 
 #endif // INTERFACE_H

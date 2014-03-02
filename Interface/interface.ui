@@ -419,9 +419,6 @@
     <addaction name="actionCopier"/>
     <addaction name="actionColler"/>
     <addaction name="actionCouper"/>
-    <addaction name="separator"/>
-    <addaction name="actionAnnuler"/>
-    <addaction name="actionRefaire"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">

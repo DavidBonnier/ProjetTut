@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>894</width>
-    <height>617</height>
+    <width>967</width>
+    <height>717</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/equerre.gif</normaloff>:/ProjetGeometrie/Resources/equerre.gif</iconset>
         </property>
         <property name="iconSize">
@@ -52,7 +52,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/crayon.gif</normaloff>:/ProjetGeometrie/Resources/crayon.gif</iconset>
         </property>
         <property name="iconSize">
@@ -87,7 +87,7 @@
          <string extracomment="Revenir en écran scindé"/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/SortieFullscreen.gif</normaloff>:/ProjetGeometrie/Resources/SortieFullscreen.gif</iconset>
         </property>
         <property name="iconSize">
@@ -126,7 +126,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/Point.gif</normaloff>:/ProjetGeometrie/Resources/Point.gif</iconset>
         </property>
         <property name="iconSize">
@@ -149,7 +149,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/Texte.gif</normaloff>:/ProjetGeometrie/Resources/Texte.gif</iconset>
         </property>
         <property name="iconSize">
@@ -172,7 +172,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/regle.gif</normaloff>:/ProjetGeometrie/Resources/regle.gif</iconset>
         </property>
         <property name="iconSize">
@@ -192,7 +192,7 @@
          <string extracomment="Outil Compas"/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="projetgeometrie.qrc">
           <normaloff>:/ProjetGeometrie/Resources/compas.gif</normaloff>:/ProjetGeometrie/Resources/compas.gif</iconset>
         </property>
         <property name="iconSize">
@@ -245,12 +245,11 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">
-</string>
+         <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>:/Interface/Resources/fontColor.png</normaloff>:/Interface/Resources/fontColor.png</iconset>
+         <iconset resource="projetgeometrie.qrc">
+          <normaloff>:/ProjetGeometrie/Resources/fontColor.png</normaloff>:/ProjetGeometrie/Resources/fontColor.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -284,7 +283,7 @@
     <widget class="QScrollArea" name="ScrollAreaOptionsOutils">
      <property name="maximumSize">
       <size>
-       <width>240</width>
+       <width>246</width>
        <height>16777215</height>
       </size>
      </property>
@@ -295,9 +294,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>266</width>
-        <height>988</height>
+        <y>-200</y>
+        <width>227</width>
+        <height>897</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -305,12 +304,6 @@
         <widget class="QDockWidget" name="DockWidgetCrayon">
          <property name="enabled">
           <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>183</width>
-           <height>180</height>
-          </size>
          </property>
          <property name="maximumSize">
           <size>
@@ -419,12 +412,6 @@
         <widget class="QDockWidget" name="DockWidgetRegle">
          <property name="enabled">
           <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>202</width>
-           <height>230</height>
-          </size>
          </property>
          <property name="maximumSize">
           <size>
@@ -559,12 +546,6 @@
        </item>
        <item>
         <widget class="QDockWidget" name="DockWidgetEquerre">
-         <property name="minimumSize">
-          <size>
-           <width>202</width>
-           <height>230</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
            <width>524287</width>
@@ -692,12 +673,6 @@
        </item>
        <item>
         <widget class="QDockWidget" name="DockWidgetCompas">
-         <property name="minimumSize">
-          <size>
-           <width>248</width>
-           <height>300</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
            <width>524287</width>
@@ -788,6 +763,9 @@
               </item>
               <item row="3" column="1">
                <widget class="QDoubleSpinBox" name="SpinBoxCompasOrientation">
+                <property name="wrapping">
+                 <bool>true</bool>
+                </property>
                 <property name="minimum">
                  <double>0.000000000000000</double>
                 </property>
@@ -817,6 +795,9 @@
               </item>
               <item>
                <widget class="QDoubleSpinBox" name="SpinBoxCompasTracerArc">
+                <property name="wrapping">
+                 <bool>true</bool>
+                </property>
                 <property name="maximum">
                  <double>359.990000000000009</double>
                 </property>
@@ -869,6 +850,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="projetgeometrie.qrc"/>
+ </resources>
  <connections/>
 </ui>

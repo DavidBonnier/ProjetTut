@@ -42,6 +42,7 @@ public:
     void setAngle(double angle);
 
     void dessinerRegle(QPainter& dessin);
+    void finTracer();
 
 protected:
     int m_graduation;

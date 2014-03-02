@@ -17,18 +17,18 @@ Interface::Interface(QMainWindow *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-    m_nomLogiciel = QString("Logiciel de Mathématiques");
-    setWindowTitle(m_nomLogiciel);
+	m_nomLogiciel = QString("Logiciel de Mathématiques");
+	setWindowTitle(m_nomLogiciel);
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	file = new QFile();
 
-    util = new User();
-    projetGeom = new ProjetGeometrie();
-    ui.geomEcranScind->addWidget(projetGeom);
+	util = new User();
+	projetGeom = new ProjetGeometrie();
+	ui.geomEcranScind->addWidget(projetGeom);
 
-    projetGeom->ui.widget->hide();
-    projetGeom->ui.ScrollAreaOptionsOutils->hide();
+	projetGeom->ui.widget->hide();
+	projetGeom->ui.ScrollAreaOptionsOutils->hide();
 
 	container = new QWidget();
 	layoutCours = new QVBoxLayout();	
@@ -79,7 +79,7 @@ Interface::Interface(QMainWindow *parent)
 	ui.PleinEcranExo->setToolTip("Écrire sur vos cahiers en Plein Écran");
 	ui.PleinEcranEval->setToolTip("Écrire sur vos cahiers en Plein Écran");
 
-    actionTailleTexte->setIcon(QIcon("Resources/fontSize.png"));
+	actionTailleTexte->setIcon(QIcon("Resources/fontSize.png"));
 	actionCouleurTexte->setIcon(QIcon("Resources/fontColor.png"));
 	actionRegle->setIcon(QIcon("Resources/regle.gif"));
 	actionCrayon->setIcon(QIcon("Resources/crayon.gif"));
@@ -106,8 +106,6 @@ Interface::Interface(QMainWindow *parent)
 	ui.actionCouper->setShortcut(tr("Ctrl+X"));
 	ui.actionApercu_avant_impression->setShortcut(tr("Alt+P"));
 	ui.actionImprimer->setShortcut(tr("Ctrl+P"));
-	ui.actionAnnuler->setShortcut(tr("Ctrl+Z"));
-	ui.actionRefaire->setShortcut(tr("Ctrl+Y"));
 	ui.actionOuvrir->setShortcut(tr("Ctrl+O"));
 	ui.actionSauvegarder->setShortcut(tr("Ctrl+S"));
 	ui.actionSauvegarder_Sous->setShortcut(tr("F12"));
@@ -141,11 +139,11 @@ Interface::Interface(QMainWindow *parent)
 	connect(ui.PleinEcranCours, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
 	connect(ui.PleinEcranEval, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
 	connect(ui.PleinEcranExo, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Cahiers()));
-	
+
 	connect(projetGeom, SIGNAL(clickSortieFullScreen()), this, SLOT(FullScreen_Geom()));
 	connect(ui.GeomPleinEcran, SIGNAL(clicked(bool)), this,SLOT(FullScreen_Geom()));
 	connect(ui.boutonInsertionGeom, SIGNAL(clicked(bool)), this,SLOT(insererGeom()));
-	
+
 	connect(ui.actionDocumentation_Utilisateur, SIGNAL(triggered(bool)), this,SLOT(Aide()));
 	connect(ui.A_propos, SIGNAL(triggered(bool)), this, SLOT(APropos()));
 	connect(ui.actionRaccourcis_Clavier, SIGNAL(triggered(bool)),this,SLOT(AffichageRaccourcis()));
@@ -160,6 +158,10 @@ Interface::Interface(QMainWindow *parent)
 	connect(projetGeom, SIGNAL(clickCrayon()), this, SLOT(showParamCrayon()));
 
 	connect(ui.actionGrille, SIGNAL(triggered(bool)), this, SLOT(afficherGrille()));
+
+	connect(ui.actionCopier, SIGNAL(triggered(bool)),this,SLOT(copier()));
+	connect(ui.actionColler, SIGNAL(triggered(bool)),this,SLOT(coller()));
+	connect(ui.actionCouper, SIGNAL(triggered(bool)),this,SLOT(couper()));
 
 	connect(ui.actionQuitter, SIGNAL(triggered(bool)),this,SLOT(close()));
 }
@@ -232,7 +234,7 @@ void Interface::FullScreen_Cahiers()
 	{
 		ui.LayoutCahiers->addWidget(ui.Onglets);
 		ui.Onglets->showNormal();
-		
+
 		ui.PleinEcranCours->setIcon(QIcon("Resources/Fullscreen.gif"));
 		ui.PleinEcranEval->setIcon(QIcon("Resources/Fullscreen.gif"));
 		ui.PleinEcranExo->setIcon(QIcon("Resources/Fullscreen.gif"));
@@ -254,46 +256,46 @@ void Interface::FullScreen_Geom()
 {
 	if(!widgetIsFullscreen)
 	{
-        projetGeom->setParent(0);
-        projetGeom->showFullScreen();
+		projetGeom->setParent(0);
+		projetGeom->showFullScreen();
 		projetGeom->m_geometrie->update();
-		
+
 		ui.boutonInsertionGeom->hide();
 		ui.GeomPleinEcran->hide();
 
-        projetGeom->m_geometrie->regle = NULL;
-        projetGeom->m_geometrie->equerre = NULL;
-        projetGeom->m_geometrie->crayon = NULL;
-			
+		projetGeom->m_geometrie->regle = NULL;
+		projetGeom->m_geometrie->equerre = NULL;
+		projetGeom->m_geometrie->crayon = NULL;
+
 		ui.Geom->update();
-        projetGeom->ui.widget->show();
-        projetGeom->ui.DockWidgetCompas->hide();
-        projetGeom->ui.DockWidgetCrayon->hide();
-        projetGeom->ui.DockWidgetEquerre->hide();
-        projetGeom->ui.DockWidgetRegle->hide();
-        projetGeom->ui.ScrollAreaOptionsOutils->show();
-		
+		projetGeom->ui.widget->show();
+		projetGeom->ui.DockWidgetCompas->hide();
+		projetGeom->ui.DockWidgetCrayon->hide();
+		projetGeom->ui.DockWidgetEquerre->hide();
+		projetGeom->ui.DockWidgetRegle->hide();
+		projetGeom->ui.ScrollAreaOptionsOutils->show();
+
 		widgetIsFullscreen = true;
 	}
 	else
 	{
-        projetGeom->m_geometrie->compas = NULL;
-        projetGeom->m_geometrie->regle = NULL;
-        projetGeom->m_geometrie->equerre = NULL;
-        projetGeom->m_geometrie->crayon = NULL;
+		projetGeom->m_geometrie->compas = NULL;
+		projetGeom->m_geometrie->regle = NULL;
+		projetGeom->m_geometrie->equerre = NULL;
+		projetGeom->m_geometrie->crayon = NULL;
 
 		ui.LayoutGeom->addWidget(ui.Geom);
-		
+
 		projetGeom->ui.BoutonRegle->setChecked(false);
 		projetGeom->ui.BoutonEquerre->setChecked(false);
 		projetGeom->ui.BoutonCompas->setChecked(false);
 		projetGeom->ui.BoutonCrayon->setChecked(false);
 
-        ui.geomEcranScind->addWidget(projetGeom);
-        projetGeom->showNormal();
+		ui.geomEcranScind->addWidget(projetGeom);
+		projetGeom->showNormal();
 		ui.boutonInsertionGeom->show();
-        ui.GeomPleinEcran->show();
-        projetGeom->ui.widget->hide();
+		ui.GeomPleinEcran->show();
+		projetGeom->ui.widget->hide();
 		projetGeom->ui.ScrollAreaOptionsOutils->hide();
 
 		widgetIsFullscreen = false;
@@ -320,7 +322,7 @@ void Interface::TailleDeTexte()
 		if(!txtSelectionne)
 			txtCours->setFont(QFont("Times New Roman", fontSize));
 	}
-	
+
 	if(ui.Onglets->currentIndex() == 1)
 	{
 		selection = txtEval->textCursor();
@@ -329,7 +331,7 @@ void Interface::TailleDeTexte()
 		if(!txtSelectionne)
 			txtEval->setFont(QFont("Times New Roman", fontSize));
 	}
-	
+
 	if(ui.Onglets->currentIndex() == 2)
 	{
 		selection = txtExo->textCursor();
@@ -338,7 +340,7 @@ void Interface::TailleDeTexte()
 		if(!txtSelectionne)
 			txtExo->setFont(QFont("Times New Roman", fontSize));
 	}
-	
+
 	if(txtSelectionne)
 	{
 		QTextCharFormat format;
@@ -359,10 +361,10 @@ void Interface::CouleurDeTexte()
 	fontColor = QColorDialog::getColor(Qt::white, this);
 	if(ui.Onglets->currentIndex() == 0)
 		txtCours->setTextColor(fontColor);
-	
+
 	if(ui.Onglets->currentIndex() == 1)
 		txtEval->setTextColor(fontColor);
-	
+
 	if(ui.Onglets->currentIndex() == 2)
 		txtExo->setTextColor(fontColor);
 }
@@ -375,19 +377,19 @@ void Interface::CouleurDeTexte()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::AffichageRaccourcis()
 {
-    QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p>"
-                                    "<p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p>"
-                                    "<p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p>"
-                                    "<p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p>"
-                                    "<p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p>"
-                                    "<p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p>"
-                                    "<p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p>"
-                                    "<p> <strong> - F12 </strong>: Sauvegarder Sous. </p>"
-                                    "<p> <strong> - Ctrl + P </strong>: Imprimer. </p>"
-                                    "<p> <strong> - Alt + P </strong>: Aperçu avant impression. </p>"
-                                    "<p> <strong> - F1 </strong>: Affichage de l'aide. </p>"
-                                    "<p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p>"
-                                    "<p> <strong> - Alt + F4 </strong>: Quitter le programme.");
+	QString msg = QString::fromUtf8("<p><em>Gestion des utilisateurs : </em></p><p></p><p> <strong> - Ctrl + N </strong>: Ajout d'un utilisateur.</p>"
+		"<p><strong> - Ctrl + D </strong>: Suppression d'un utilisateur.</p>"
+		"<p> <strong> - Ctrl + E </strong>: Changer d'utilisateur. </p><p></p>"
+		"<p> <em> Édition : </em> </p><p> <strong> - Ctrl + C </strong>: Copier. </p>"
+		"<p> <strong> - Ctrl + V </strong>: Coller.</p><p> <strong> - Ctrl + X </strong>: Couper. </p>"
+		"<p> <strong> - Ctrl + Z </strong>: Annuler. </p><p> <strong> - Ctrl + Y </strong>: Refaire. </p><p></p>"
+		"<p> <em> Autres : </p><p></p><p> <strong> - Ctrl + S </strong>: Sauvegarder. </p>"
+		"<p> <strong> - F12 </strong>: Sauvegarder Sous. </p>"
+		"<p> <strong> - Ctrl + P </strong>: Imprimer. </p>"
+		"<p> <strong> - Alt + P </strong>: Aperçu avant impression. </p>"
+		"<p> <strong> - F1 </strong>: Affichage de l'aide. </p>"
+		"<p> <strong> - Ctrl + H </strong>: Affichage de cette boite de dialogue. </p>"
+		"<p> <strong> - Alt + F4 </strong>: Quitter le programme.");
 	QMessageBox* shortcuts = new QMessageBox(QMessageBox::NoIcon, "Raccourcis clavier ", msg);
 	shortcuts->setIconPixmap(QPixmap("Resources/raccourcisClavier.png"));
 	shortcuts->show();
@@ -406,13 +408,13 @@ void Interface::ApercuAvtImpr()
 	QRect mainScreenSize = screen.availableGeometry(screen.primaryScreen());
 
 	QPrinter print(QPrinter::HighResolution);
-    QPrintPreviewDialog preview(&print, this);
-    preview.setWindowFlags ( Qt::Window );
+	QPrintPreviewDialog preview(&print, this);
+	preview.setWindowFlags ( Qt::Window );
 	preview.setFixedSize(mainScreenSize.width() - 10, mainScreenSize.height() - 10);
 
 	preview.setWindowTitle("Aperçu avant impression");
-    connect(&preview, SIGNAL(paintRequested(QPrinter *)), SLOT(Impression(QPrinter *)));
-    preview.exec();
+	connect(&preview, SIGNAL(paintRequested(QPrinter *)), SLOT(Impression(QPrinter *)));
+	preview.exec();
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -424,21 +426,6 @@ void Interface::ApercuAvtImpr()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::Impression(QPrinter* p)
 {
-	/*QPainter painter;
-    painter.begin(p);
-    double xscale = p->pageRect().width()/ui.Onglets->width();
-    double yscale = p->pageRect().height()/ui.Onglets->height();
-    double scale = qMin(xscale, yscale);
-    painter.translate(p->paperRect().x() + p->pageRect().width()/2, p->paperRect().y() + p->pageRect().height()/2);
-    painter.scale(scale, scale);
-    painter.translate(-width()/4, -height()/2);
-	
-	if(ui.Onglets->currentIndex() == 0)
-		txtCours->render(&painter);
-	else if(ui.Onglets->currentIndex() == 1)
-		txtEval->render(&painter);
-	else if(ui.Onglets->currentIndex() == 2)
-		txtExo->render(&painter);*/
 	txtCours->print(p);
 }
 
@@ -461,20 +448,20 @@ void Interface::Aide()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::insererGeom()
 {	
-    QString texteFinal;
-    QString cheminImage(projetGeom->m_geometrie->generationSVG());
+	QString texteFinal;
+	QString cheminImage(projetGeom->m_geometrie->generationSVG());
 	if(ui.Onglets->currentIndex() == 0)
 	{
-		 texteFinal = txtCours->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
-		 txtCours->setHtml(texteFinal);
+		texteFinal = txtCours->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
+		txtCours->setHtml(texteFinal);
 	}
-	
+
 	else if(ui.Onglets->currentIndex() == 1)
 	{
 		texteFinal = txtEval->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
 		txtEval->setHtml(texteFinal);
 	}
-	
+
 	else if(ui.Onglets->currentIndex() == 2)
 	{
 		texteFinal = txtExo->toHtml() + "<img src = \""+ cheminImage +"\" alt = \"\"/>";
@@ -490,11 +477,11 @@ void Interface::insererGeom()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerRegle()
 {
-    if(projetGeom->m_geometrie->regle == NULL)
-        projetGeom->m_geometrie->gererRegle();
+	if(projetGeom->m_geometrie->regle == NULL)
+		projetGeom->m_geometrie->gererRegle();
 
 	else
-        projetGeom->m_geometrie->regle = NULL;
+		projetGeom->m_geometrie->regle = NULL;
 
 	ui.Geom->update();
 }
@@ -507,11 +494,11 @@ void Interface::creerRegle()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerEquerre()
 {
-    if(projetGeom->m_geometrie->equerre == NULL)
-        projetGeom->m_geometrie->gererEquerre();
+	if(projetGeom->m_geometrie->equerre == NULL)
+		projetGeom->m_geometrie->gererEquerre();
 
 	else
-        projetGeom->m_geometrie->equerre = NULL;
+		projetGeom->m_geometrie->equerre = NULL;
 
 	ui.Geom->update();	
 }
@@ -524,11 +511,11 @@ void Interface::creerEquerre()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::creerCrayon()
 {
-    if(projetGeom->m_geometrie->crayon == NULL)
-        projetGeom->m_geometrie->gererCrayon();
+	if(projetGeom->m_geometrie->crayon == NULL)
+		projetGeom->m_geometrie->gererCrayon();
 
 	else
-        projetGeom->m_geometrie->crayon = NULL;
+		projetGeom->m_geometrie->crayon = NULL;
 
 
 	ui.Geom->update();
@@ -595,7 +582,7 @@ void Interface::showParamCrayon()
 {
 	if(projetGeom->ui.ScrollAreaOptionsOutils->isHidden())
 		projetGeom->ui.ScrollAreaOptionsOutils->show();
-	
+
 	if(projetGeom->ui.DockWidgetCrayon->isHidden())
 		projetGeom->ui.DockWidgetCrayon->show();
 	else
@@ -611,7 +598,7 @@ void Interface::showParamCrayon()
 void Interface::afficherGrille()
 {
 	projetGeom->ui.CheckBoxGrille->setChecked(ui.actionGrille->isChecked()); //Mise à jour de la checkbox Grille dans ProjetGeometrie
-    projetGeom->m_geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
+	projetGeom->m_geometrie->grille = ui.actionGrille->isChecked(); //Activation de la grille
 	ui.Geom->update();
 }
 
@@ -625,25 +612,25 @@ void Interface::APropos()
 {
 	QMessageBox info;
 	info.setText("A Propos de ce logiciel");
-    info.setInformativeText("<p>Ce logiciel a été réalisé par des étudiants de l'<strong>IUT du Puy-en-Velay</strong>"
-                            "dans le cadre d'un projet tuteuré visant à aider"
-                            "les personnes en situation de handicap dans les mathématiques.</p>"
-							"<br/><br/>" 
-							"Enseignant référant :<strong> MONCORGÉ Dominque</strong>"
-							"<br/>""<br/>"
-							"Étudiants ayant pris part au projet :"
-							"<br/><br/>"
-							"2013/2014 : Création du logiciel et intégration du module de géométrie"
-							"<br/>""<br/>"
-							"-<em>ADAMONY Ravel</em>"
-							"<br/>"
-							"-<em>BIOLLEY Pierre</em>"
-							"<br/>"
-							"-<em>BONNIER David</em>"
-							"<br/>"
-							"-<em>JACQUIN Dylan</em>"
-							"<br/>"
-							"-<em>ROCHE Hugo</em>");
+	info.setInformativeText("<p>Ce logiciel a été réalisé par des étudiants de l'<strong>IUT du Puy-en-Velay</strong>"
+		"dans le cadre d'un projet tuteuré visant à aider"
+		"les personnes en situation de handicap dans les mathématiques.</p>"
+		"<br/><br/>" 
+		"Enseignant référant :<strong> MONCORGÉ Dominque</strong>"
+		"<br/>""<br/>"
+		"Étudiants ayant pris part au projet :"
+		"<br/><br/>"
+		"2013/2014 : Création du logiciel et intégration du module de géométrie"
+		"<br/>""<br/>"
+		"-<em>ADAMONY Ravel</em>"
+		"<br/>"
+		"-<em>BIOLLEY Pierre</em>"
+		"<br/>"
+		"-<em>BONNIER David</em>"
+		"<br/>"
+		"-<em>JACQUIN Dylan</em>"
+		"<br/>"
+		"-<em>ROCHE Hugo</em>");
 	//To be continued...
 	info.setIcon(QMessageBox::Information);
 	info.setStandardButtons(QMessageBox::Ok);
@@ -660,8 +647,8 @@ void Interface::APropos()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::sauverSous()
 {
-    //Demande du nom du chemin avant de sauvegarder
-    repSauvegarde = QFileDialog::getSaveFileName(this, tr("Enregistrer un fichier"), repSauvegarde, tr("Fichier texte (*.html)"));
+	//Demande du nom du chemin avant de sauvegarder
+	repSauvegarde = QFileDialog::getSaveFileName(this, tr("Enregistrer un fichier"), repSauvegarde, tr("Fichier texte (*.html)"));
 	sauvegarder(); //Sauvegarde en ayant modifié le chemin
 }
 
@@ -693,21 +680,21 @@ void Interface::sauvegarder()
 	txtModifie = false;
 
 	if(repSauvegarde == " ")
-        setWindowTitle(m_nomLogiciel);
+		setWindowTitle(m_nomLogiciel);
 	else
 	{
 		QStringList filePath = (QString(repSauvegarde).split("/"));
-        setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
+		setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
 	}
 
 	QTextStream FluxOut(file); //Flux pour le fichier de sauvegarde
 	FluxOut.setCodec("UTF-8"); //Passage en UTF-8
 	//Ouverture du fichier, et vérification
-    if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
+	if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
+		return;
 	QString *texte = new QString;
-    *texte = txtCours->toHtml(); //Récupération et transcription du contenu du cahier en HTML.
-    FluxOut << *texte << endl; //Ecriture dans le fichier
+	*texte = txtCours->toHtml(); //Récupération et transcription du contenu du cahier en HTML.
+	FluxOut << *texte << endl; //Ecriture dans le fichier
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -718,31 +705,31 @@ void Interface::sauvegarder()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::ouvrir()
 {
-    if(peutEtreSauver())
+	if(peutEtreSauver())
 	{
-        //Demande et récupération du ficher à ouvrir
-        repSauvegarde = QFileDialog::getOpenFileName(this, tr("Ouverture d'un fichier texte"),
-                                                      repSauvegarde, tr("Fichier texte (*.html)"));
+		//Demande et récupération du ficher à ouvrir
+		repSauvegarde = QFileDialog::getOpenFileName(this, tr("Ouverture d'un fichier texte"),
+			repSauvegarde, tr("Fichier texte (*.html)"));
 
-        if (!repSauvegarde.isEmpty())
-        {
-            QStringList filePath = (QString(repSauvegarde).split("/"));
-            setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
+		if (!repSauvegarde.isEmpty())
+		{
+			QStringList filePath = (QString(repSauvegarde).split("/"));
+			setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1]);
 
-            QFile fichier(repSauvegarde);
-            fichier.open(QIODevice::ReadOnly | QIODevice::Text); //Ouverture du fichier
-            QTextStream flux(&fichier);
+			QFile fichier(repSauvegarde);
+			fichier.open(QIODevice::ReadOnly | QIODevice::Text); //Ouverture du fichier
+			QTextStream flux(&fichier);
 
-            QString texte = flux.readAll(); //Lecture entière du fichier
+			QString texte = flux.readAll(); //Lecture entière du fichier
 
-            if(ui.Onglets->currentIndex() == 0)
-                txtCours->setHtml(texte);
-            if(ui.Onglets->currentIndex() == 1)
-                txtEval->setHtml(texte);
-            if(ui.Onglets->currentIndex() == 2)
-                txtExo->setHtml(texte);
-        }
-    }
+			if(ui.Onglets->currentIndex() == 0)
+				txtCours->setHtml(texte);
+			if(ui.Onglets->currentIndex() == 1)
+				txtEval->setHtml(texte);
+			if(ui.Onglets->currentIndex() == 2)
+				txtExo->setHtml(texte);
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -754,22 +741,22 @@ void Interface::ouvrir()
 ///////////////////////////////////////////////////////////////////////////
 bool Interface::peutEtreSauver()
 {
-    if(txtModifie)
-    {
-        QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, m_nomLogiciel,
-                    tr("Ce document a été modifier.\n"
-                    "Voulez vous sauvgarder les chnagements ?"),
-                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        if(ret == QMessageBox::Save)
-        {
-            sauver();
-            return true;
-        }
-        else if (ret == QMessageBox::Cancel)
-            return false;
-    }
-    return true;
+	if(txtModifie)
+	{
+		QMessageBox* ret = new QMessageBox(QMessageBox::Information, m_nomLogiciel,tr("Ce document a été modifié.\n Voulez vous sauvegarder les changements ?"));
+		ret->addButton(QMessageBox::Save)->setText("Sauvegarder");
+		ret->addButton(QMessageBox::Discard)->setText("Ne pas sauvegarder");
+		ret->addButton(QMessageBox::Cancel)->setText("Annuler");
+		int rep = ret->exec();
+		if(rep == QMessageBox::Save)
+		{
+			sauver();
+			return true;
+		}
+		else if (rep == QMessageBox::Cancel)
+			return false;
+	}
+	return true;
 
 }
 
@@ -781,23 +768,23 @@ bool Interface::peutEtreSauver()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::fermerFichier()
 {
-    if(peutEtreSauver())
+	if(peutEtreSauver())
 	{
-        if(file->isOpen())
-            file->close();
+		if(file->isOpen())
+			file->close();
 
-        if(ui.Onglets->currentIndex() == 0)
-            txtCours->clear();
-        if(ui.Onglets->currentIndex() == 1)
-            txtEval->clear();
-        if(ui.Onglets->currentIndex() == 2)
-            txtExo->clear();
+		if(ui.Onglets->currentIndex() == 0)
+			txtCours->clear();
+		if(ui.Onglets->currentIndex() == 1)
+			txtEval->clear();
+		if(ui.Onglets->currentIndex() == 2)
+			txtExo->clear();
 
-        repSauvegarde= " ";
-        txtModifie = false;
+		repSauvegarde= " ";
+		txtModifie = false;
 
-        setWindowTitle(m_nomLogiciel);
-    }
+		setWindowTitle(m_nomLogiciel);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -808,18 +795,18 @@ void Interface::fermerFichier()
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::nouveauFichier()
 {
-    if(peutEtreSauver())
+	if(peutEtreSauver())
 	{
-        if(file->isOpen())
-            file->close();
+		if(file->isOpen())
+			file->close();
 
-        txtCours->clear();
-        txtEval->clear();
-        txtExo->clear();
+		txtCours->clear();
+		txtEval->clear();
+		txtExo->clear();
 
-        setWindowTitle(m_nomLogiciel);
-        txtModifie = true;
-    }
+		setWindowTitle(m_nomLogiciel);
+		txtModifie = true;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////// 
@@ -835,16 +822,64 @@ void Interface::ModificationTexte()
 	if(repSauvegarde != " ")
 	{
 		QStringList filePath = (QString(repSauvegarde).split("/"));
-        setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1] + "*");
+		setWindowTitle(m_nomLogiciel + " - " + filePath[filePath.size() - 1] + "*");
 	}
 	else
-        setWindowTitle(m_nomLogiciel + " - Sans titre*");
+		setWindowTitle(m_nomLogiciel + " - Sans titre*");
 }
 
 void Interface::closeEvent(QCloseEvent *event)
 {
-    if(peutEtreSauver())
-       event->accept();
-    else
-       event->ignore();
+	if(peutEtreSauver())
+		event->accept();
+	else
+		event->ignore();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 02/03/2014
+//!
+//! Slot permettant de copier tout le contenu du cahier en cours ou simplement la selection.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::copier()
+{
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->copy();
+	if(ui.Onglets->currentIndex() == 1)
+		txtEval->copy();
+	if(ui.Onglets->currentIndex() == 2)
+		txtExo->copy();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 02/03/2014
+//!
+//! Slot permettant de coller le contenu préalablement copié ou coupé..
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::coller()
+{
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->copy();
+	if(ui.Onglets->currentIndex() == 1)
+		txtEval->paste();
+	if(ui.Onglets->currentIndex() == 2)
+		txtExo->paste();
+}
+
+/////////////////////////////////////////////////////////////////////////// 
+//! \author ROCHE Hugo
+//! \date 02/03/2014
+//!
+//! Slot permettant de couper tout le contenu du cahier en cours ou simplement la selection.
+/////////////////////////////////////////////////////////////////////////// 
+void Interface::couper()
+{
+	if(ui.Onglets->currentIndex() == 0)
+		txtCours->cut();
+	if(ui.Onglets->currentIndex() == 1)
+		txtEval->cut();
+	if(ui.Onglets->currentIndex() == 2)
+		txtExo->cut();
 }

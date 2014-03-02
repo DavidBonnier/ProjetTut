@@ -61,21 +61,27 @@ QPointF Equerre::Thales(double longueur, double largeur, double transp, int x, i
 
 void Equerre::setTransparence(bool transparence)
 {
-    Instrument::setTransparence(transparence);
     m_geometrie->m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
+    Instrument::setTransparence(transparence);
 }
 
 void Equerre::translation(double positionX , double positionY)
 {
-    Instrument::translation(positionX,positionY);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionX->setValue(positionX);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionY->setValue(positionY);
+    Instrument::translation(positionX,positionY);
 }
 
 void Equerre::setAngle(double angle)
 {
-    Instrument::setAngle(angle);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
+    if(!m_geometrie->tableauFigure.isEmpty())
+    {
+        Ligne* maLigne = dynamic_cast<Ligne*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(maLigne && !maLigne->getFin())
+            maLigne->setAngle(-m_angle);
+    }
+    Instrument::setAngle(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////

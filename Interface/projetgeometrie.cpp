@@ -43,13 +43,17 @@ ProjetGeometrie::ProjetGeometrie()
     connect(ui.SpinBoxReglePositionY, SIGNAL(valueChanged(int)), this, SLOT(ReglePositionY(int)));
     connect(ui.CheckBoxRegleTransparence, SIGNAL(clicked(bool)), this, SLOT(RegleTransparence(bool)));
     connect(ui.SpinBoxRegleOrientation, SIGNAL(valueChanged(double)), this, SLOT(RegleOrientation(double)));
-    connect(ui.BoutonRegleTracerOK, SIGNAL(clicked(bool)), this, SLOT(RegleTracer()));
+    connect(ui.BoutonRegleTracerOK, SIGNAL(clicked(bool)), this, SLOT(RegleFinTracer()));
+    connect(ui.SpinBoxRegleTracerPoint1, SIGNAL(valueChanged(double)), this, SLOT(RegleTracer()));
+    connect(ui.SpinBoxRegleTracerPoint2, SIGNAL(valueChanged(double)), this, SLOT(RegleTracer()));
     //Equerre
     connect(ui.SpinBoxEquerrePositionX, SIGNAL(valueChanged(int)), this, SLOT(EquerrePositionX(int)));
     connect(ui.SpinBoxEquerrePositionY, SIGNAL(valueChanged(int)), this, SLOT(EquerrePositionY(int)));
     connect(ui.CheckBoxEquerreTransparence, SIGNAL(clicked(bool)), this, SLOT(EquerreTransparence(bool)));
     connect(ui.SpinBoxEquerreOrientation, SIGNAL(valueChanged(double)), this, SLOT(EquerreOrientation(double)));
-    connect(ui.BoutonEquerreTracerOK, SIGNAL(clicked(bool)), this, SLOT(EquerreTracer()));
+    connect(ui.BoutonEquerreTracerOK, SIGNAL(clicked(bool)), this, SLOT(EquerreFinTracer()));
+    connect(ui.SpinBoxEquerreTracerPoint1, SIGNAL(valueChanged(double)), this, SLOT(EquerreTracer()));
+    connect(ui.SpinBoxEquerreTracerPoint2, SIGNAL(valueChanged(double)), this, SLOT(EquerreTracer()));
     //Compas
     connect(ui.SpinBoxCompasPositionX, SIGNAL(valueChanged(int)), this, SLOT(CompasPositionX(int)));
     connect(ui.SpinBoxCompasPositionY, SIGNAL(valueChanged(int)), this, SLOT(CompasPositionY(int)));
@@ -281,6 +285,16 @@ void ProjetGeometrie::RegleOrientation(double orientation)
     }
 }
 
+void ProjetGeometrie::RegleFinTracer()
+{
+    if (m_geometrie->regle)
+    {
+        m_geometrie->regle->finTracer();
+        m_geometrie->modifRegle = true;
+        m_geometrie->update();
+    }
+}
+
 void ProjetGeometrie::RegleTracer()
 {
     if (m_geometrie->regle)
@@ -346,6 +360,17 @@ void ProjetGeometrie::EquerreTracer()
         m_geometrie->update();
     }
 }
+
+void ProjetGeometrie::EquerreFinTracer()
+{
+    if (m_geometrie->equerre)
+    {
+        m_geometrie->equerre->finTracer();
+        m_geometrie->modifEquerre = true;
+        m_geometrie->update();
+    }
+}
+
 //Compas
 void ProjetGeometrie::CompasPositionX(int x)
 {

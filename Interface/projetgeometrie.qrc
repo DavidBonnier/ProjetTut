@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/ProjetGeometrie">
-        <file>Resources/compas.gif</file>
+        <file>Resources/fontColor.png</file>          <file>Resources/compas.gif</file>
         <file>Resources/crayon.gif</file>
         <file>Resources/equerre.gif</file>
         <file>Resources/Point.gif</file>

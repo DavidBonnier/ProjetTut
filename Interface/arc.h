@@ -15,19 +15,16 @@ private:
     QRectF m_rectangle;
     double m_startAngle;
     double * m_spanAngle;
-    bool m_finTracer;
 
 public:
     inline void setRect(QRectF rectangle){m_rectangle = rectangle;}
     inline void setRect(int x, int y, int w, int h){m_rectangle = QRectF(x,y,w,h);}
     inline void setStartAngle(double startAngle){m_startAngle = startAngle;}
     inline void setSpanAngle(double spanAngle){m_spanAngle = new double(spanAngle);}
-    inline void setFin(bool finTracer){m_finTracer = finTracer;}
 
     inline QRectF getRectangle() {return m_rectangle;}
     inline double getStart() {return m_startAngle;}
     inline double * getSpan() {return m_spanAngle;}
-    inline bool getFin(){return m_finTracer;}
 };
 
 #endif // ARC_H

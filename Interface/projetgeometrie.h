@@ -56,12 +56,14 @@ public slots :
     void RegleTransparence(bool b);
     void RegleOrientation(double orientation);
     void RegleTracer();
+    void RegleFinTracer();
     //Equerre
     void EquerrePositionX(int x);
     void EquerrePositionY(int y);
     void EquerreTransparence(bool b);
     void EquerreOrientation(double orientation);
     void EquerreTracer();
+    void EquerreFinTracer();
     //Compas
     void CompasPositionX(int x);
     void CompasPositionY(int y);

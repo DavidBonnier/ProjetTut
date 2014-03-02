@@ -86,77 +86,46 @@ Regle::~Regle()
 ///////////////////////////////////////////////////////////////////////
 void Regle :: tracer (double graduation1 , double graduation2 )
 {
+    double temps;
+    if(graduation1 > graduation2)
+    {
+        temps = graduation1;
+        graduation1 = graduation2;
+        graduation2 = temps;
+    }
+
     graduation1 *= 50;
     graduation2 *= 50;
 
-    QPointF * debTrait = NULL;
-    QPointF * finTrait = NULL;
+    Ligne * ligne = new Ligne(m_position.x() + graduation1, m_position.y(),
+                              m_position.x() + graduation2, m_position.y());
+    ligne->setAngle(-m_angle);
 
-    const int angleDroit = 90;
-    const int decalageRegle = 1;
+    if(m_geometrie->tableauFigure.isEmpty())
+        m_geometrie->tableauFigure.push_back(ligne);
+    else
+    {
+        Ligne* maLigne = dynamic_cast<Ligne*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(maLigne && !maLigne->getFin())
+        {
+            maLigne->setQLine(ligne->getQLine());
+            maLigne->setAngle(-m_angle);
+        }
+        else
+            m_geometrie->tableauFigure.push_back(ligne);
+    }
+}
 
-    if(m_angle == 0 || m_angle == 360)
+void Regle :: finTracer()
+{
+    if(!m_geometrie->tableauFigure.isEmpty())
     {
-        debTrait = new QPointF(m_position.x() + graduation1, m_position.y() - decalageRegle);
-        finTrait = new QPointF(m_position.x() + graduation2, m_position.y() - decalageRegle);
+        Ligne* maLigne = dynamic_cast<Ligne*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(maLigne && !maLigne->getFin())
+        {
+            maLigne->setFin(true);
+        }
     }
-    else if(m_angle < 90)
-    {
-        const double x1 = cos(toGradian(m_angle)) * graduation1;
-        const double y1 = sin(toGradian(m_angle)) * graduation1;
-        const double x2 = cos(toGradian(m_angle)) * graduation2;
-        const double y2 = sin(toGradian(m_angle)) * graduation2;
-        debTrait = new QPointF(m_position.x() + x1 + decalageRegle, m_position.y() + y1);
-        finTrait = new QPointF(m_position.x() + x2 + decalageRegle, m_position.y() + y2);
-    }
-    else if(m_angle == 90)
-    {
-        debTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation1);
-        finTrait = new QPointF(m_position.x() + decalageRegle, m_position.y() + graduation2);
-    }
-    else if(m_angle < 180)
-    {
-        const double angleEcartement = m_angle - angleDroit;
-        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
-        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() - x1, m_position.y() + y1 + decalageRegle);
-        finTrait = new QPointF(m_position.x() - x2, m_position.y() + y2 + decalageRegle);
-    }
-    else if(m_angle == 180)
-    {
-        debTrait = new QPointF(m_position.x() - graduation1, m_position.y() + decalageRegle);
-        finTrait = new QPointF(m_position.x() - graduation2, m_position.y() + decalageRegle);
-    }
-    else if(m_angle < 270)
-    {
-        const double angleEcartement = m_angle - 2*angleDroit;
-        const double x1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double y1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double x2 = cos(toGradian(angleEcartement)) * graduation2;
-        const double y2 = sin(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() - x1 - decalageRegle, m_position.y() - y1);
-        finTrait = new QPointF(m_position.x() - x2 - decalageRegle, m_position.y() - y2);
-    }
-    else if(m_angle == 270)
-    {
-        debTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation1);
-        finTrait = new QPointF(m_position.x() - decalageRegle, m_position.y() - graduation2);
-    }
-    else if(m_angle < 360)
-    {
-        const double angleEcartement = m_angle - 3*angleDroit;
-        const double x1 = sin(toGradian(angleEcartement)) * graduation1;
-        const double y1 = cos(toGradian(angleEcartement)) * graduation1;
-        const double x2 = sin(toGradian(angleEcartement)) * graduation2;
-        const double y2 = cos(toGradian(angleEcartement)) * graduation2;
-        debTrait = new QPointF(m_position.x() + x1, m_position.y() - y1 - decalageRegle);
-        finTrait = new QPointF(m_position.x() + x2, m_position.y() - y2 - decalageRegle);
-    }
-
-    if (debTrait && finTrait)
-        m_geometrie->tableauFigure.push_back(new Ligne(QLineF(*debTrait, *finTrait)));
 }
 
 //***************************************Fonctions de mise à jour des valeurs***************************************
@@ -201,21 +170,28 @@ void Regle::setGraduation(int graduation)
 
 void Regle::setTransparence(bool transparence)
 {
-    Instrument::setTransparence(transparence);
     m_geometrie->m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
+    Instrument::setTransparence(transparence);
 }
 
 void Regle::translation(double positionX , double positionY)
 {
-    Instrument::translation(positionX,positionY);
     m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionX->setValue(positionX);
     m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionY->setValue(positionY);
+    Instrument::translation(positionX,positionY);
 }
 
 void Regle::setAngle(double angle)
 {
-    Instrument::setAngle(angle);
     m_geometrie->m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
+
+    if(!m_geometrie->tableauFigure.isEmpty())
+    {
+        Ligne* maLigne = dynamic_cast<Ligne*> (m_geometrie->tableauFigure[m_geometrie->tableauFigure.size()-1]);
+        if(maLigne && !maLigne->getFin())
+            maLigne->setAngle(-m_angle);
+    }
+    Instrument::setAngle(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
