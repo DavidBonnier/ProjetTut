@@ -8,6 +8,28 @@ ProjetGeometrie::ProjetGeometrie()
 
     ui.DessinLayout->addWidget(m_geometrie);
 	ui.CheckBoxGrille->setChecked(true);
+
+//Initialisation des valeurs min et max des spinBox
+	ui.SpinBoxCompasPositionX->setMinimum(-(m_geometrie->largeurViewport)/2);
+	ui.SpinBoxCompasPositionY->setMinimum(-(m_geometrie->hauteurViewport)/2);
+	ui.SpinBoxCompasPositionX->setMaximum(m_geometrie->largeurViewport/2);
+	ui.SpinBoxCompasPositionY->setMaximum(m_geometrie->hauteurViewport/2);
+
+	ui.SpinBoxCrayonPositionX->setMinimum(-(m_geometrie->largeurViewport)/2);
+	ui.SpinBoxCrayonPositionY->setMinimum(-(m_geometrie->hauteurViewport)/2);
+	ui.SpinBoxCrayonPositionX->setMaximum(m_geometrie->largeurViewport/2);
+	ui.SpinBoxCrayonPositionY->setMaximum(m_geometrie->hauteurViewport/2);
+
+	ui.SpinBoxEquerrePositionX->setMinimum(-(m_geometrie->largeurViewport)/2);
+	ui.SpinBoxEquerrePositionY->setMinimum(-(m_geometrie->hauteurViewport)/2);
+	ui.SpinBoxEquerrePositionX->setMaximum(m_geometrie->largeurViewport/2);
+	ui.SpinBoxEquerrePositionY->setMaximum(m_geometrie->hauteurViewport/2);
+
+	ui.SpinBoxReglePositionX->setMinimum(-(m_geometrie->largeurViewport)/2);
+	ui.SpinBoxReglePositionY->setMinimum(-(m_geometrie->hauteurViewport)/2);
+	ui.SpinBoxReglePositionX->setMaximum(m_geometrie->largeurViewport/2);
+	ui.SpinBoxReglePositionY->setMaximum(m_geometrie->hauteurViewport/2);
+
 //Connexions des boutons
 	ui.BoutonCrayon->setToolTip("Outil Crayon");
 	ui.BoutonCompas->setToolTip("Outil Compas");

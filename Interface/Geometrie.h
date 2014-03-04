@@ -82,6 +82,9 @@ public:
 	void mouseMoveEvent(QMouseEvent *move);
     bool eventFilter(QObject * obj, QEvent * e);
 
+	int largeurViewport; 
+	int hauteurViewport;
+
 private:
     char ordreInstruments[4]; //Tableau de positions
 
@@ -89,7 +92,6 @@ private:
     QString * m_nomFichierTemp;
     QRect * m_rectangleViewport;
 
-    int m_minDimFenetre;
     int m_nbGraduation;
 
 signals:

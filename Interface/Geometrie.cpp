@@ -21,7 +21,8 @@
 Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
 {
     m_projetGeometrie = projetGeometrie;
-	
+	largeurViewport = width() - width()%100; //Arrondissement aux centaines inferieures
+	hauteurViewport = height() - height()%100;
 	id_point = 0;
     clickTxt = false;
 	clickPoint = false;
@@ -239,10 +240,12 @@ void Geometrie::paintEvent (QPaintEvent *event)
         }
     }
 
-    m_minDimFenetre = qMin(width(),height());
+	int largeurViewport = width() - width()%100 //Arrondissement aux centaines inferieures
+	   ,hauteurViewport = height() - height()%100;
 
     QPainter dessin(this);
-
+	dessin.setViewport(0,0, largeurViewport, hauteurViewport);
+	dessin.setWindow(-largeurViewport/2, -hauteurViewport/2, largeurViewport, hauteurViewport);
 	//Dessin ou non de la grille
 	if (grille)
 	{
@@ -252,33 +255,30 @@ void Geometrie::paintEvent (QPaintEvent *event)
 		EpaisseurGrille.setWidth(1);
 		EpaisseurGrilleCentre.setWidth(3);
 
-        int hauteur = height();
-        int largeur = width();
-
 		//Graduations verticales
-        for (int i=0 ; i<largeur ; i+=50)
-            if(i-25<=largeur/2 && i+25>=largeur/2) //Graduation du milieu en vertical
+        for (int i=-largeurViewport/2 ; i<largeurViewport ; i+=50)
+            if(i == 0) //Graduation du milieu en vertical
 			{
                 dessin.setPen(EpaisseurGrilleCentre);
-                dessin.drawLine(i,0 , i, hauteur);
+                dessin.drawLine(i,-hauteurViewport/2 , i, hauteurViewport);
 			}
 			else
 			{
 				dessin.setPen(EpaisseurGrille);
-                dessin.drawLine(i,0 , i,hauteur);
+                dessin.drawLine(i,-hauteurViewport/2 , i,hauteurViewport);
 			}
 
 		//Horizontales
-        for (int i=0 ; i<hauteur ; i+=50)
-            if(i-25<=hauteur/2 && i+25>=hauteur/2) //Graduation du milieu en vertical
+        for (int i=-hauteurViewport/2 ; i<hauteurViewport ; i+=50)
+            if(i == 0) //Graduation du milieu en vertical
 			{
 				dessin.setPen(EpaisseurGrilleCentre);
-                dessin.drawLine(0,i , largeur, i);
+                dessin.drawLine(-largeurViewport/2,i , largeurViewport, i);
 			}
 			else
 			{
 				dessin.setPen(EpaisseurGrille);
-                dessin.drawLine(0,i, largeur,i);
+                dessin.drawLine(-largeurViewport/2,i, largeurViewport,i);
 			}
 
 		dessin.restore();
@@ -286,6 +286,8 @@ void Geometrie::paintEvent (QPaintEvent *event)
 
     QPainter * peintre;
     peintre = new QPainter(this);
+	peintre->setViewport(0,0, largeurViewport, hauteurViewport);
+	peintre->setWindow(-largeurViewport/2, -hauteurViewport/2, largeurViewport, hauteurViewport);
     dessinerFigure(peintre);
     delete peintre;
 
