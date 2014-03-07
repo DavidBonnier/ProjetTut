@@ -89,7 +89,6 @@ private:
     char ordreInstruments[4]; //Tableau de positions
 
     void dessinerFigure(QPainter * peintre);
-    QString * m_nomFichierTemp;
     QRect * m_rectangleViewport;
 
     int m_nbGraduation;

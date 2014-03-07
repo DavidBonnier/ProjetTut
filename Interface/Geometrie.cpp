@@ -47,7 +47,6 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
     ordreInstruments[2] = 'r';
     ordreInstruments[3] = 'c'; //Compas
 
-    m_nomFichierTemp = new QString("./temps.svg");
     m_rectangleViewport = new QRect (0,0,1500,1500);
     m_nbGraduation = 500;
 }
@@ -355,12 +354,16 @@ void Geometrie::dessinerFigure(QPainter * peintre)
 
 QString Geometrie::generationSVG()
 {
+    QString fichierTemp ("./temps.svg");
+    QString fichierTemp2 ("./temps2.svg");
+
+
     QPainter * peintreGeneration;
     peintreGeneration = new QPainter;
 
     QSvgGenerator * generator;
     generator = new QSvgGenerator;
-    generator->setFileName(*m_nomFichierTemp);
+    generator->setFileName(fichierTemp);
 
     peintreGeneration->begin(generator);
     dessinerFigure(peintreGeneration);
@@ -368,8 +371,26 @@ QString Geometrie::generationSVG()
     delete generator;
     delete peintreGeneration;
 
+    peintreGeneration = new QPainter;
+    generator = new QSvgGenerator;
+    generator->setFileName(fichierTemp2);
+    peintreGeneration->begin(generator);
+    QSvgRenderer(fichierTemp).render(peintreGeneration);
+
+    //Ajout de la grille
+    if(grille)
+    {
+
+
+        ++3
+    }
+
+    peintreGeneration->end();
+    delete generator;
+    delete peintreGeneration;
+
     QFile * sauvegardeFichier;
-    sauvegardeFichier = new QFile(*m_nomFichierTemp);
+    sauvegardeFichier = new QFile(fichierTemp);
 
     QDateTime courantDateTime = QDateTime::currentDateTime();
     QString nomFichier ("./" + courantDateTime.toString("dd-MM-yyyy_hh-mm-ss")+".svg");
@@ -378,7 +399,7 @@ QString Geometrie::generationSVG()
     sauvegardeFichier->copy(nomFichier);
     sauvegardeFichier->close();
     delete sauvegardeFichier;
-    QFile::remove(*m_nomFichierTemp);
+    QFile::remove(fichierTemp);
 
     return nomFichier;
 }
