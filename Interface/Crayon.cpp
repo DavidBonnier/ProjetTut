@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \file Crayon.cpp
 //!
-//! \brief Mise en place des fonctions servant à modifier le fichier XML suivant la transformation appelée.
+//! \brief Mise en place des fonctions pour modifier le Crayon.
 //!
 //! \date 12/01/2014
 ///////////////////////////////////////////////////////////////////////////
@@ -13,7 +13,12 @@
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \brief Constructeur du crayon, initialise toutes les valeurs du fichier XML à 0.
+//! \param geometrie La seule instanciation de Geometrie pour pourvoir changer l'ui.
+//!
+//! \brief Constructeur du Crayon, initialise toutes les données membres avec le fichier XML.
+//!
+//! Appelle de Initialisation qui est dans Instrument pour initialiser les données membres d'Instument.
+//! Ensuite initialisation des données membres de Crayon dans le constructeur.
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -58,12 +63,36 @@ Crayon::Crayon(Geometrie * geometrie)
     update();
 }
 
+//*********************************Fonctions de mise à jour des valeurs*******************************
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param transparence Nouveau booléan pour la transparence ou non du Crayon.
+//!
+//! \brief Cette fonction met à jour la transparence du Crayon et la chekBox de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la transparence.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Crayon::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
     m_geometrie->m_projetGeometrie->ui.CheckBoxCrayonTransparence->setChecked(transparence);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param positionX Double pour la position en x de la pointe du Crayon.
+//! \param positionY Double pour la position en y de la pointe du Crayon.
+//!
+//! \brief Cette fonction met à jour la position et les SpinBoxs de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la position.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Crayon::translation(double positionX , double positionY)
 {
     Instrument::translation(positionX,positionY);
@@ -71,19 +100,29 @@ void Crayon::translation(double positionX , double positionY)
     m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonPositionY->setValue(positionY);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param angle Double qui est le nouveau angle du Crayon.
+//!
+//! \brief Cette fonction met à jour l'angle et la spinBox du Crayon.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour l'angle.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Crayon::setAngle(double angle)
 {
     Instrument::setAngle(angle);
     m_geometrie->m_projetGeometrie->ui.SpinBoxCrayonOrientation->setValue(angle);
 }
 
-//***************************************Fonctions de mise à jour des valeurs***************************************
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param dessin Prend le dessin du QPainter en paramètre
+//! \param dessin Prend le dessin du QPainter en paramètres
 //!
-//! \brief Cette fonction dessine un crayon grâce aux valeurs de son fichier XML.
+//! \brief Cette fonction dessine un Crayon grâce à ses données membres.
 //!
 //! \date 18/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -128,7 +167,14 @@ void Crayon::dessinerCrayon(QPainter& dessin)
 	dessin.restore();
 }
 
-void Crayon ::  MagnetiserCrayon(QList <Figure *> tableauFigure)
+///////////////////////////////////////////////////////////////////////
+//! \author BIOLLEY Pierre
+//!
+//! \brief
+//!
+//! \date 07/02/2014
+///////////////////////////////////////////////////////////////////////
+void Crayon::MagnetiserCrayon(QList <Figure *> tableauFigure)
 {	
 	if(m_geometrie->magne_actif)
 	{
@@ -189,8 +235,8 @@ void Crayon ::  MagnetiserCrayon(QList <Figure *> tableauFigure)
 			xml_doc.close();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante[2];
-			DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*PI/180));
-			DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*PI/180) + Yequerre);
+            DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*M_PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*M_PI/180));
+            DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*M_PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*M_PI/180) + Yequerre);
 
 			for (int i =0 ; i<2 ; ++i)
 			{
@@ -284,7 +330,7 @@ void Crayon ::  MagnetiserCrayon(QList <Figure *> tableauFigure)
 			xml_doc.close();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante;
-			DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*PI/180),Yregle+ Wregle*sin(Rotationregle*PI/180));
+            DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*M_PI/180),Yregle+ Wregle*sin(Rotationregle*M_PI/180));
 
 			QVector2D VecteurCourant (DroiteCourante.x2()-DroiteCourante.x1(),DroiteCourante.y2()-DroiteCourante.y1());
 
@@ -336,6 +382,13 @@ void Crayon ::  MagnetiserCrayon(QList <Figure *> tableauFigure)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BIOLLEY Pierre
+//!
+//! \brief
+//!
+//! \date 07/02/2014
+///////////////////////////////////////////////////////////////////////
 void Crayon::traceCrayon()
 {
 	if (m_estMagnetise)

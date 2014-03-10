@@ -160,22 +160,56 @@ void Regle::setGraduation(int graduation)
     update();
 }
 
-
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param transparence Nouveau booléan pour la transparence ou non de la Regle.
+//!
+//! \brief Cette fonction met à jour la transparence de la Regle et la chekBox de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la transparence.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Regle::setTransparence(bool transparence)
 {
-    m_geometrie->m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
     Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxRegleTransparence->setChecked(transparence);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param positionX Double pour la position en x de l'angle du 0 de la Regle.
+//! \param positionY Double pour la position en y de l'angle du 0 de la Regle.
+//!
+//! \brief Cette fonction met à jour la position et les SpinBoxs de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la position.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Regle::translation(double positionX , double positionY)
 {
+    Instrument::translation(positionX,positionY);
     m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionX->setValue(positionX);
     m_geometrie->m_projetGeometrie->ui.SpinBoxReglePositionY->setValue(positionY);
-    Instrument::translation(positionX,positionY);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param angle Double qui est le nouveau angle de la Regle.
+//!
+//! \brief Cette fonction met à jour l'angle, la spinBox de la Regle et modifie la ligne si il en a une en cours.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour l'angle.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Regle::setAngle(double angle)
 {
+    Instrument::setAngle(angle);
     m_geometrie->m_projetGeometrie->ui.SpinBoxRegleOrientation->setValue(angle);
 
     if(!m_geometrie->tableauFigure.isEmpty())
@@ -184,15 +218,14 @@ void Regle::setAngle(double angle)
         if(maLigne && !maLigne->getFin())
             maLigne->setAngle(-m_angle);
     }
-    Instrument::setAngle(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param dessin Prend le dessin du QPainter en paramètre
+//! \param dessin Prend le dessin du QPainter en paramètres
 //!
-//! \brief Cette fonction dessine une règle grâce aux valeurs de son fichier XML.
+//! \brief Cette fonction dessine une Regle grâce à ses données membres.
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -238,7 +271,14 @@ void Regle::dessinerRegle(QPainter& dessin)
     dessin.restore();
 }
 
-void Regle ::  MagnetiserRegle (QList <Figure *> tableauFigure)
+///////////////////////////////////////////////////////////////////////
+//! \author BIOLLEY Pierre
+//!
+//! \brief
+//!
+//! \date 07/02/2014
+///////////////////////////////////////////////////////////////////////
+void Regle::MagnetiserRegle (QList <Figure *> tableauFigure)
 {	
 	if(m_geometrie->magne_actif)
 	{
@@ -291,8 +331,8 @@ void Regle ::  MagnetiserRegle (QList <Figure *> tableauFigure)
 		int y = m_position.y();
 		double rotation = m_angle;
 		// Détection des bords de l'instrument à magnétiser ici l'equerre
-		droitesOutilCourant.setLine(x,y,w*cos(rotation*PI/180) + x,w*sin(rotation*PI/180) + y);
-		QPoint Point3 ((w/2)*cos(rotation*PI/180) + x,(w/2)*sin(rotation*PI/180) + y);
+        droitesOutilCourant.setLine(x,y,w*cos(rotation*M_PI/180) + x,w*sin(rotation*M_PI/180) + y);
+        QPoint Point3 ((w/2)*cos(rotation*M_PI/180) + x,(w/2)*sin(rotation*M_PI/180) + y);
 		if(rotation<0) rotation +=360;
 
 		bool magnet = false;
@@ -324,7 +364,7 @@ void Regle ::  MagnetiserRegle (QList <Figure *> tableauFigure)
 				angletemp =  180*qAcos (COSSIN)/PI *qAsin(COSSIN)/abs(qAsin(COSSIN));*/
 
 
-				double angleCourant = 180*qAcos(VecteurCourant.x()/(1 * sqrt(VecteurCourant.x()*VecteurCourant.x() + VecteurCourant.y()*VecteurCourant.y())))/PI;
+                double angleCourant = 180*qAcos(VecteurCourant.x()/(1 * sqrt(VecteurCourant.x()*VecteurCourant.x() + VecteurCourant.y()*VecteurCourant.y())))/M_PI;
 				angletemp = angleCourant - rotation;
 
 				if (abs(angletemp) < m_geometrie->m_txMagnetAng || abs(abs(angletemp)-180 )< m_geometrie->m_txMagnetAng )
@@ -528,8 +568,8 @@ void Regle ::  MagnetiserRegle (QList <Figure *> tableauFigure)
 			xml_doc.close();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante[2];
-			DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*PI/180));
-			DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*PI/180) + Yequerre);
+            DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*M_PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*M_PI/180));
+            DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*M_PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*M_PI/180) + Yequerre);
 
 
 

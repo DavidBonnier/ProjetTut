@@ -9,13 +9,17 @@
 #include "Equerre.h"
 #include "Geometrie.h"
 #include "projetgeometrie.h"
-#include "qmath.h"
-#include <QDebug>
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \brief Constructeur de l'équerre, initialise toutes les valeurs du fichier XML à 0.
+//! \param geometrie La seule instanciation de Geometrie pour pourvoir changer l'ui.
+//!
+//! \brief Constructeur du Equerre, initialise toutes les données membres avec le fichier XML.
+//!
+//! Appelle de InitialisationRegle qui est dans Regle pour initialiser les données membres de Regle.
+//! Cette dernière appelle la fonction Initialisation d'Instrument.
+//! Ensuite initialisation des données membres de Compas dans le constructeur.
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -53,21 +57,57 @@ QPointF Equerre::Thales(double longueur, double largeur, double transp, int x, i
     return QPointF(x+longueurTransp, y+transp); //Retourne les coordonnée du point de l'intersection de ce segment avec l'hypoténuse
 }
 
+//**********************************Fonctions de mise à jour des valeurs*******************************
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param transparence Nouveau booléan pour la transparence ou non de l'Equerre.
+//!
+//! \brief Cette fonction met à jour la transparence de l'Equerre et la chekBox de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la transparence.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Equerre::setTransparence(bool transparence)
 {
-    m_geometrie->m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
     Instrument::setTransparence(transparence);
+    m_geometrie->m_projetGeometrie->ui.CheckBoxEquerreTransparence->setChecked(transparence);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param positionX Double pour la position en x de l'angle droit de l'Equerre.
+//! \param positionY Double pour la position en y de l'angle droit de l'Equerre.
+//!
+//! \brief Cette fonction met à jour la position et les SpinBoxs de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la position.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Equerre::translation(double positionX , double positionY)
 {
+    Instrument::translation(positionX,positionY);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionX->setValue(positionX);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerrePositionY->setValue(positionY);
-    Instrument::translation(positionX,positionY);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param angle Double qui est le nouveau angle de l'Equerre.
+//!
+//! \brief Cette fonction met à jour l'angle, la spinBox de l'Equerre et modifie la ligne si il en a une en cours.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour l'angle.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Equerre::setAngle(double angle)
 {
+    Instrument::setAngle(angle);
     m_geometrie->m_projetGeometrie->ui.SpinBoxEquerreOrientation->setValue(angle);
     if(!m_geometrie->tableauFigure.isEmpty())
     {
@@ -75,15 +115,14 @@ void Equerre::setAngle(double angle)
         if(maLigne && !maLigne->getFin())
             maLigne->setAngle(-m_angle);
     }
-    Instrument::setAngle(angle);
 }
 
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param dessin Prend le dessin du QPainter en paramètre
+//! \param dessin Prend le dessin du QPainter en paramètres
 //!
-//! \brief Cette fonction dessine une équerre grâce aux valeurs de son fichier XML.
+//! \brief Cette fonction dessine une Equerre grâce à ses données membres.
 //!
 //! \date 17/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -134,7 +173,14 @@ void Equerre::dessinerEquerre(QPainter& dessin)
     dessin.restore();
 }
 
-void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
+///////////////////////////////////////////////////////////////////////
+//! \author BIOLLEY Pierre
+//!
+//! \brief
+//!
+//! \date 07/02/2014
+///////////////////////////////////////////////////////////////////////
+void Equerre::MagnetiserEquerre (QList <Figure *> tableauFigure)
 {
 	if(m_geometrie->magne_actif)
 	{
@@ -187,10 +233,10 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
 		int y = m_position.y();
 		double rotation[2] = {m_angle,m_angle -90};
 		// Détection des bords de l'instrument à magnétiser ici l'equerre
-		droitesOutilCourant[0].setLine(x,y,w*cos(rotation[0]*PI/180) + x,w*sin(rotation[0]*PI/180) + y);
+        droitesOutilCourant[0].setLine(x,y,w*cos(rotation[0]*M_PI/180) + x,w*sin(rotation[0]*M_PI/180) + y);
 		if(rotation[1]<0) rotation[1] +=360;
 
-		droitesOutilCourant[1].setLine(x,y,h*cos(rotation[1]*PI/180) + x,h*sin(rotation[1]*PI/180) + y);
+        droitesOutilCourant[1].setLine(x,y,h*cos(rotation[1]*M_PI/180) + x,h*sin(rotation[1]*M_PI/180) + y);
 
 		bool magnet = false;
 		double BestAngle=99999;
@@ -224,7 +270,7 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
 					angletemp =  180*qAcos (COSSIN)/PI *qAsin(COSSIN)/abs(qAsin(COSSIN));*/
 
 
-					double angleCourant = 180*qAcos(VecteurCourant.x()/(1 * sqrt(VecteurCourant.x()*VecteurCourant.x() + VecteurCourant.y()*VecteurCourant.y())))/PI;
+                    double angleCourant = 180*qAcos(VecteurCourant.x()/(1 * sqrt(VecteurCourant.x()*VecteurCourant.x() + VecteurCourant.y()*VecteurCourant.y())))/M_PI;
 					angletemp = angleCourant - rotation[i];
 
 					if (abs(angletemp) < m_geometrie->m_txMagnetAng || abs(abs(angletemp)-180 )< m_geometrie->m_txMagnetAng )
@@ -380,7 +426,7 @@ void Equerre ::  MagnetiserEquerre (QList <Figure *> tableauFigure)
 				xml_doc.close();
 				//Vecteur de la droite de la regle
 				QLine DroiteCourante;
-				DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*PI/180),Yregle+ Wregle*sin(Rotationregle*PI/180));
+                DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*M_PI/180),Yregle+ Wregle*sin(Rotationregle*M_PI/180));
 
 				QVector2D VecteurCourant (DroiteCourante.x2()-DroiteCourante.x1(),DroiteCourante.y2()-DroiteCourante.y1());
 

@@ -559,7 +559,7 @@ void Interface::showParamEquerre()
 //! \author ROCHE Hugo 
 //! \date 01/02/2014
 //!
-//! Fonction gerant l'affichage des paramètres du compas.
+//! Fonction gerant l'affichage des paramètres du Compas.
 /////////////////////////////////////////////////////////////////////////// 
 void Interface::showParamCompas()
 {

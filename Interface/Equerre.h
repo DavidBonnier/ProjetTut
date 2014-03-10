@@ -17,8 +17,9 @@
 #include <QMouseEvent>
 #include <QString>
 #include <QPointF>
+#include "qmath.h"
+#include <QDebug>
 
-#include "math.h"
 #include "Regle.h"
 
 class Geometrie;
@@ -26,7 +27,7 @@ class Geometrie;
 ///////////////////////////////////////////////////////////////////////////
 //! \class Equerre
 //!
-//! \brief Classe servant à effectuer les transformations sur l'équerre en modifiant son fichier XML.
+//! \brief Classe servant à effectuer les transformations sur l'équerre.
 ///////////////////////////////////////////////////////////////////////////
 class Equerre : public Regle
 {

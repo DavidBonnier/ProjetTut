@@ -25,7 +25,7 @@ class Geometrie;
 ///////////////////////////////////////////////////////////////////////////
 //! \class Regle
 //!
-//! \brief Classe servant à effectuer les transformations sur la règle en modifiant son fichier XML.
+//! \brief Classe servant à effectuer les transformations sur la règle.
 ///////////////////////////////////////////////////////////////////////////
 class Regle : public Instrument
 {

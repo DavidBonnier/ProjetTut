@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \file Compas.h
 //!
-//! \brief Déclaration des fonctions pour la gestion des transformations géométriques du compas.
+//! \brief Déclaration des fonctions pour la gestion des transformations géométriques du Compas.
 //!
 //! \date 12/01/2014
 ///////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,6 @@ private:
     int m_hauteurPointe;
     int m_hauteurBase;
     int m_ecartement;
-
 };
 
 #endif

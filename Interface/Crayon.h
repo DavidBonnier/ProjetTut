@@ -23,7 +23,7 @@ class Geometrie;
 ///////////////////////////////////////////////////////////////////////////
 //! \class Crayon
 //!
-//! \brief Classe servant à effectuer les transformations sur le compas en modifiant son fichier XML.
+//! \brief Classe servant à effectuer les transformations sur le crayon.
 ///////////////////////////////////////////////////////////////////////////
 class Crayon : public Instrument
 {

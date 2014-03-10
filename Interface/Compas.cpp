@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \file Compas.cpp
 //!
-//! \brief Mise en place des fonctions servant à modifier le fichier XML suivant la transformation appelée.
+//! \brief Mise en place des fonctions pour modifier le Compas.
 //!
 //! \date 12/01/2014
 ///////////////////////////////////////////////////////////////////////////
@@ -15,7 +15,7 @@
 //!
 //! \param geometrie La seule instanciation de Geometrie pour pourvoir changer l'ui.
 //!
-//! \brief Constructeur du compas, initialise toutes les données membres avec le fichier XML.
+//! \brief Constructeur du Compas, initialise toutes les données membres avec le fichier XML.
 //!
 //! Appelle de Initialisation qui est dans Instrument pour initialiser les données membres d'Instument.
 //! Ensuite initialisation des données membres de Compas dans le constructeur.
@@ -74,12 +74,12 @@ Compas::Compas(Geometrie * geometrie)
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param ecart Ecartement actuel du compas.
+//! \param ecart Ecartement actuel du Compas.
 //! \param longueurBranche Longueur d'une branche.
 //!
 //! \return Retourne l'angle entre une branche et la droite coupant le compas en deux verticalement.
 //!
-//! \brief Calcul de la motié de l'angle entre les 2 branches du compas.
+//! \brief Calcul de la motié de l'angle entre les 2 branches du Compas.
 //!
 //! Calcul de l'angle à l'aide des propriétés des triangles.
 //! L'angle entre une branche et la droite coupant le compas en deux verticalement.
@@ -98,14 +98,14 @@ double Compas::angleEcartement(double ecart, double longueurBranche)
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param ecart Ecartement actuel du compas
+//! \param ecart Ecartement actuel du Compas
 //! \param longueurBranche Longueur d'une branche
 //!
-//! \return Retourne la hauteur entre le bas du compas et le centre de la base
+//! \return Retourne la hauteur entre le bas du Compas et le centre de la base
 //!
 //! \brief Calcul la hauteur du Compas entre la base et le centre.
 //!
-//! Calcul entre le bas du compas et la base grâce à Pythagore.
+//! Calcul entre le bas du Compas et la base grâce à Pythagore.
 //! Ceci est pour permettre d'ajuster la hauteur de la base.
 //!
 //! \date 18/01/2014
@@ -120,7 +120,7 @@ int Compas::hauteurCompas(double ecart, int longueurBranche)
 //!
 //! \param angleArriver Angle d'arriver de l'arc
 //!
-//! \brief Cette fonction met à jour l'angle de fin de tracer de l'arc.
+//! \brief Cette fonction crée un arc ou met à jour l'angle d'arriver.
 //!
 //! \date 02/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -152,6 +152,13 @@ void Compas :: tracer (double angleArriver)
     }
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \brief Cette fonction est appellée pour finir un tracer.
+//!
+//! \date 02/02/2014
+///////////////////////////////////////////////////////////////////////
 void Compas ::finTracer()
 {
     m_transparence = false;
@@ -165,13 +172,13 @@ void Compas ::finTracer()
     }
 }
 
-//***************************************Fonctions de mise à jour des valeurs***************************************
+//**********************************Fonctions de mise à jour des valeurs*******************************
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param e Nouvel écartement du compas
+//! \param ecartement Nouvel écartement du Compas.
 //!
-//! \brief Cette fonction met à jour le fichier XML du compas avec le nouvel écartement du compas
+//! \brief Cette fonction met à jour l'écartement du Compas et la spinBox de droite.
 //!
 //! \date 15/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -182,13 +189,35 @@ void Compas::setEcartement(double ecartement)
     update();
 }
 
-
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param transparence Nouveau booléan pour la transparence ou non du Compas.
+//!
+//! \brief Cette fonction met à jour la transparence du Compas et la chekBox de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la transparence.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Compas::setTransparence(bool transparence)
 {
     Instrument::setTransparence(transparence);
     m_geometrie->m_projetGeometrie->ui.CheckBoxCompasTransparence->setChecked(transparence);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param positionX Double pour la position en x de la pointe du Compas.
+//! \param positionY Double pour la position en y de la pointe du Compas.
+//!
+//! \brief Cette fonction met à jour la position et les SpinBoxs de droite.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour la position.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Compas::translation(double positionX , double positionY)
 {
     Instrument::translation(positionX,positionY);
@@ -196,6 +225,17 @@ void Compas::translation(double positionX , double positionY)
     m_geometrie->m_projetGeometrie->ui.SpinBoxCompasPositionY->setValue(positionY);
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param angle Double qui est le nouveau angle du Compas.
+//!
+//! \brief Cette fonction met à jour l'angle et la spinBox du Compas.
+//!
+//! Appelle la fonction de la classe mère pour mettre à jour l'angle.
+//!
+//! \date 15/01/2014
+///////////////////////////////////////////////////////////////////////
 void Compas::setAngle(double angle)
 {
     Instrument::setAngle(angle);
@@ -207,7 +247,7 @@ void Compas::setAngle(double angle)
 //!
 //! \param dessin Prend le dessin du QPainter en paramètres
 //!
-//! \brief Cette fonction dessine un compas grâce aux valeurs de son fichier XML.
+//! \brief Cette fonction dessine un compas grâce à ses données membres.
 //!
 //! \date 19/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -280,6 +320,13 @@ void Compas::dessinerCompas(QPainter& dessin)
     dessin.restore();
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author ADAMONY Ravel
+//!
+//! \brief Fonction qui permet la modification de l'écartement à la souris.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 void Compas::sourisEcart(QMouseEvent *posSouris)
 {
 	double vecteurR = 1;
@@ -310,7 +357,14 @@ void Compas::sourisEcart(QMouseEvent *posSouris)
 	setEcartement(m_ecartement);
 }
 
-void Compas ::  MagnetiserCompas(QList <Figure *> tableauFigure)
+///////////////////////////////////////////////////////////////////////
+//! \author BIOLLEY Pierre
+//!
+//! \brief
+//!
+//! \date 07/02/2014
+///////////////////////////////////////////////////////////////////////
+void Compas::MagnetiserCompas(QList <Figure *> tableauFigure)
 {	
 	if(m_geometrie->magne_actif)
 	{
@@ -370,8 +424,8 @@ void Compas ::  MagnetiserCompas(QList <Figure *> tableauFigure)
 			xml_doc.close();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante[2];
-			DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*PI/180));
-			DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*PI/180) + Yequerre);
+            DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*M_PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*M_PI/180));
+            DroiteCourante[1].setLine(Xequerre,Yequerre,Hequerre*cos(Rotationequerre[1]*M_PI/180) + Xequerre,Hequerre*sin(Rotationequerre[1]*M_PI/180) + Yequerre);
 
 			for (int i =0 ; i<2 ; ++i)
 			{
@@ -465,7 +519,7 @@ void Compas ::  MagnetiserCompas(QList <Figure *> tableauFigure)
 			xml_doc.close();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante;
-			DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*PI/180),Yregle+ Wregle*sin(Rotationregle*PI/180));
+            DroiteCourante.setLine(Xregle,Yregle,Xregle+ Wregle*cos(Rotationregle*M_PI/180),Yregle+ Wregle*sin(Rotationregle*M_PI/180));
 
 			QVector2D VecteurCourant (DroiteCourante.x2()-DroiteCourante.x1(),DroiteCourante.y2()-DroiteCourante.y1());
 
