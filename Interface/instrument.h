@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////
+//! \file instrument.h
+//!
+//! \brief Déclaration des variables, fonctions pour la gestion des instruments.
+//! Le SVG Generator et les instruments sont déclarés ici.
+//!
+//! \date 01/02/2014
+//! \version 4.2
+///////////////////////////////////////////////////////////////////////////
 #ifndef INSTRUMENT_H
 #define INSTRUMENT_H
 
@@ -11,6 +20,8 @@
 #include "arc.h"
 #include "ligne.h"
 
+#define PI 3.14159265358979323846264279502884
+
 class Geometrie;
 
 class Instrument : public QWidget
@@ -21,7 +32,7 @@ public:
     ~Instrument();
 
     //Fonctions de sélection avec la souris
-    void clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartement);
+    void clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartement , bool boutonTrace);
     void move(QMouseEvent *move);
     void deselectionner();
 
@@ -36,9 +47,9 @@ public:
     inline int getLargeur(){return m_largeur;}
 
     bool m_moveSelected;
-    bool m_rotateSelectedRight;
-    bool m_rotateSelectedLeft;
+    bool m_rotateSelected;
 	bool m_ecartSelected;
+	bool m_traceSelected;
 
 protected:
     //Instrument

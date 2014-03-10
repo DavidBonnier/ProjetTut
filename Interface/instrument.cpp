@@ -41,10 +41,8 @@ void Instrument::Initialisation()
                 m_transparence = element.text().toInt();
             if (element.tagName() == "moveSelected")
                 m_moveSelected = element.text().toInt();
-            if (element.tagName() == "rotateSelectedRight")
-                m_rotateSelectedRight = element.text().toInt();
-            if (element.tagName() == "rotateSelectedLeft")
-                m_rotateSelectedLeft = element.text().toInt();
+            if (element.tagName() == "rotateSelected")
+                m_rotateSelected = element.text().toInt();
 
             //Variable
             if (element.tagName() == "positionX")
@@ -72,6 +70,7 @@ void Instrument::Initialisation()
     }
     xml_doc.close();
 	m_ecartSelected = false;
+	m_traceSelected = false;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -121,22 +120,30 @@ void Instrument::setAngle(double angle)
     update();
 }
 
-void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartement)
+void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartement , bool boutonTrace)
 {
-    if(m_moveSelected||m_rotateSelectedLeft||m_rotateSelectedRight||m_ecartSelected)
+	if(m_moveSelected||m_rotateSelected||m_ecartSelected||m_traceSelected)
     {
         deselectionner();
         return;
     }
 
-    if(!boutonEcartement&&!boutonRotation)
+	if(!boutonEcartement&&!boutonRotation&&!boutonTrace)
     {
         m_moveSelected = true;
         m_offset.setX(clic->x() - m_position.x());
         m_offset.setY(clic->y() - m_position.y());
     }
 
-	if(boutonEcartement&&!boutonRotation)
+	if(!boutonEcartement&&!boutonRotation&&boutonTrace)
+    {
+        m_moveSelected = true;
+		m_traceSelected = true;
+        m_offset.setX(clic->x() - m_position.x());
+        m_offset.setY(clic->y() - m_position.y());
+    }
+
+	if(boutonEcartement&&!boutonRotation&&!boutonTrace)
 	{
 		m_ecartSelected = true;
 		m_posClic.setX(clic->x());
@@ -146,27 +153,9 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartem
 			m_oldEcartValue = com->getEcart();
 	}
 
-	if(!boutonEcartement&&boutonRotation)
+	if(!boutonEcartement&&boutonRotation&&!boutonTrace)
 	{
-		Equerre* equ = dynamic_cast<Equerre*>(this);
-		Compas* com = dynamic_cast<Compas*>(this);
-		Regle* reg = dynamic_cast<Regle*>(this);
-		Crayon* cra = dynamic_cast<Crayon*>(this);
-		int thUp, thDown;
-		if(equ || reg)
-		{
-			thDown = 90;
-			thUp = 270;
-		}
-		else
-		{
-			thDown = 0;
-			thUp = 180;
-		}
-		if (m_angle > thDown && m_angle < thUp)
-			m_rotateSelectedLeft = true;
-		else
-			m_rotateSelectedRight = true;
+		m_rotateSelected = true;
 		m_oldRotationValue = m_angle;
 		m_posClic.setX(clic->x());
 		m_posClic.setY(clic->y());
@@ -179,16 +168,6 @@ void Instrument::move(QMouseEvent *move)
    if(m_moveSelected)
     {
         translation(move->x() - m_offset.x(), move->y() - m_offset.y());
-        //Pom_position.x()es positions négatives
-        if (m_position.x() < 0)
-        {
-			m_position.setX(0);
-        }
-
-        if (m_position.y() < 0)
-        {
-			m_position.setY(0);
-        }
 		Equerre* equ = dynamic_cast<Equerre*>(this);
 		if (equ)
 		{
@@ -196,32 +175,50 @@ void Instrument::move(QMouseEvent *move)
 			equ->translation (equ->getPositionX(),equ->getPositionY());
 			equ->setAngle (equ->getAngle());
 		}
+		Regle* reg = dynamic_cast<Regle*>(this);
+		if (reg)
+		{
+			reg->MagnetiserRegle(m_geometrie->tableauFigure);
+			reg->translation (reg->getPositionX(),reg->getPositionY());
+			reg->setAngle (reg->getAngle());
+		}
+		Crayon* cra = dynamic_cast<Crayon*>(this);
+		if (cra)
+		{
+			cra->MagnetiserCrayon(m_geometrie->tableauFigure);
+			cra->translation (cra->getPositionX(),cra->getPositionY());
+			cra->setAngle (cra->getAngle());
+			if(cra->m_traceSelected)
+			{
+				cra->traceCrayon();
+			}
+		}
+		Compas* comp = dynamic_cast<Compas*>(this);
+		if (comp)
+		{
+			comp->MagnetiserCompas(m_geometrie->tableauFigure);
+			comp->translation (comp->getPositionX(),comp->getPositionY());
+			comp->setAngle (comp->getAngle());
+		}
     }
 
-    if (m_rotateSelectedRight || m_rotateSelectedLeft)
+    if (m_rotateSelected)
     {
-        double xA = m_posClic.x() -m_position.x();
-        double yA = m_posClic.y() -m_position.y();
-        double xB = move->x() - m_position.x();
-        double yB = move->y() - m_position.y();
-        double cosTheta = (xA*xB + yA*yB)/(sqrt(pow(xA,2)+pow(yA,2)) * sqrt(pow(xB,2)+pow(yB,2)));
-        double thetaRadians = acos(cosTheta);
-        double theta = (180*thetaRadians)/3.14159265359;
-        //On regarde si la souris est au dessus de la droite (posClic, pos)
-        double cd =yA/xA;
-        double h = m_position.y()-cd*m_position.x();
-        if (move->y() < cd * move->x() + h)
-            theta = -theta;
-        double newAngle;
-        if (m_rotateSelectedRight)
-            newAngle = m_oldRotationValue + theta;
-        else
-            newAngle = m_oldRotationValue - theta;
+		QPoint tailleFenetre (m_geometrie->largeurViewport * 0.75, m_geometrie->hauteurViewport * 0.875);
+       QVector2D VecteurRegleSouris (move->x() - tailleFenetre.x() - m_position.x(), move->y() - tailleFenetre.y() - m_position.y());
+		double newAngle = (180/M_PI)*acos (VecteurRegleSouris.x()/sqrt (pow (VecteurRegleSouris.x(),2) + pow (VecteurRegleSouris.y(),2)));
         if (newAngle < 0)
             newAngle +=360;
         if (newAngle > 360)
             newAngle -= 360;
-        setAngle(newAngle);
+		if (move->y() - m_geometrie->hauteurViewport * 0.875 >= m_position.y())
+		{
+			setAngle(newAngle);
+		}
+		else
+		{
+			setAngle(newAngle + 2*(180-newAngle));
+		}
     }
 
 	if(m_ecartSelected)
@@ -235,9 +232,9 @@ void Instrument::move(QMouseEvent *move)
 void Instrument::deselectionner()
 {
     m_moveSelected = false;
-    m_rotateSelectedRight = false;
-    m_rotateSelectedLeft = false;
+	m_rotateSelected = false;
 	m_ecartSelected = false;
+	m_traceSelected = false;
 }
 
 double Instrument::toGradian(double angle)

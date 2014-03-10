@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-//! \file interface.cpp
+//! \file user.h
 //!
 //! \brief Déclaration des variables, fonctions pour la gestion des utilisateurs.
 //!

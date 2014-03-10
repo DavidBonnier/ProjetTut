@@ -46,6 +46,7 @@ public:
 
     void dessinerCompas(QPainter& dessin);
 	void sourisEcart(QMouseEvent *posSouris);
+	void MagnetiserCompas (QList <Figure *> tableauFigure);
 
 private:
     int m_hauteurPointe;

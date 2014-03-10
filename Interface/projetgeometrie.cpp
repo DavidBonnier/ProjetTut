@@ -8,6 +8,7 @@ ProjetGeometrie::ProjetGeometrie()
 
     ui.DessinLayout->addWidget(m_geometrie);
 	ui.CheckBoxGrille->setChecked(true);
+	ui.checkBoxMagne->setChecked(true);
 
 //Initialisation des valeurs min et max des spinBox
 	ui.SpinBoxCompasPositionX->setMinimum(-(m_geometrie->largeurViewport)/2);
@@ -53,7 +54,9 @@ ProjetGeometrie::ProjetGeometrie()
     connect(ui.BoutonTexte, SIGNAL(clicked(bool)), this, SLOT(zoneTexte()));
     connect(ui.spinBoxEpaisseur, SIGNAL(valueChanged(int)), this, SLOT(Epaisseur()));
     connect(ui.CheckBoxGrille, SIGNAL(clicked(bool)), this, SLOT(Grille(bool)));
+	connect(ui.checkBoxMagne, SIGNAL(clicked(bool)), this, SLOT(Magne(bool)));
 	connect(ui.BoutonCouleur, SIGNAL(clicked(bool)), this, SLOT(Couleur()));
+	
 //Instruments
     //Crayon
     connect(ui.SpinBoxCrayonPositionX, SIGNAL(valueChanged(int)), this, SLOT(CrayonPositionX(int)));
@@ -172,6 +175,12 @@ void ProjetGeometrie::Epaisseur()
 void ProjetGeometrie::Grille(bool b)
 {
     m_geometrie->grille = b;
+    m_geometrie->update();
+}
+
+void ProjetGeometrie::Magne(bool b)
+{
+	m_geometrie->magne_actif = b;
     m_geometrie->update();
 }
 

@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////
+//! \file projetgeometrie.h
+//!
+//! \brief Déclaration des variables, fonctions pour la gestion de la géométrie en plein écran.
+//!
+//! Toutes les fonctions relatives à la géométrie (les instruments, les tracés, les spinbox...) sont déclarées ici.
+//!
+//! \date 01/02/2014
+//! \version 4.2
+///////////////////////////////////////////////////////////////////////////
+
 #ifndef PROJETGEOMETRIE_H
 #define PROJETGEOMETRIE_H
 
@@ -43,6 +54,7 @@ public slots :
 
     void Epaisseur();
     void Grille(bool b);
+	void Magne(bool b);
     void Couleur();
 //Intruments
     //Crayon

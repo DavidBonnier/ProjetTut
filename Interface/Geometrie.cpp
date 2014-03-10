@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \brief Costructeur de Geometrie, il défini les pointeurs à NULL, les modifications à false et créer un premier ordre de tracage des instruments.
+//! \brief Constructeur de Geometrie, il défini les pointeurs à NULL, les modifications à false et créer un premier ordre de tracage des instruments.
 //!
 //! \date 30/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -26,6 +26,7 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
 	id_point = 0;
     clickTxt = false;
 	clickPoint = false;
+	magne_actif = true;
     txtSelectionne = false;
     stockTxt.clear();
     setMouseTracking(true);
@@ -49,6 +50,9 @@ Geometrie::Geometrie(ProjetGeometrie* projetGeometrie)
 
     m_rectangleViewport = new QRect (0,0,1500,1500);
     m_nbGraduation = 500;
+
+	m_txMagnetAng = 30;
+	m_txMagnetDist = 30;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -380,9 +384,6 @@ QString Geometrie::generationSVG()
     //Ajout de la grille
     if(grille)
     {
-
-
-        ++3
     }
 
     peintreGeneration->end();
@@ -421,58 +422,63 @@ void Geometrie::mousePressEvent(QMouseEvent *clic)
 	if(detec == QColor(255,255,51) || detec == QColor(255,255,153))
 	{
 		//Le corps de la règle
-		regle->clic(clic,false,false);
+		regle->clic(clic,false,false,false);
 	}
 
 	if(detec == QColor(127,255,255))
 	{
 		//Le bouton de rotation de la règle
-		regle->clic(clic,true,false);
+		regle->clic(clic,true,false,false);
 	}
 
 	//Équerre--------------------------------------------------------
 	if(detec == QColor(255,255,50) || detec == QColor(255,255,152))
 	{
 		//Le corps de l'équerre
-		equerre->clic(clic,false,false);
+		equerre->clic(clic,false,false,false);
 	}
 
 	if(detec == QColor(126,255,255))
 	{
 		//Le bouton de rotation de l'équerre
-		equerre->clic(clic,true,false);
+		equerre->clic(clic,true,false,false);
 	}
 
 	//Crayon--------------------------------------------------------
 	if(detec == QColor(255,255,49) || detec == QColor(255,203,96))
 	{
 		//Le corps du crayon
-		crayon->clic(clic,false,false);
+		crayon->clic(clic,false,false,false);
 	}
 
 	if(detec == QColor(125,255,255))
 	{
-		//Le bouton de rotation de la règle
-		crayon->clic(clic,true,false);
+		//Le bouton de rotation du crayon
+		crayon->clic(clic,true,false,false);
+	}
+	if(detec == QColor(0,255,0))
+	{
+		//Le bouton de tracé du crayon
+		crayon->clic(clic,false,false,true);
 	}
 
 	//Compas--------------------------------------------------------
 	if(detec == QColor(160,160,164) || detec == QColor(0,0,255))
 	{
 		//Le corps du crayon
-		compas->clic(clic,false,false);
+		compas->clic(clic,false,false,false);
 	}
 
 	if(detec == QColor(124,255,255))
 	{
-		//Le bouton de rotation du crayon
-		compas->clic(clic,true,false);
+		//Le bouton de rotation du compas
+		compas->clic(clic,true,false,false);
 	}
 
 	if(detec == QColor(255,0,0))
 	{
 		//Le bouton d'écartement du compas
-		compas->clic(clic,false,true);
+		compas->clic(clic,false,true,false);
 	}
 
 	//Désélection si on clique sur un pixel blanc ou noir
@@ -577,7 +583,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 	//Regle--------------------------------------------------------
 	if (regle)
 	{
-        if (regle->m_moveSelected || regle->m_rotateSelectedLeft || regle->m_rotateSelectedRight)
+        if (regle->m_moveSelected || regle->m_rotateSelected)
 		{
 			regle->move(move);
 			modifRegle = true;
@@ -587,7 +593,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 	//Equerre--------------------------------------------------------
 	if (equerre)
 	{
-        if (equerre->m_moveSelected || equerre->m_rotateSelectedLeft || equerre->m_rotateSelectedRight)
+        if (equerre->m_moveSelected || equerre->m_rotateSelected)
 		{
 			equerre->move(move);
 			modifEquerre = true;
@@ -597,7 +603,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 	//Crayon--------------------------------------------------------
 	if (crayon)
 	{
-        if (crayon->m_moveSelected || crayon->m_rotateSelectedLeft || crayon->m_rotateSelectedRight)
+        if (crayon->m_moveSelected || crayon->m_rotateSelected || crayon->m_traceSelected)
 		{
 			crayon->move(move);
 			modifCrayon = true;
@@ -607,7 +613,7 @@ void Geometrie::mouseMoveEvent(QMouseEvent *move)
 	//Compas--------------------------------------------------------
 	if (compas)
 	{
-		if (compas->m_moveSelected || compas->m_rotateSelectedLeft || compas->m_rotateSelectedRight || compas->m_ecartSelected)
+		if (compas->m_moveSelected || compas->m_rotateSelected || compas->m_ecartSelected)
 		{
 			compas->move(move);
 			modifCompas = true;

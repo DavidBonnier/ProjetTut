@@ -1,12 +1,13 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \file point.h
 //!
-//! \brief Classe servant à la création des points.s
+//! \brief Classe servant à la création des points.
 //!
-//! Hérite de Figure pour le stockage en svg. deux accesseurs pour accéder aux deux lignes qui forment le point.
+//! Hérite de Figure pour le tracer et donc le stockage en svg.
+//! Deux accesseurs pour accéder aux deux lignes qui forment le point.
 //!
 //! \date 21/02/2014
-//! \version 1.0
+//! \version 2.0
 ///////////////////////////////////////////////////////////////////////////
 
 #ifndef POINT_H
@@ -15,6 +16,11 @@
 #include "figure.h"
 #include <QLineF>
 
+///////////////////////////////////////////////////////////////////////////
+//! \class Point
+//!
+//! \brief Classe qui permet le tracer d'un point.
+///////////////////////////////////////////////////////////////////////////
 class Point : public Figure
 {
 public:
@@ -33,7 +39,7 @@ private:
     QLineF m_ligneHorizontal;
     QLineF m_ligneVertical;
 
-    void MAJLigne();
+    void MAJLignes();
 };
 
 #endif // POINT_H

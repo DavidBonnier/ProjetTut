@@ -65,7 +65,7 @@ public:
     bool modifRegle;
 
 	//Affichage de la grille
-	bool grille;
+	bool grille, magne_actif;
 
     int id_txtSelectionne, id_point;
     bool clickTxt, txtSelectionne;
@@ -84,6 +84,10 @@ public:
 
 	int largeurViewport; 
 	int hauteurViewport;
+
+	//variables nécessaires au magnétisme
+	int m_txMagnetAng;
+	int m_txMagnetDist;
 
 private:
     char ordreInstruments[4]; //Tableau de positions

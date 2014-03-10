@@ -1,13 +1,29 @@
+﻿///////////////////////////////////////////////////////////////////////////
+//! \file arc.h
+//!
+//! \brief Déclaration des variables, fonctions pour le tracé d'un arc.
+//!
+//! Fichier regroupant les fonctions et données membres de la classe Arc.
+//! Acceseur pour chacune des données membres.
+//!
+//! \date 01/02/2014
+//! \version 4.2
+///////////////////////////////////////////////////////////////////////////
+
 #ifndef ARC_H
 #define ARC_H
 
 #include "figure.h"
 #include <QRectF>
 
+///////////////////////////////////////////////////////////////////////////
+//! \class Arc
+//!
+//! \brief Classe qui permet le tracer d'un Arc
+///////////////////////////////////////////////////////////////////////////
 class Arc : public Figure
 {
 public:
-    Arc();
     Arc(int x, int m_positionY, int w, int h, double startAngle, double * spanAngle = NULL);
     Arc(QRectF rectangle, double startAngle, double * spanAngle = NULL);
 

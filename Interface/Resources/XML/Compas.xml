@@ -4,10 +4,11 @@
         <!--bool-->
         <transparence>0</transparence>
         <moveSelected>0</moveSelected>
-    <positionX>10</positionX>
-    <positionY>10</positionY>
-    <angle>90</angle>
-    <oldRotationValue>90</oldRotationValue>
+	<rotateSelected>0</rotateSelected>
+    <positionX>0</positionX>
+    <positionY>0</positionY>
+    <angle>0</angle>
+    <oldRotationValue>0</oldRotationValue>
     <ecartement>0</ecartement>
     <offsetX>0</offsetX>
     <offsetY>0</offsetY>

@@ -43,6 +43,7 @@ public:
 
     void dessinerRegle(QPainter& dessin);
     void finTracer();
+	void MagnetiserRegle (QList <Figure *> tableauFigure);
 
 protected:
     int m_graduation;
