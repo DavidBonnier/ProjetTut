@@ -2,11 +2,11 @@
 //! \file instrument.h
 //!
 //! \brief Déclaration des variables, fonctions pour la gestion des instruments.
-//! Le SVG Generator et les instruments sont déclarés ici.
 //!
 //! \date 01/02/2014
 //! \version 4.2
 ///////////////////////////////////////////////////////////////////////////
+
 #ifndef INSTRUMENT_H
 #define INSTRUMENT_H
 
@@ -20,10 +20,13 @@
 #include "arc.h"
 #include "ligne.h"
 
-#define PI 3.14159265358979323846264279502884
-
 class Geometrie;
 
+///////////////////////////////////////////////////////////////////////////
+//! \class Instrument
+//!
+//! \brief Classe qui est la mère de tout les différents instruments (Regle, Equerre, Compas, Crayon).
+///////////////////////////////////////////////////////////////////////////
 class Instrument : public QWidget
 {
     Q_OBJECT

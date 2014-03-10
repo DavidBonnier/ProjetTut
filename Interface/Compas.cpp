@@ -13,7 +13,12 @@
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \brief Constructeur du compas, initialise toutes les valeurs du fichier XML à 0.
+//! \param geometrie La seule instanciation de Geometrie pour pourvoir changer l'ui.
+//!
+//! \brief Constructeur du compas, initialise toutes les données membres avec le fichier XML.
+//!
+//! Appelle de Initialisation qui est dans Instrument pour initialiser les données membres d'Instument.
+//! Ensuite initialisation des données membres de Compas dans le constructeur.
 //!
 //! \date 16/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -30,14 +35,16 @@ Compas::Compas(Geometrie * geometrie)
     QFile xml_doc(*m_nomFichierXML);// On choisit le fichier contenant les informations XML.
     if(!xml_doc.open(QIODevice::ReadOnly))// Si l'on n'arrive pas à ouvrir le fichier XML.
     {
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
+         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert."
+                              "Verifiez que le nom est le bon et que le document est bien place");
          return;
     }
     QDomDocument dom(*m_nomDocument); // Création de l'objet DOM
     if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
     {
          xml_doc.close();
-         QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
+         QMessageBox::warning(this,"Erreur a l'ouverture du document XML",
+                              "Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
          return;
     }
     QDomElement dom_element = dom.documentElement();
@@ -64,24 +71,23 @@ Compas::Compas(Geometrie * geometrie)
     update();
 }
 
-Compas::~Compas()
-{
-
-}
-
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param ecart Ecartement actuel du compas
-//! \param longueurBranche Longueur d'une branche
+//! \param ecart Ecartement actuel du compas.
+//! \param longueurBranche Longueur d'une branche.
 //!
 //! \return Retourne l'angle entre une branche et la droite coupant le compas en deux verticalement.
 //!
-//! \brief Calcul à l'aide des propriétés des triangles, l'angle entre une branche et la droite coupant le compas en deux verticalement pour permettre la rotation des branches
+//! \brief Calcul de la motié de l'angle entre les 2 branches du compas.
+//!
+//! Calcul de l'angle à l'aide des propriétés des triangles.
+//! L'angle entre une branche et la droite coupant le compas en deux verticalement.
+//! L'angle est pour permettre la rotation des branches.
 //!
 //! \date 18/01/2014
 ///////////////////////////////////////////////////////////////////////
-double Compas::angleEcartement(double ecart, double longueurBranche) //Retourne l'écartement entre une branche et la droite milieue
+double Compas::angleEcartement(double ecart, double longueurBranche)
 {
     double teta = (ecart/2)/longueurBranche; //sin(teta) = (ecart/2)/(longueurBranche)
     teta = asin(teta); //sin-1(teta) en radian
@@ -97,7 +103,10 @@ double Compas::angleEcartement(double ecart, double longueurBranche) //Retourne 
 //!
 //! \return Retourne la hauteur entre le bas du compas et le centre de la base
 //!
-//! \brief Calcul la hauteur entre le bas du compas et la base grâce à Pythagore pour permettre d'ajuster la hauteur de la base.
+//! \brief Calcul la hauteur du Compas entre la base et le centre.
+//!
+//! Calcul entre le bas du compas et la base grâce à Pythagore.
+//! Ceci est pour permettre d'ajuster la hauteur de la base.
 //!
 //! \date 18/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -111,7 +120,7 @@ int Compas::hauteurCompas(double ecart, int longueurBranche)
 //!
 //! \param angleArriver Angle d'arriver de l'arc
 //!
-//! \brief Cette fonction met à jour le fichier XML du compas avec le nouvel écartement du compas
+//! \brief Cette fonction met à jour l'angle de fin de tracer de l'arc.
 //!
 //! \date 02/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -120,8 +129,10 @@ void Compas :: tracer (double angleArriver)
     m_transparence = true;
     if(m_geometrie->tableauFigure.isEmpty())
     {
-        m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
-                                                     m_ecartement*2,m_ecartement*2,m_angle*16,new double (angleArriver*16)));
+        m_geometrie->tableauFigure.push_back(new Arc(m_position.x() - m_ecartement,
+                                                     m_position.y() - m_ecartement,
+                                                     m_ecartement * 2, m_ecartement * 2,
+                                                     m_angle * 16, new double(angleArriver * 16)));
     }
     else
     {
@@ -129,12 +140,14 @@ void Compas :: tracer (double angleArriver)
         if(monArc && !monArc->getFin())
         {
             m_angle = monArc->getStart()/16 + angleArriver;
-            monArc->setSpanAngle(angleArriver*16);
+            monArc->setSpanAngle(angleArriver * 16);
         }
         else
         {
-            m_geometrie->tableauFigure.push_back(new Arc(m_position.x()-m_ecartement,m_position.y()-m_ecartement,
-                                                         m_ecartement*2,m_ecartement*2,m_angle*16,new double (angleArriver*16)));
+            m_geometrie->tableauFigure.push_back(new Arc(m_position.x() - m_ecartement,
+                                                         m_position.y() - m_ecartement,
+                                                         m_ecartement * 2, m_ecartement * 2,
+                                                         m_angle * 16, new double(angleArriver * 16)));
         }
     }
 }

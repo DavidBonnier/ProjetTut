@@ -1,11 +1,29 @@
 #include "instrument.h"
 #include "Geometrie.h"
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \param parent QWidget donner au widget parent.
+//!
+//! \brief Constructeur d'Instrument par défault.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 Instrument::Instrument(QWidget *parent) :
     QWidget(parent)
 {
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \brief Destructeur d'Instrument.
+//!
+//! Delete les 3 QString pointeurs qui sont des données membres.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 Instrument::~Instrument()
 {
     delete m_nomFichierXML;
@@ -13,6 +31,17 @@ Instrument::~Instrument()
     delete m_nomElement;
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author BONNIER David
+//!
+//! \brief Fonction appeler par tout les contructeurs héritant de la classe (Regle, Equerre, Compas, Crayon).
+//!
+//! Fonction qui initialise toutes les données membres d'Instrument avec le XML.
+//! Nom des fichiers XML données dans les constructeurs spécifiques des classes filles.
+//! Les 3 paramètres avant de l'appeler sont : m_nomFichierXML, m_nomDocument, m_nomElement.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 void Instrument::Initialisation()
 {
     QFile xml_doc(*m_nomFichierXML);// On choisit le fichier contenant les informations XML.
@@ -76,10 +105,12 @@ void Instrument::Initialisation()
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param positionX Nouvelle position en x
-//! \param positionY Nouvelle position en y
+//! \param positionX Nouvelle position en x.
+//! \param positionY Nouvelle position en y.
 //!
-//! \brief Cette fonction met à jour les nouvelles position en x et y et met a jour ui.
+//! \brief Cette fonction met à jour les nouvelles position en x et y.
+//!
+//! Elle appelle update qui est le paintEvent pour retracer l'Instrument au bonne endroit.
 //!
 //! \date 15/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -95,7 +126,10 @@ void Instrument::translation(double positionX , double positionY)
 //!
 //! \param transparence Change le paramètre de la transparence
 //!
-//! \brief Cette fonction choisit si on affiche les instrments en transparence ou pas.
+//! \brief Cette fonction permet de changer le paramètre de transparence.
+//!
+//! La transparence est utile pour savoir comment on trace l'instrument.
+//! Elle appelle update qui est le paintEvent pour retracer l'Instrument correctement.
 //!
 //! \date 15/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -108,9 +142,11 @@ void Instrument::setTransparence(bool transparence)
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!
-//! \param newangle Nouvelle orientation
+//! \param angle Nouvelle orientation
 //!
-//! \brief Cette fonction met à jour le fichier XML de la règle avec sa nouvelle orientation
+//! \brief Cette fonction met à jour l'angle de l'Instrument.
+//!
+//! Elle appelle update qui est le paintEvent pour retracer l'Instrument avec le bonne angle.
 //!
 //! \date 15/01/2014
 ///////////////////////////////////////////////////////////////////////
@@ -120,6 +156,13 @@ void Instrument::setAngle(double angle)
     update();
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author ADAMONY Ravel
+//!
+//! \brief Fonction qui gère les clic souris.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartement , bool boutonTrace)
 {
 	if(m_moveSelected||m_rotateSelected||m_ecartSelected||m_traceSelected)
@@ -163,6 +206,13 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartem
     update();
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author ADAMONY Ravel
+//!
+//! \brief Fonction qui gère les déplacement de la souris.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 void Instrument::move(QMouseEvent *move)
 {
    if(m_moveSelected)
@@ -229,6 +279,13 @@ void Instrument::move(QMouseEvent *move)
     update();
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author ADAMONY Ravel
+//!
+//! \brief Fonction qui remet tout les booléans qui sont utile a la sélection a false.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 void Instrument::deselectionner()
 {
     m_moveSelected = false;
@@ -237,6 +294,17 @@ void Instrument::deselectionner()
 	m_traceSelected = false;
 }
 
+///////////////////////////////////////////////////////////////////////
+//! \author ADAMONY Ravel
+//!
+//! \param angle Angle à changer en gradian.
+//!
+//! \return Angle en gradian retournée qui est un double
+//!
+//! \brief Fonction qui convertie les degrés en gradian.
+//!
+//! \date 01/02/2014
+///////////////////////////////////////////////////////////////////////
 double Instrument::toGradian(double angle)
 {
     return M_PI*(angle/180);

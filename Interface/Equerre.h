@@ -32,7 +32,6 @@ class Equerre : public Regle
 {
 public:
     Equerre(Geometrie * geometrie);
-    ~Equerre();
 
     void setTransparence(bool transparence);
     void translation(double positionX , double positionY);

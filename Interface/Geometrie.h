@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \file Geometrie.h
 //!
-//! \brief Définition des fonctions servant à gérer tous les instruments.
+//! \brief Déclaration des fonctions de tracer en générale (Instrument, Figure)
 //!
 //! \date 12/01/2014
 ///////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,8 @@ class ProjetGeometrie;
 ///////////////////////////////////////////////////////////////////////////
 //! \class Geometrie
 //!
-//! \brief Classe permettant l'affichage des instruments. Elle recoit les signaux pour les appliquer à ceux-ci.
+//! \brief Classe permettant l'affichage des instruments et des Figures que l'on trace.
+//! Elle recoit les signaux pour les appliquer à ceux-ci.
 ///////////////////////////////////////////////////////////////////////////
 class Geometrie : public QWidget
 {

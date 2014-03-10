@@ -44,7 +44,6 @@ class User : public QDialog
 
 public:
     User(QDialog *parent = 0);
-    ~User();
 
     QString id_user_actuel;
     QString mdp_user_actuel;

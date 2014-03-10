@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////////////////////////
 //! \author BONNIER David
 //!
-//! \param parent QWidget donner au widget parent.
+//! \param parent QWidget donner au widget parent par défault.
 //!
 //! \brief Constructeur de Figure qui initialise donne le QWidget au parent et le booléan a false.
 //!

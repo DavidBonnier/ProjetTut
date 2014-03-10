@@ -19,8 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////
 //! \class ProjetGeometrie
 //!
-//! \brief Classe principale gère les connections entre le ui
-//!  et le programme
+//! \brief Classe principale gère les connections entre le ui et le programme coté géometrie.
 ///////////////////////////////////////////////////////////////////////////
 class ProjetGeometrie : public QWidget
 {

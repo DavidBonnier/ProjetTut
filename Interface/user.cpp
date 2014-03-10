@@ -17,10 +17,6 @@ User::User(QDialog *parent)
 	premUtil = false;
 }
 
-User::~User()
-{
-}
-
 ///////////////////////////////////////////////////////////////////////////
 //! \author ROCHE Hugo
 //! \date 31/01/2014

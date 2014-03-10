@@ -15,6 +15,7 @@
 #include <QPainter>
 #include <QTextStream>
 #include <QMouseEvent>
+
 #include "instrument.h"
 
 class Geometrie;
@@ -22,13 +23,12 @@ class Geometrie;
 ///////////////////////////////////////////////////////////////////////////
 //! \class Compas
 //!
-//! \brief Classe servant à effectuer les transformations sur le compas en modifiant son fichier XML.
+//! \brief Classe servant à effectuer les transformations sur le compas.
 ///////////////////////////////////////////////////////////////////////////
 class Compas : public Instrument
 {
 public:
     Compas(Geometrie * geometrie);
-    ~Compas();
 
 	inline int getEcart(){return m_ecartement;}
 

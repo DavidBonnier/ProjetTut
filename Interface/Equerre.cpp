@@ -32,12 +32,6 @@ Equerre::Equerre(Geometrie * geometrie)
     update();
 }
 
-
-Equerre::~Equerre()
-{
-
-}
-
 ///////////////////////////////////////////////////////////////////////
 //! \author JACQUIN Dylan
 //!

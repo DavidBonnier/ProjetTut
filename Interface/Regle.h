@@ -32,7 +32,6 @@ class Regle : public Instrument
 public:
     Regle();
     Regle(Geometrie * geometrie);
-    ~Regle();
 
     void tracer(double graduation1 , double graduation2);
     void setGraduation(int graduation);

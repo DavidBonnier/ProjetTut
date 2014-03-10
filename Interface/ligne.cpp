@@ -61,7 +61,7 @@ Ligne::Ligne(double x1, double y1, double x2, double y2)
 //!
 //! \param numero1 QPointF qui est le premier point de la ligne.
 //!
-//! \brief Apelle de la fonction de changement du premier point de QlineF.
+//! \brief Appelle de la fonction de changement du premier point de QlineF.
 //!
 //! \date 01/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ void Ligne::setPoint1 (QPointF numero1)
 //!
 //! \param numero2 QPointF qui est le second point de la ligne.
 //!
-//! \brief Apelle de la fonction de changement du second point de QlineF.
+//! \brief Appelle de la fonction de changement du second point de QlineF.
 //!
 //! \date 01/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ void Ligne::setPoint2 (QPointF numero2)
 //!
 //! \param angle Double qui est l'angle de la ligne.
 //!
-//! \brief Apelle de la fonction de changement d'angle de QLineF.
+//! \brief Appelle de la fonction de changement d'angle de QLineF.
 //!
 //! \date 01/02/2014
 ///////////////////////////////////////////////////////////////////////

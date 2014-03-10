@@ -26,7 +26,6 @@ class Point : public Figure
 public:
     Point(QPoint pointBase, int largeurPoint = 10);
     Point(QLineF ligneHorizontal, QLineF ligneVertical);
-    ~Point();
 
     inline QLineF getHorizontalLine(){return m_ligneHorizontal;}
     inline QLineF getVerticalLine(){return m_ligneVertical;}

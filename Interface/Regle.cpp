@@ -67,13 +67,6 @@ void Regle::InitialisationRegle()
     xml_doc.close();
 }
 
-
-
-Regle::~Regle()
-{
-
-}
-
 ///////////////////////////////////////////////////////////////////////
 //! \author  BONNIER David
 //!

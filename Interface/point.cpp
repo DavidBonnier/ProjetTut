@@ -19,7 +19,7 @@
 //!
 //! \brief Constructeur de Point paramètre par défault de 10 pour la largeur.
 //!
-//! Apelle de la fonction MAJLignes pour inititialiser les 2 lignes avec les paramètres.
+//! Appelle de la fonction MAJLignes pour inititialiser les 2 lignes avec les paramètres.
 //!
 //! \date 23/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -50,24 +50,13 @@ Point::Point(QLineF ligneHorizontal, QLineF ligneVertical)
 }
 
 ///////////////////////////////////////////////////////////////////////
-//! \author ROCHE Hugo
-//!
-//! \brief Destructeur de Point.
-//!
-//! \date 21/02/2014
-///////////////////////////////////////////////////////////////////////
-Point::~Point()
-{
-}
-
-///////////////////////////////////////////////////////////////////////
 //! \author BONNIER David
 //!
 //! \param pointBase QPoint qui est le point centrale de la croix.
 //!
 //! \brief Mise a jour du point de base pour les tracés.
 //!
-//! Apelle de la fonction MAJLignes pour mettre à jour les 2 lignes avec les nouveaux paramètres.
+//! Appelle de la fonction MAJLignes pour mettre à jour les 2 lignes avec les nouveaux paramètres.
 //!
 //! \date 23/02/2014
 ///////////////////////////////////////////////////////////////////////
@@ -84,7 +73,7 @@ void Point::setPointBase(QPoint pointBase)
 //!
 //! \brief Mise a jour de la largeur des tracés.
 //!
-//! Apelle de la fonction MAJLignes pour mettre à jour les 2 lignes avec les nouveaux paramètres.
+//! Appelle de la fonction MAJLignes pour mettre à jour les 2 lignes avec les nouveaux paramètres.
 //!
 //! \date 23/02/2014
 ///////////////////////////////////////////////////////////////////////

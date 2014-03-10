@@ -74,6 +74,8 @@ Geometrie::~Geometrie()
 ///////////////////////////////////////////////////////////////////////
 //! \author ROCHE Hugo
 //!
+//! \return booléan qui retourne vrai si elle est instancier, sinon c'est faux.
+//!
 //! \brief Cette fonction instancie ou détruit une règle suivant la présence ou non de celle-ci.
 //!
 //! \date 31/01/2014
@@ -95,6 +97,8 @@ bool Geometrie::gererRegle()
 
 ///////////////////////////////////////////////////////////////////////
 //! \author ROCHE Hugo
+//!
+//! \return booléan qui retourne vrai si elle est instancier, sinon c'est faux.
 //!
 //! \brief Cette fonction instancie ou détruit un compas suivant la présence ou non de celui-ci.
 //!
@@ -118,6 +122,8 @@ bool Geometrie::gererCompas()
 ///////////////////////////////////////////////////////////////////////
 //! \author ROCHE Hugo
 //!
+//! \return booléan qui retourne vrai si elle est instancier, sinon c'est faux.
+//!
 //! \brief Cette fonction instancie ou détruit un crayon suivant la présence ou non de celui-ci.
 //!
 //! \date 31/01/2014
@@ -139,6 +145,8 @@ bool Geometrie::gererCrayon()
 
 ///////////////////////////////////////////////////////////////////////
 //! \author ROCHE Hugo
+//!
+//! \return booléan qui retourne vrai si elle est instancier, sinon c'est faux.
 //!
 //! \brief Cette fonction instancie ou détruit une équerre suivant la présence ou non de celle-ci.
 //!
