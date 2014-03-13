@@ -41,7 +41,7 @@ public:
     QPointF Thales(double longueur, double largeur, double transp, int x, int y);
 
     void dessinerEquerre(QPainter& dessin);
-	void MagnetiserEquerre (QList <Figure *> tableauFigure);
+    void MagnetiserEquerre ();
 };
 
 #endif

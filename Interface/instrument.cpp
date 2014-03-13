@@ -221,21 +221,21 @@ void Instrument::move(QMouseEvent *move)
 		Equerre* equ = dynamic_cast<Equerre*>(this);
 		if (equ)
 		{
-			equ->MagnetiserEquerre(m_geometrie->tableauFigure);
+            equ->MagnetiserEquerre();
 			equ->translation (equ->getPositionX(),equ->getPositionY());
 			equ->setAngle (equ->getAngle());
 		}
 		Regle* reg = dynamic_cast<Regle*>(this);
 		if (reg)
 		{
-			reg->MagnetiserRegle(m_geometrie->tableauFigure);
+            reg->MagnetiserRegle();
 			reg->translation (reg->getPositionX(),reg->getPositionY());
 			reg->setAngle (reg->getAngle());
 		}
 		Crayon* cra = dynamic_cast<Crayon*>(this);
 		if (cra)
 		{
-			cra->MagnetiserCrayon(m_geometrie->tableauFigure);
+            cra->MagnetiserCrayon();
 			cra->translation (cra->getPositionX(),cra->getPositionY());
 			cra->setAngle (cra->getAngle());
 			if(cra->m_traceSelected)
@@ -246,7 +246,7 @@ void Instrument::move(QMouseEvent *move)
 		Compas* comp = dynamic_cast<Compas*>(this);
 		if (comp)
 		{
-			comp->MagnetiserCompas(m_geometrie->tableauFigure);
+            comp->MagnetiserCompas();
 			comp->translation (comp->getPositionX(),comp->getPositionY());
 			comp->setAngle (comp->getAngle());
 		}

@@ -278,61 +278,17 @@ void Regle::dessinerRegle(QPainter& dessin)
 //!
 //! \date 07/02/2014
 ///////////////////////////////////////////////////////////////////////
-void Regle::MagnetiserRegle (QList <Figure *> tableauFigure)
+void Regle::MagnetiserRegle ()
 {	
 	if(m_geometrie->magne_actif)
 	{
-		//recherche des valeurs du XML------------------------------------------------------------
-		QDomDocument dom("Regle"); // Création de l'objet DOM
-		QFile xml_doc("Resources/XML/Regle.xml"); // On choisit le fichier contenant les informations XML.
-		if(!xml_doc.open(QIODevice::ReadOnly)) // Si l'on n'arrive pas à ouvrir le fichier XML.
-		{
-			QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
-			return;
-		}
-		if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
-		{
-			xml_doc.close();
-			QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
-			return;
-		}	
-		QDomElement dom_element = dom.documentElement();
-		QDomNode noeud = dom_element.firstChild();
-		int w, h;
-		while(!noeud.isNull()) //Parours du fichier
-		{
-			QDomElement element = noeud.toElement(); // On utilise cette propriété afin de transformer le nœud en éléments.
-			//Cela nous permet aussi de récupérer l'élément ou nœud courant.
-			if(!element.isNull()) //S'il y a un élément dans le noeud
-			{
-				/*
-				if (element.tagName() == "positionX")
-				x = element.text().toInt();
-				if (element.tagName() == "positionY")
-				y = element.text().toInt();
-				*/
-				if (element.tagName() == "longueur")
-					w = element.text().toInt();
-				if (element.tagName() == "largeur")
-					h = element.text().toInt();	
-				/*
-				if (element.tagName() == "rotation")
-				rotation = element.text().toDouble();	
-				if (element.tagName() == "graduation")
-				graduation = element.text().toInt();	
-				*/
-			}
-			noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
-		}
-		xml_doc.close();
-		//fin recherche---------------------------------------------------------------------------
 		QLine droitesOutilCourant;
 		int x = m_position.x();
 		int y = m_position.y();
 		double rotation = m_angle;
 		// Détection des bords de l'instrument à magnétiser ici l'equerre
-        droitesOutilCourant.setLine(x,y,w*cos(rotation*M_PI/180) + x,w*sin(rotation*M_PI/180) + y);
-        QPoint Point3 ((w/2)*cos(rotation*M_PI/180) + x,(w/2)*sin(rotation*M_PI/180) + y);
+        droitesOutilCourant.setLine(x,y,m_longueur*cos(rotation*M_PI/180) + x,m_longueur*sin(rotation*M_PI/180) + y);
+        QPoint Point3 ((m_longueur/2)*cos(rotation*M_PI/180) + x,(m_longueur/2)*sin(rotation*M_PI/180) + y);
 		if(rotation<0) rotation +=360;
 
 		bool magnet = false;
@@ -524,48 +480,11 @@ void Regle::MagnetiserRegle (QList <Figure *> tableauFigure)
 		//on a la regle nous regardons donc le magnétisme avec l'equerre
 		if (m_geometrie->equerre)
 		{
-			//Lecture equerre
-			QDomDocument dom("Equerre"); // Création de l'objet DOM
-			QFile xml_doc("Resources/XML/Equerre.xml"); // On choisit le fichier contenant les informations XML.
-			if(!xml_doc.open(QIODevice::ReadOnly)) // Si l'on n'arrive pas à ouvrir le fichier XML.
-			{
-				QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre ouvert. Verifiez que le nom est le bon et que le document est bien place");
-				return;
-			}
-			if (!dom.setContent(&xml_doc)) // Si l'on n'arrive pas à associer le fichier XML à l'objet DOM.
-			{
-				xml_doc.close();
-				QMessageBox::warning(this,"Erreur a l'ouverture du document XML","Le document XML n'a pas pu etre attribue a l'objet QDomDocument.");
-				return;
-			}	
-			QDomElement dom_element = dom.documentElement();
-			QDomNode noeud = dom_element.firstChild();
 			int Xequerre,Yequerre, Wequerre, Hequerre;
-			Xequerre= m_geometrie->equerre->getPositionX();
-			Yequerre= m_geometrie->equerre->getPositionY();
-			double Rotationequerre[2] = {m_geometrie->equerre->getAngle(),m_geometrie->equerre->getAngle()+90};
-			if (Rotationequerre[1] >360) Rotationequerre[1]-=360;
-			while(!noeud.isNull()) //Parours du fichier
-			{
-				QDomElement element = noeud.toElement(); // On utilise cette propriété afin de transformer le nœud en éléments.
-				//Cela nous permet aussi de récupérer l'élément ou nœud courant.
-				if(!element.isNull()) //S'il y a un élément dans le noeud
-				{
-					/*
-					if (element.tagName() == "positionX")
-					Xregle = element.text().toInt();
-					if (element.tagName() == "positionY")
-					Yregle = element.text().toInt();*/
-					if (element.tagName() == "longueur")
-						Wequerre = element.text().toInt();
-					if (element.tagName() == "largeur")
-						Hequerre = element.text().toInt();	
-					/*if (element.tagName() == "rotation")
-					Rotationregle = element.text().toDouble();	*/	
-				}
-				noeud = noeud.nextSibling(); //Ce code permet d'aller à l'élément suivant.
-			}
-			xml_doc.close();
+            Xequerre = m_geometrie->equerre->getPositionX();
+            Yequerre = m_geometrie->equerre->getPositionY();
+            Wequerre = m_geometrie->equerre->getLongueur();
+            Hequerre = m_geometrie->equerre->getLargeur();
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante[2];
             DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*M_PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*M_PI/180));
