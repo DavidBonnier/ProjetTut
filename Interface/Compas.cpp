@@ -364,7 +364,7 @@ void Compas::sourisEcart(QMouseEvent *posSouris)
 //!
 //! \date 07/02/2014
 ///////////////////////////////////////////////////////////////////////
-void Compas::MagnetiserCompas(QList <Figure *> tableauFigure)
+void Compas::MagnetiserCompas()
 {	
 	if(m_geometrie->magne_actif)
 	{

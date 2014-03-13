@@ -189,7 +189,7 @@ void Equerre::MagnetiserEquerre()
 		int y = m_position.y();
 		double rotation[2] = {m_angle,m_angle -90};
 		// Détection des bords de l'instrument à magnétiser ici l'equerre
-        droitesOutilCourant[0].setLine(x,y,m_longeur*cos(rotation[0]*M_PI/180) + x,m_longeur*sin(rotation[0]*M_PI/180) + y);
+        droitesOutilCourant[0].setLine(x,y,m_longueur*cos(rotation[0]*M_PI/180) + x,m_longueur*sin(rotation[0]*M_PI/180) + y);
 		if(rotation[1]<0) rotation[1] +=360;
 
         droitesOutilCourant[1].setLine(x,y,m_largeur*cos(rotation[1]*M_PI/180) + x,m_largeur*sin(rotation[1]*M_PI/180) + y);
@@ -211,9 +211,9 @@ void Equerre::MagnetiserEquerre()
 			QVector2D VecteurO (droitesOutilCourant[i].x1()-droitesOutilCourant[i].x2(),droitesOutilCourant[i].y1()-droitesOutilCourant[i].y2());
 
 			//Parcours des droites aux quelles on peut se magnétiser
-			for (int j=0 ; j<tableauFigure.size(); ++j)//A changer si list
+            for (int j=0 ; j<m_geometrie->tableauFigure.size(); ++j)//A changer si list
 			{
-				Ligne* DroiteCourante = dynamic_cast<Ligne*>(tableauFigure[j]);//Changement?
+                Ligne* DroiteCourante = dynamic_cast<Ligne*>(m_geometrie->tableauFigure[j]);//Changement?
 				if(DroiteCourante!=NULL)
 				{
 					double angletemp;
@@ -344,6 +344,8 @@ void Equerre::MagnetiserEquerre()
                 Yregle = m_geometrie->regle->getPositionY();
                 Wregle = m_geometrie->regle->getLongueur();
                 Hregle = m_geometrie->regle->getLargeur();
+
+                double Rotationregle = m_geometrie->regle->getAngle();
 
                 //Vecteur de la droite de l'equerre
 				QLine DroiteCourante;

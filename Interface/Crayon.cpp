@@ -174,7 +174,7 @@ void Crayon::dessinerCrayon(QPainter& dessin)
 //!
 //! \date 07/02/2014
 ///////////////////////////////////////////////////////////////////////
-void Crayon::MagnetiserCrayon(QList <Figure *> tableauFigure)
+void Crayon::MagnetiserCrayon()
 {	
 	if(m_geometrie->magne_actif)
 	{

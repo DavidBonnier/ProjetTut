@@ -305,9 +305,9 @@ void Regle::MagnetiserRegle ()
 		QVector2D VecteurO (droitesOutilCourant.x1()-droitesOutilCourant.x2(),droitesOutilCourant.y1()-droitesOutilCourant.y2());
 
 		//Parcours des droites aux quelles on peut se magnétiser
-		for (int j=0 ; j<tableauFigure.size(); ++j)//A changer si list
+        for (int j=0 ; j<m_geometrie->tableauFigure.size(); ++j)//A changer si list
 		{
-			Ligne* DroiteCourante = dynamic_cast<Ligne*>(tableauFigure[j]);//Changement?
+            Ligne* DroiteCourante = dynamic_cast<Ligne*>(m_geometrie->tableauFigure[j]);//Changement?
 			if(DroiteCourante!=NULL)
 			{
 				double angletemp;
@@ -485,6 +485,10 @@ void Regle::MagnetiserRegle ()
             Yequerre = m_geometrie->equerre->getPositionY();
             Wequerre = m_geometrie->equerre->getLongueur();
             Hequerre = m_geometrie->equerre->getLargeur();
+
+            double Rotationequerre[2] = {m_geometrie->equerre->getAngle(),m_geometrie->equerre->getAngle()+90};
+            if (Rotationequerre[1] >360) Rotationequerre[1]-=360;
+
 			//Vecteur de la droite de la regle
 			QLine DroiteCourante[2];
             DroiteCourante[0].setLine(Xequerre,Yequerre,Xequerre+ Wequerre*cos(Rotationequerre[0]*M_PI/180),Yequerre+ Wequerre*sin(Rotationequerre[0]*M_PI/180));

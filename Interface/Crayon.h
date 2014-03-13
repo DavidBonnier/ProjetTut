@@ -35,7 +35,7 @@ public:
     void setAngle(double angle);
 
     void dessinerCrayon(QPainter& dessin);
-	void MagnetiserCrayon (QList <Figure *> tableauFigure);
+    void MagnetiserCrayon ();
 	void traceCrayon();
 
 	bool m_estMagnetise;
