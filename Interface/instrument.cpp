@@ -199,9 +199,6 @@ void Instrument::clic(QMouseEvent *clic, bool boutonRotation, bool boutonEcartem
 	if(!boutonEcartement&&boutonRotation&&!boutonTrace)
 	{
 		m_rotateSelected = true;
-		m_oldRotationValue = m_angle;
-		m_posClic.setX(clic->x());
-		m_posClic.setY(clic->y());
 	}
     update();
 }
