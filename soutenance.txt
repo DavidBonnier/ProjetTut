@@ -1,0 +1,12 @@
+Intro 												2,30 Z-Hugo
+Résumé 								2,30 Diglan
+Présentation SSESD 					1 Diglan
+Présentation 2 logiciels 				5 DaVide
+Magnétisme 									5 Mineral
+Démo logiciel (parralèle 3cm écart) 			5 Caravelle
+{
+	Nouveau user, pas besoin de se co,
+	Epaisseur du trait
+	Tracer parallèle
+}
+Conclu 												2,30 Z-Hugo
